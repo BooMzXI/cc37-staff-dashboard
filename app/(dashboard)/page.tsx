@@ -1,5 +1,7 @@
-export default function Hello() {
-    return (
-        <div>Hello, World!</div>
-    )
+import React from "react";
+
+export default function Dashboard() {
+  return (
+    <div className="">Hello</div>
+  );
 }
