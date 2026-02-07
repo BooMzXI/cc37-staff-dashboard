@@ -7,6 +7,8 @@ import Link from "next/link";
 import { MENU_ITEMS } from "@/config/menu-items";
 import { Session, User } from "better-auth";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 type AuthSession = {
   session: Session;
@@ -29,11 +31,22 @@ type Props = {
 
 const DashboardNavbar = ({ session }: Props) => {
   const { theme, toggleTheme } = useTheme();
-
+  const router = useRouter();
   const userRole = session?.user?.role || null;
   const filteredMenu = MENU_ITEMS.filter(
     (item) => userRole && item.roles.includes(userRole),
   );
+
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login");
+          router.refresh();
+        },
+      },
+    });
+  };
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-xl">
       <div className="flex h-14 items-center justify-between px-4 lg:px-6">
@@ -81,7 +94,7 @@ const DashboardNavbar = ({ session }: Props) => {
           </button>
 
           <div className="mx-2 h-6 w-px bg-border" />
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" onClick={handleSignOut}>
             Sign Out
           </Button>
         </div>
