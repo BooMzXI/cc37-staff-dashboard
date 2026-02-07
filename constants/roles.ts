@@ -1,5 +1,5 @@
 export enum ROLES {
   ADMIN = "admin",
   ACADEMIC = "academic", // ฝ่ายวิชาการ
-  REGISTRATION = "registration", // ฝ่ายทะเบียน
+  REGISTRATION = "regis", // ฝ่ายทะเบียน
 }

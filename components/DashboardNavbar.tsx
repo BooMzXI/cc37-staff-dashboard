@@ -32,6 +32,12 @@ type Props = {
 const DashboardNavbar = ({ session }: Props) => {
   const { theme, toggleTheme } = useTheme();
   const router = useRouter();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const userRole = session?.user?.role || null;
   const filteredMenu = MENU_ITEMS.filter(
     (item) => userRole && item.roles.includes(userRole),
@@ -85,13 +91,12 @@ const DashboardNavbar = ({ session }: Props) => {
             onClick={toggleTheme}
             className="flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
             aria-label="Toggle theme"
-            suppressHydrationWarning
           >
-            {theme === "light" ? (
+            {mounted && (theme === "light" ? (
               <Moon className="h-4 w-4" />
             ) : (
               <Sun className="h-4 w-4" />
-            )}
+            ))}
           </button>
 
           <div className="mx-2 h-6 w-px bg-border" />
