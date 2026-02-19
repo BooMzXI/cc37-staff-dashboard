@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 
-type AuthSession = {
+export type AuthSession = {
   session: Session;
   user: User & { role?: string };
 };
@@ -30,7 +30,7 @@ type Props = {
   { label: "แอดมิน", icon: ShieldCheck, href: "/admin" },
 ];*/
 
-const DashboardNavbar = ({ session }: Props) => {
+const DashboardNavbar = ({ role }: {role: string | undefined | null}) => {
   const { theme, toggleTheme } = useTheme();
   const router = useRouter();
   const [mounted, setMounted] = React.useState(false);
@@ -39,7 +39,7 @@ const DashboardNavbar = ({ session }: Props) => {
     setMounted(true);
   }, []);
 
-  const userRole = session?.user?.role || null;
+  const userRole = role || null;
   const filteredMenu = MENU_ITEMS.filter(
     (item) => userRole && item.roles.includes(userRole),
   );

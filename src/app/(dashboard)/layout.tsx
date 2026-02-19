@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { Suspense } from "react";
-import DashboardNavbar from "@/components/DashboardNavbar";
+import DashboardNavbar, { AuthSession } from "@/components/DashboardNavbar";
 import { authClient } from "@/lib/auth-client";
 
 async function DashboardShell({
@@ -15,7 +15,7 @@ async function DashboardShell({
   });
   return (
     <>
-      <DashboardNavbar session={data} />
+      <DashboardNavbar role={data?.user.role} />
       {children}
     </>
   );
