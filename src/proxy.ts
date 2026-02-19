@@ -5,6 +5,9 @@ import { headers } from "next/headers";
 
 export async function proxy(request: NextRequest) {
   const sessionToken = request.cookies.get("better-auth.session_token");
+  // const { data } = await authClient.getSession({
+  //     fetchOptions: { headers: await headers() }
+  // });
 
   const isLoginPage = request.nextUrl.pathname.startsWith("/login");
   
