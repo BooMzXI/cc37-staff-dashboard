@@ -9,6 +9,7 @@ import { Session, User } from "better-auth";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 type AuthSession = {
   session: Session;
@@ -61,6 +62,7 @@ const DashboardNavbar = ({ session }: Props) => {
             href="/"
             className="flex items-center gap-2 font-bold text-lg tracking-tight text-foreground"
           >
+            <Image width={50} height={50} className="" src={"https://storage.comcamp.io/web-assets/Comcamp-Logo.png"} alt=""></Image>
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground text-sm font-bold">
               D
             </div>
@@ -73,14 +75,14 @@ const DashboardNavbar = ({ session }: Props) => {
                 className?: string;
               }>;
               return (
-                <a
+                <Link
                   key={item.title}
                   href={item.url}
                   className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                 >
                   <Icon className="h-4 w-4" />
                   {item.title}
-                </a>
+                </Link>
               );
             })}
           </div>
@@ -89,7 +91,7 @@ const DashboardNavbar = ({ session }: Props) => {
         <div className="flex items-center gap-1">
           <button
             onClick={toggleTheme}
-            className="flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            className="cursor-pointer flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
             aria-label="Toggle theme"
           >
             {mounted && (theme === "light" ? (
@@ -100,7 +102,7 @@ const DashboardNavbar = ({ session }: Props) => {
           </button>
 
           <div className="mx-2 h-6 w-px bg-border" />
-          <Button variant="ghost" size="sm" onClick={handleSignOut}>
+          <Button variant="ghost" className="cursor-pointer" size="sm" onClick={handleSignOut}>
             Sign Out
           </Button>
         </div>
