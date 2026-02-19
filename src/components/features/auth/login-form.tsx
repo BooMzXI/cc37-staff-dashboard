@@ -62,7 +62,9 @@ export function LoginForm() {
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Staff Login</CardTitle>
+        <CardTitle className="text-2xl font-bold text-center flex flex-col">
+          <div className="">ComCamp 37</div>
+        </CardTitle>
         <CardDescription className="text-center">
           เข้าสู่ระบบสำหรับทีมงาน ComCamp
         </CardDescription>
@@ -109,7 +111,7 @@ export function LoginForm() {
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
