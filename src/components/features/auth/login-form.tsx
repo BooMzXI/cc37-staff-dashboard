@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import Image from "next/image"
 
 const formSchema = z.object({
   username: z.string().min(1, { message: "กรุณากรอกชื่อผู้ใช้" }),
@@ -62,12 +63,12 @@ export function LoginForm() {
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg">
       <CardHeader className="space-y-1">
+        <div className="w-full">
+          <img alt="logo" className="w-36 mx-auto" src={"https://storage.comcamp.io/web-assets/Comcamp-Logo.png"} />
+        </div>
         <CardTitle className="text-2xl font-bold text-center flex flex-col">
-          <div className="">ComCamp 37</div>
+          <div className="">Staff Back Office</div>
         </CardTitle>
-        <CardDescription className="text-center">
-          เข้าสู่ระบบสำหรับทีมงาน ComCamp
-        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>

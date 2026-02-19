@@ -56,17 +56,13 @@ const DashboardNavbar = ({ session }: Props) => {
   };
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-xl">
-      <div className="flex h-14 items-center justify-between px-4 lg:px-6">
+      <div className="pl-14! flex h-14 items-center justify-between px-4 lg:px-6">
         <div className="flex items-center gap-6">
           <Link
             href="/"
             className="flex items-center gap-2 font-bold text-lg tracking-tight text-foreground"
           >
-            <Image width={50} height={50} className="" src={"https://storage.comcamp.io/web-assets/Comcamp-Logo.png"} alt=""></Image>
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground text-sm font-bold">
-              D
-            </div>
-            <span className="hidden sm:inline">Dashboard</span>
+            <img className="w-10" src={"https://storage.comcamp.io/web-assets/Comcamp-Logo.png"} alt=""></img>
           </Link>
 
           <div className="hidden md:flex items-center gap-1">

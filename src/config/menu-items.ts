@@ -17,7 +17,7 @@ export type MenuItem = {
 
 export const MENU_ITEMS: MenuItem[] = [
   {
-    title: "หน้าหลัก (Dashboard)",
+    title: "หน้าหลัก",
     url: "/",
     icon: Home,
     roles: [ROLES.ADMIN, ROLES.ACADEMIC, ROLES.REGISTRATION],
