@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { config } from "@/config/config";
 
 export async function GET() {
   try {
     const headersList = await headers();
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/staff/statistic`, {
+    const res = await fetch(`${config.backend.baseUrl}/api/staff/statistic`, {
       method: "GET",
       headers: headersList,
       cache: "no-store",
