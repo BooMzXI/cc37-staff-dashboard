@@ -4,15 +4,15 @@ import { authClient } from "./lib/auth-client";
 import { headers } from "next/headers";
 
 export async function proxy(request: NextRequest) {
-  const session = await authClient.getSession(); //check session every time for better security
+  const sessionToken = request.cookies.get("better-auth.session_token");
 
   const isLoginPage = request.nextUrl.pathname.startsWith("/login");
-
-  if(!session) {
+  
+  if (!sessionToken && !isLoginPage) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if(isLoginPage){
+  if (sessionToken && isLoginPage) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
