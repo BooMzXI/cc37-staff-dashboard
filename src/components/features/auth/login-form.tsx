@@ -57,7 +57,7 @@ export function LoginForm() {
              setError(ctx.error.message as string || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ")
              setIsLoading(false)
         }
-    })
+    });
   }
 
   return (
