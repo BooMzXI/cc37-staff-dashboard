@@ -34,7 +34,7 @@ export default function DashboardLayout({
             {children}
           </div>  
         </div>
-      </DashboardShell>
+        </DashboardShell>
     </Suspense>
   );
 }
