@@ -18,7 +18,6 @@ export default function AdminPage() {
     }
   }, [session, router]);
 
-  if (session?.user && (session.user as User)?.role !== 'admin') return null;
 
   return <div>Welcome Admin!</div>
 }

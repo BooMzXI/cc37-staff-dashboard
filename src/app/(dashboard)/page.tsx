@@ -10,6 +10,7 @@ import {
   STATS_CONFIG, 
   type StatisticData
 } from "@/config/dashboard-stats";
+import PageTitle from "@/components/PageTitle";
 
 export default function Dashboard() {
 const [data, setData] = useState<StatisticData | null>(null);
@@ -18,7 +19,8 @@ const [loading, setLoading] = useState(true);
 useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/statistic`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/staff/statistic`, {
+          credentials: "include"
         });
         if (!res.ok) throw new Error("Failed to fetch");
         const jsonData = await res.json();
@@ -43,12 +45,9 @@ useEffect(() => {
 
 
   return (
-    <div className="min-h-screen bg-background">
-      <main className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-foreground">Overview</h1>
-          <p className="text-sm text-muted-foreground">Welcome back!</p>
-        </div>
+    <>
+        <PageTitle title="Overview" description="Welcome back!" />
+        
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {data && STATS_CONFIG.map((stat) => {
              const value = data[stat.key as keyof StatisticData];
@@ -75,7 +74,6 @@ useEffect(() => {
             );
           })}
         </div>
-      </main>
-    </div>
+    </>
   );
 }

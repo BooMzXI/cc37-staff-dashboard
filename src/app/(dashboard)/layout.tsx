@@ -28,7 +28,13 @@ export default function DashboardLayout({
 }) {
   return (
     <Suspense fallback={<div className="h-screen w-screen" />}>
-      <DashboardShell>{children}</DashboardShell>
+      <DashboardShell>
+        <div className="mx-auto max-w-7xl px-4 py-8 lg:px-6 container">
+          <div className="mt-5">
+            {children}
+          </div>  
+        </div>
+      </DashboardShell>
     </Suspense>
   );
 }
