@@ -9,8 +9,9 @@ import { Session, User } from "better-auth";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
-type AuthSession = {
+export type AuthSession = {
   session: Session;
   user: User & { role?: string };
 };
@@ -29,7 +30,7 @@ type Props = {
   { label: "แอดมิน", icon: ShieldCheck, href: "/admin" },
 ];*/
 
-const DashboardNavbar = ({ session }: Props) => {
+const DashboardNavbar = ({ role }: {role: string | undefined | null}) => {
   const { theme, toggleTheme } = useTheme();
   const router = useRouter();
   const [mounted, setMounted] = React.useState(false);
@@ -38,7 +39,7 @@ const DashboardNavbar = ({ session }: Props) => {
     setMounted(true);
   }, []);
 
-  const userRole = session?.user?.role || null;
+  const userRole = role || null;
   const filteredMenu = MENU_ITEMS.filter(
     (item) => userRole && item.roles.includes(userRole),
   );
@@ -55,16 +56,13 @@ const DashboardNavbar = ({ session }: Props) => {
   };
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/80 backdrop-blur-xl">
-      <div className="flex h-14 items-center justify-between px-4 lg:px-6">
+      <div className="pl-14! flex h-14 items-center justify-between px-4 lg:px-6">
         <div className="flex items-center gap-6">
           <Link
             href="/"
             className="flex items-center gap-2 font-bold text-lg tracking-tight text-foreground"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground text-sm font-bold">
-              D
-            </div>
-            <span className="hidden sm:inline">Dashboard</span>
+            <img className="w-10" src={"https://storage.comcamp.io/web-assets/Comcamp-Logo.png"} alt=""></img>
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
@@ -73,14 +71,14 @@ const DashboardNavbar = ({ session }: Props) => {
                 className?: string;
               }>;
               return (
-                <a
+                <Link
                   key={item.title}
                   href={item.url}
                   className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                 >
                   <Icon className="h-4 w-4" />
                   {item.title}
-                </a>
+                </Link>
               );
             })}
           </div>
@@ -89,7 +87,7 @@ const DashboardNavbar = ({ session }: Props) => {
         <div className="flex items-center gap-1">
           <button
             onClick={toggleTheme}
-            className="flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            className="cursor-pointer flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
             aria-label="Toggle theme"
           >
             {mounted && (theme === "light" ? (
@@ -100,7 +98,7 @@ const DashboardNavbar = ({ session }: Props) => {
           </button>
 
           <div className="mx-2 h-6 w-px bg-border" />
-          <Button variant="ghost" size="sm" onClick={handleSignOut}>
+          <Button variant="ghost" className="cursor-pointer" size="sm" onClick={handleSignOut}>
             Sign Out
           </Button>
         </div>

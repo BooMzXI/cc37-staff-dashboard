@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import Image from "next/image"
 
 const formSchema = z.object({
   username: z.string().min(1, { message: "กรุณากรอกชื่อผู้ใช้" }),
@@ -56,16 +57,18 @@ export function LoginForm() {
              setError(ctx.error.message as string || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ")
              setIsLoading(false)
         }
-    })
+    });
   }
 
   return (
     <Card className="w-full max-w-md mx-auto shadow-lg">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">Staff Login</CardTitle>
-        <CardDescription className="text-center">
-          เข้าสู่ระบบสำหรับทีมงาน ComCamp
-        </CardDescription>
+        <div className="w-full">
+          <img alt="logo" className="w-36 mx-auto" src={"https://storage.comcamp.io/web-assets/Comcamp-Logo.png"} />
+        </div>
+        <CardTitle className="text-2xl font-bold text-center flex flex-col">
+          <div className="">Staff Back Office</div>
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -109,7 +112,7 @@ export function LoginForm() {
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full cursor-pointer" disabled={isLoading}>
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
