@@ -18,7 +18,8 @@ const [loading, setLoading] = useState(true);
 useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/statistic`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/staff/statistic`, {
+          credentials: "include"
         });
         if (!res.ok) throw new Error("Failed to fetch");
         const jsonData = await res.json();
