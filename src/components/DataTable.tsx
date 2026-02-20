@@ -36,9 +36,9 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+  /*const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
-  );
+  );*/ // ถ้าอยากใช้ filter แยกคอลัมน์ก็เปิดใช้งาน state นี้ แล้วใส่ props ที่เกี่ยวข้องใน useReactTable
   const [globalFilter, setGlobalFilter] = React.useState("")
 
   const table = useReactTable({
@@ -98,7 +98,7 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
