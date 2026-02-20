@@ -2,7 +2,8 @@
 
 import { Button } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
+import { ArrowUpDown, Eye } from "lucide-react"
+import Link from "next/link"
 
 export type information = {
   id: string
@@ -83,5 +84,18 @@ export const columns: ColumnDef<information>[] = [
   {
     accessorKey: "timeChecked",
     header: "เวลาที่ตรวจสอบ",
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      const student = row.original
+      return (
+        <Link href={`/personal-information/${student.id}`}>
+          <Button variant="ghost" size="icon" className="hover:bg-primary/10 cursor-pointer">
+            <Eye className="h-4 w-4" />
+          </Button>
+        </Link>
+      )
+    },
   },
 ]
