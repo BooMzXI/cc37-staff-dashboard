@@ -4,8 +4,8 @@ export default function PageTitle({ title, description }: { title: string; descr
     return(
         <>
             <div className="mb-8">
-                <h1 className="text-2xl font-bold text-foreground">{title}</h1>
-                <p className="text-sm text-muted-foreground">{description}</p>
+                <h1 className="text-3xl font-bold text-foreground">{title}</h1>
+                <p className="text-lg text-muted-foreground">{description}</p>
             </div>
         </>
     );
