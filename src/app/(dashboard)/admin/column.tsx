@@ -2,6 +2,8 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { StaffActionCell } from "./components/StaffActionCell";
+import { ArrowUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export type StaffUser = {
   id: string;
@@ -14,19 +16,43 @@ export type StaffUser = {
 export const columns: ColumnDef<StaffUser>[] = [
   {
     accessorKey: "username",
-    header: "Username",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Username <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    }
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Name <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Email <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "role",
-    header: "Role",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Role <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => {
       const role = row.original.role;
       const roleColors: Record<string, string> = {
