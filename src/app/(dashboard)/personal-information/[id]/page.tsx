@@ -9,6 +9,8 @@ import { Loader2 } from "lucide-react";
 import { StudentDetail } from "@/types/student";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
+import { Clock } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 const InfoRow = ({
   label,
@@ -41,6 +43,52 @@ const StatusBadge = ({
     )}
   </span>
 );
+
+const StatusApplication = ({
+  status,
+  result,
+}: {
+  status: boolean;
+  result?: string;
+}) => {
+  const isPending = result === "waiting_for_announcement";
+
+  if (isPending) {
+    return (
+      <div className="flex flex-col items-center justify-center space-y-3 py-6">
+        <div className="flex items-center gap-3 text-2xl font-bold text-amber-500">
+          <span>รอประกาศผล</span>
+          <Clock className="h-10 w-10" />
+        </div>
+        <p className="text-muted-foreground">ผลการตัดสิน: {result}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col items-center justify-center space-y-3 py-6">
+      <div
+        className={`flex items-center gap-3 text-2xl font-bold ${
+          status ? "text-green-600" : "text-destructive"
+        }`}
+      >
+		<span>{status ? "ผ่านการคัดเลือก" : "ไม่ผ่านการคัดเลือก"}</span>
+        {status ? (
+          <CheckCircle2 className="h-10 w-10" />
+        ) : (
+          <XCircle className="h-10 w-10" />
+        )}
+      </div>
+
+      {result && (
+        <p className="text-muted-foreground">
+          ผลการตัดสิน:{" "}
+          <span className="font-medium text-foreground">{result}</span>
+        </p>
+      )}
+    </div>
+  );
+};
 
 export default function PersonalDetail() {
   const params = useParams();
@@ -80,42 +128,93 @@ export default function PersonalDetail() {
     return `${thaiDay} ${thaiMonth} ${thaiYear}`;
   };
 
-const handleNoteSubmit = async (isNote: boolean, content: string = "") => {
-  if (!data?.std_application_id) return;
-  
-  if (isNote && !content.trim()) {
-    alert("กรุณาพิมพ์หมายเหตุก่อนบันทึก");
-    return;
-  }
+  const formatThaiDateTime = (dateString?: string) => {
+    if (!dateString) return "ยังไม่มีการตรวจสอบ";
 
-  setIsSubmittingNote(true);
-  try {
-    const res = await fetch("/api/staff/application/note", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        app_id: data.std_application_id,
-        is_note: isNote,   // true = บันทึก, false = ลบ
-        app_note: content,
-      }),
-    });
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "รูปแบบเวลาไม่ถูกต้อง";
 
-    if (!res.ok) throw new Error("Failed to update note");
-    alert(isNote ? "บันทึกหมายเหตุสำเร็จ!" : "ลบหมายเหตุสำเร็จ!");
-    setIsEditingNote(false);
-    
-    if (!isNote) {
-      setNoteText("");
+    const thaiMonths = [
+      "มกราคม",
+      "กุมภาพันธ์",
+      "มีนาคม",
+      "เมษายน",
+      "พฤษภาคม",
+      "มิถุนายน",
+      "กรกฎาคม",
+      "สิงหาคม",
+      "กันยายน",
+      "ตุลาคม",
+      "พฤศจิกายน",
+      "ธันวาคม",
+    ];
+
+    const day = date.getDate();
+    const month = thaiMonths[date.getMonth()];
+    const year = date.getFullYear() + 543;
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${day} ${month} ${year} เวลา ${hours}:${minutes} น.`;
+  };
+
+  const handleNoteSubmit = async (isNote: boolean, content: string = "") => {
+    if (!data?.std_application_id) return;
+
+    if (isNote && !content.trim()) {
+      alert("กรุณาพิมพ์หมายเหตุก่อนบันทึก");
+      return;
     }
-  } catch (error) {
-    console.error(error);
-    alert("เกิดข้อผิดพลาดในการจัดการหมายเหตุ");
-  } finally {
-    setIsSubmittingNote(false);
-  }
-};
+
+    setIsSubmittingNote(true);
+    try {
+      const res = await fetch("/api/staff/application/note", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          app_id: data.std_application_id,
+          is_note: isNote, // true = บันทึก, false = ลบ
+          app_note: content,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to update note");
+      alert(isNote ? "บันทึกหมายเหตุสำเร็จ!" : "ลบหมายเหตุสำเร็จ!");
+      setIsEditingNote(false);
+
+      if (!isNote) {
+        setNoteText("");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("เกิดข้อผิดพลาดในการจัดการหมายเหตุ");
+    } finally {
+      setIsSubmittingNote(false);
+    }
+  };
+
+  const [checkStatus, setCheckStatus] = useState<
+    "correct" | "incorrect" | "pending"
+  >("pending");
+
+  const handleUpdateCheckStatus = async (
+    newStatus: "correct" | "incorrect" | "pending",
+  ) => {
+    setCheckStatus(newStatus);
+    /*
+    try {
+      await fetch(`/api/staff/application/${id}/status`, {
+        method: "PATCH",
+        body: JSON.stringify({ status: newStatus })
+      });
+      alert("อัปเดตสถานะสำเร็จ");
+    } catch(err) {
+      alert("เกิดข้อผิดพลาด");
+    }
+    */
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -263,11 +362,8 @@ const handleNoteSubmit = async (isNote: boolean, content: string = "") => {
                 </CardContent>
               </Card>
 
-			{/* Note */}
+              {/* Note */}
               <Card>
-                <CardHeader className="pb-3 flex flex-row items-center justify-between space-y-0">
-                  <CardTitle className="text-lg">หมายเหตุ</CardTitle>
-                </CardHeader>
                 <CardContent>
                   <div
                     className={`grid transition-all duration-300 ease-in-out ${
@@ -300,11 +396,11 @@ const handleNoteSubmit = async (isNote: boolean, content: string = "") => {
                           variant="destructive"
                           className="w-full flex-1"
                           onClick={() => handleNoteSubmit(false, "")}
-						  disabled={isSubmittingNote || !noteText.trim()}
-						>
-						  {isSubmittingNote ? (
-							<Loader2 className="h-4 w-4 animate-spin mr-2" />
-						  ) : null}
+                          disabled={isSubmittingNote || !noteText.trim()}
+                        >
+                          {isSubmittingNote ? (
+                            <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                          ) : null}
                           ลบหมายเหตุ
                         </Button>
                       </>
@@ -324,9 +420,9 @@ const handleNoteSubmit = async (isNote: boolean, content: string = "") => {
                           variant="ghost"
                           className="w-full text-muted-foreground flex-1"
                           onClick={() => {
-							setIsEditingNote(false)
-							setNoteText("");
-						  }}
+                            setIsEditingNote(false);
+                            setNoteText("");
+                          }}
                           disabled={isSubmittingNote}
                         >
                           ยกเลิก
@@ -346,7 +442,10 @@ const handleNoteSubmit = async (isNote: boolean, content: string = "") => {
                   <CardTitle className="text-lg">ข้อมูลส่วนตัว</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <InfoRow label="รหัสผู้สมัคร" value={id} />
+                  <InfoRow
+                    label="รหัสผู้สมัคร"
+                    value={data.std_user_id || ""}
+                  />
                   <InfoRow
                     label="อายุ"
                     value={`${data.std_info?.std_info_age || 0} ปี`}
@@ -409,6 +508,65 @@ const handleNoteSubmit = async (isNote: boolean, content: string = "") => {
                 </CardContent>
               </Card>
             </div>
+          </div>
+          <div className="mt-6">
+            <Card className="border-2 border-muted/50">
+              <CardContent className="p-6 text-center flex flex-col items-center">
+                <StatusApplication
+                  status={data.std_application_pass}
+                  result={data.std_application_result}
+                />
+                <div className="mt-2 mb-6 text-sm text-muted-foreground bg-muted/30 py-2 px-4 rounded-full inline-block">
+                  อัปเดตสถานะล่าสุดเมื่อ:{" "}
+                  <span className="font-medium text-foreground">
+                    {formatThaiDateTime(data.std_status?.updated_at)}
+                  </span>
+                </div>
+
+                <Separator className="w-1/2 mb-6" />
+                <div className="flex flex-wrap justify-center gap-3 w-full max-w-2xl mx-auto">
+                  <Button
+                    className={`flex-1 min-w-[180px] min-h-[50px] ${
+                      checkStatus === "correct"
+                        ? "opacity-50"
+                        : "bg-green-600 hover:bg-green-700 text-white"
+                    }`}
+                    variant={checkStatus === "correct" ? "outline" : "default"}
+                    disabled={checkStatus === "correct"}
+                    onClick={() => handleUpdateCheckStatus("correct")}
+                  >
+                    <CheckCircle2 className="mr-2 h-5 w-5" />
+                    ข้อมูลถูกต้อง
+                  </Button>
+
+                  <Button
+                    className={`flex-1 min-w-[180px] min-h-[50px] ${
+                      checkStatus === "incorrect"
+                        ? "opacity-50"
+                        : "bg-red-600 hover:bg-red-700 text-white"
+                    }`}
+                    variant={
+                      checkStatus === "incorrect" ? "outline" : "default"
+                    }
+                    disabled={checkStatus === "incorrect"}
+                    onClick={() => handleUpdateCheckStatus("incorrect")}
+                  >
+                    <XCircle className="mr-2 h-5 w-5" />
+                    ข้อมูลไม่ถูกต้อง
+                  </Button>
+
+                  <Button
+                    className="flex-1 min-w-[180px] min-h-[50px] text-amber-600 border-amber-500 hover:bg-amber-50 hover:text-amber-700 dark:hover:bg-amber-950/30"
+                    variant="outline"
+                    disabled={checkStatus === "pending"}
+                    onClick={() => handleUpdateCheckStatus("pending")}
+                  >
+                    <Clock className="mr-2 h-5 w-5" />
+                    รอส่งเอกสารเพิ่มเติม
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </Card>
       </main>

@@ -20,6 +20,7 @@ import Link from "next/link"
 export interface StudentApplication {
   std_application_id: string;
   std_application_submit: boolean;
+  std_application_confirmed: boolean;
   std_user: {
     name: string;
     email: string;
@@ -27,9 +28,6 @@ export interface StudentApplication {
   std_info: {
     std_info_gender: string;
     std_info_phone_number: string;
-  };
-  std_status: {
-    stf_regis_question_checked: boolean;
   };
 }
 
@@ -78,11 +76,11 @@ export const columns: ColumnDef<StudentApplication>[] = [
     }
   },
   {
-    accessorKey: "std_status.stf_regis_question_checked",
-    header: "สถานะการตรวจ",
+    accessorKey: "std_application_confirmed",
+    header: "ยืนยันใบสมัคร",
     cell: ({ row }) => {
-      const isChecked = row.original.std_status?.stf_regis_question_checked;
-      return isChecked ? <span className="text-green-600">ตรวจแล้ว</span> : <span className="text-muted-foreground">รอตรวจ</span>;
+      const isChecked = row.original.std_application_confirmed;
+      return isChecked ? <span className="text-green-600">ยืนยันแล้ว</span> : <span className="text-muted-foreground">ยังไม่ได้ยืนยัน</span>;
     }
   },
   {
