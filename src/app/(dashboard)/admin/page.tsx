@@ -1,20 +1,17 @@
-"use client"
+"use client";
 
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PageTitle from "@/components/PageTitle";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { PlusCircle } from "lucide-react";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-
-import { Card, CardContent } from "@/components/ui/card";
+import { CreateStaffDialog } from "./components/CreateStaffDialog";
+import { columns, StaffUser } from "./column";
+import { DataTable } from "@/components/DataTable";
+import { Loader2 } from "lucide-react";
 
 type User = {
   role?: string;
@@ -23,6 +20,29 @@ type User = {
 export default function AdminPage() {
   const { data: session } = authClient.useSession();
   const router = useRouter();
+  
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [staffData, setStaffData] = useState<StaffUser[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  const handleGetStaffData = async () => {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/staff`, {
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error("Failed to fetch staff data");
+      const jsonData = await res.json();
+      setStaffData(jsonData);
+    } catch (error) {
+      console.error("Failed to fetch staff data:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    handleGetStaffData();
+  }, []);
 
   useEffect(() => {
     if (session && (session.user as User)?.role !== 'admin') {
@@ -30,6 +50,13 @@ export default function AdminPage() {
     }
   }, [session, router]);
 
+  if (loading) {
+    return (
+      <div className="flex h-96 w-full items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -38,8 +65,35 @@ export default function AdminPage() {
           title="Admin Dashboard"
           description="Welcome Administrator! Here you can manage the system settings and user accounts."
         />
-        <div className="w-full flex items-end">ff</div>
+        
+        <div className="mt-8">
+          <Card className="border-2 border-muted/50 shadow-sm">
+            
+            <CardHeader className="flex flex-row items-center justify-between pb-4">
+              <CardTitle className="text-xl">Staff Management</CardTitle>
+              
+              <Button 
+                className="flex items-center gap-2"
+                onClick={() => setIsCreateDialogOpen(true)}
+              >
+                <PlusCircle className="h-4 w-4" />
+                เพิ่ม Staff ใหม่
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <DataTable columns={columns} data={staffData} />
+            </CardContent>
+
+          </Card>
+        </div>
+
+        <CreateStaffDialog 
+          open={isCreateDialogOpen} 
+          onOpenChange={setIsCreateDialogOpen}
+          onSuccess={handleGetStaffData}
+        />
+
       </main>
     </div>
-  )
+  );
 }

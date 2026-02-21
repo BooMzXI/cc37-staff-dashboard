@@ -48,16 +48,15 @@ export function LoginForm() {
     const { data, error: authError } = await authClient.signIn.username({
         username: values.username,
         password: values.password,
-    }, {
-        onSuccess: () => {
-            router.push("/")
-            router.refresh()
-        },
-        onError: (ctx: { error: { message: unknown } }) => {
-             setError(ctx.error.message as string || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ")
-             setIsLoading(false)
-        }
     });
+    
+    if (authError) {
+        setError(authError.message || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ");
+        setIsLoading(false);
+    } else {
+        router.push("/");
+        router.refresh(); 
+    }
   }
 
   return (

@@ -14,7 +14,7 @@ export default function PersonalInformation() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/personal-information`,
+          `/api/personal-information`,
           {
             method: "GET",
             credentials: "include",
