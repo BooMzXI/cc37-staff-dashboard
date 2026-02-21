@@ -1,16 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal, Edit, Trash } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { StaffActionCell } from "./components/StaffActionCell";
 
 export type StaffUser = {
   id: string;
@@ -45,43 +36,11 @@ export const columns: ColumnDef<StaffUser>[] = [
         regis: "text-orange-600 font-semibold",
         user: "text-muted-foreground",
       };
-      return <span className={roleColors[role] || ""}>{role}</span>;
+      return <span className={`uppercase text-xs ${roleColors[role] || ""}`}>{role}</span>;
     },
   },
   {
     id: "actions",
-    cell: ({ row }) => {
-      const staff = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">เปิดเมนู</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>@{staff.username}</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => console.log("แก้ไข", staff.id)}>
-              <Edit className="mr-2 h-4 w-4" />
-              แก้ไขข้อมูล
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="text-destructive focus:text-destructive"
-              onClick={() => {
-                if(confirm(`ยืนยันการลบผู้ใช้ ${staff.username}?`)) {
-                  console.log("ลบ", staff.id);
-                }
-              }}
-            >
-              <Trash className="mr-2 h-4 w-4" />
-              ลบผู้ใช้งาน
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
+    cell: ({ row }) => <StaffActionCell row={row} />,
   },
 ];
