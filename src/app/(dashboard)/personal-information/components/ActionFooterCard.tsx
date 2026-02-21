@@ -6,44 +6,25 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { CheckCircle2, XCircle, Clock } from "lucide-react";
 
-const StatusApplication = ({ status, result }: { status: boolean; result?: string }) => {
-  const isPending = result === "waiting_for_announcement";
-
-  if (isPending) {
-    return (
-      <div className="flex flex-col items-center justify-center space-y-3 py-6">
-        <div className="flex items-center gap-3 text-2xl font-bold text-amber-500">
-          <span>รอประกาศผล</span>
-          <Clock className="h-10 w-10" />
-        </div>
-        <p className="text-muted-foreground">ผลการตัดสิน: {result}</p>
-      </div>
-    );
-  }
+const StatusApplication = ({ status }: { status: boolean;}) => {
 
   return (
     <div className="flex flex-col items-center justify-center space-y-3 py-6">
       <div className={`flex items-center gap-3 text-2xl font-bold ${status ? "text-green-600" : "text-destructive"}`}>
-        <span>{status ? "ผ่านการคัดเลือก" : "ไม่ผ่านการคัดเลือก"}</span>
+        <span>{status ? "ข้อมูลถูกต้อง" : "ข้อมูลไม่ถูกต้อง"}</span>
         {status ? <CheckCircle2 className="h-10 w-10" /> : <XCircle className="h-10 w-10" />}
       </div>
-      {result && (
-        <p className="text-muted-foreground">
-          ผลการตัดสิน: <span className="font-medium text-foreground">{result}</span>
-        </p>
-      )}
     </div>
   );
 };
 
 interface ActionFooterProps {
-  passStatus: boolean;
-  result?: string;
+  confirmStatus: boolean;
   updatedAt?: string;
   formatThaiDateTime: (date?: string) => string;
 }
 
-export default function ActionFooterCard({ passStatus, result, updatedAt, formatThaiDateTime }: ActionFooterProps) {
+export default function ActionFooterCard({ confirmStatus, updatedAt, formatThaiDateTime }: ActionFooterProps) {
   const [checkStatus, setCheckStatus] = useState<"correct" | "incorrect" | "pending">("pending");
   const handleUpdateCheckStatus = async (newStatus: "correct" | "incorrect" | "pending") => {
     setCheckStatus(newStatus);
@@ -53,7 +34,7 @@ export default function ActionFooterCard({ passStatus, result, updatedAt, format
   return (
     <Card className="border-2 border-muted/50">
       <CardContent className="p-6 text-center flex flex-col items-center">
-        <StatusApplication status={passStatus} result={result} />
+        <StatusApplication status={confirmStatus}/>
         
         <div className="mt-2 mb-6 text-sm text-muted-foreground bg-muted/30 py-2 px-4 rounded-full inline-block">
           อัปเดตสถานะล่าสุดเมื่อ: <span className="font-medium text-foreground">{formatThaiDateTime(updatedAt)}</span>

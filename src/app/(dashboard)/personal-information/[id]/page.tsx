@@ -87,9 +87,9 @@ export default function PersonalDetail() {
             </h1>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[1fr_1.5fr]">
+          <div className="grid gap-6 lg:grid-cols-[1fr_1.5fr] w-full overflow-hidden">
             {/* Left column */}
-            <div className="space-y-6">
+            <div className="space-y-6 ">
               {/* Photo placeholder */}
               <ProfileCard data={data} />
               {/* Application status */}
@@ -111,8 +111,7 @@ export default function PersonalDetail() {
           </div>
           <div className="mt-6">
             <ActionFooterCard
-			  passStatus={data.std_application_pass}
-			  result={data.std_application_result}
+			  confirmStatus={data.std_application_confirm}
 			  updatedAt={data.updated_at}
 			  formatThaiDateTime={formatThaiDateTime}
 			/>

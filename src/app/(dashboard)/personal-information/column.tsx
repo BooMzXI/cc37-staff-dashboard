@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, Eye } from "lucide-react"
+import { ArrowUpDown, Eye, CircleX, CircleCheckBig } from "lucide-react"
 import Link from "next/link"
 
 /*export type information = {
@@ -41,6 +41,17 @@ export const columns: ColumnDef<StudentApplication>[] = [
         </Button>
       )
     },
+    cell: ({ row }) => {
+        const name = row.original.std_user?.name || "-";
+        return (
+          <div 
+            className="w-[100px] md:w-[10px] lg:w-[200px] truncate" 
+            title={name}
+          >
+            {name}
+          </div>
+        );
+      }
   },
   {
     accessorKey: "std_info.std_info_gender",
@@ -66,6 +77,17 @@ export const columns: ColumnDef<StudentApplication>[] = [
         </Button>
       )
     },
+    cell: ({ row }) => {
+      const email = row.original.std_user?.email || "-";
+      return (
+        <div 
+          className="w-[180px] md:w-[200px] lg:w-[250px] truncate" 
+          title={email}
+        >
+          {email}
+        </div>
+      );
+    }
   },
   {
     accessorKey: "std_application_submit",
@@ -77,11 +99,30 @@ export const columns: ColumnDef<StudentApplication>[] = [
   },
   {
     accessorKey: "std_application_confirmed",
-    header: "ยืนยันใบสมัคร",
+    header: "ความถูกต้อง",
     cell: ({ row }) => {
       const isChecked = row.original.std_application_confirmed;
-      return isChecked ? <span className="text-green-600">ยืนยันแล้ว</span> : <span className="text-muted-foreground">ยังไม่ได้ยืนยัน</span>;
+      return isChecked ? <span className="text-green-600"><CircleCheckBig className="h-6 w-6 inline-block text-green-600"/></span> : <span className=" text-muted-foreground"><CircleX className=" text-red-600 h-6 w-6 inline-block"/></span>;
     }
+    /*header: ({ column }) => {
+      return (
+        <Button 
+          variant="ghost" 
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          สถานะการส่งใบสมัคร 
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+    cell: ({ row }) => {
+      const isChecked = row.original.std_application_submit;
+      return isChecked ? (
+        <span className="text-green-600">ส่งแล้ว</span>
+      ) : (
+        <span className="text-muted-foreground">ยังไม่ได้ส่ง</span>
+      );
+    }*/
   },
   {
     id: "actions",

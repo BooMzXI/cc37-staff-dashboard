@@ -9,14 +9,15 @@ interface StudentInfoProps {
 
 export default function StudentInfoSection({ data, formatThaiDate }: StudentInfoProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       {/* ข้อมูลส่วนตัว */}
-      <Card>
+      <Card className="w-full overflow-hidden">
         <CardHeader className="pb-3">
           <CardTitle className="text-lg">ข้อมูลส่วนตัว</CardTitle>
         </CardHeader>
         <CardContent>
           <InfoRow label="รหัสผู้สมัคร" value={data.std_user_id || "-"} />
+          <InfoRow label="ชื่อ-นามสกุล" value={`${data.std_info?.std_info_first_name || ""} ${data.std_info?.std_info_last_name || ""}`} />
           <InfoRow label="อายุ" value={`${data.std_info?.std_info_age || 0} ปี`} />
           <InfoRow label="วันเกิด" value={formatThaiDate(data.std_info?.std_info_birthdate)} />
           <InfoRow label="เพศ" value={data.std_info?.std_info_gender === "male" ? "ชาย" : data.std_info?.std_info_gender === "female" ? "หญิง" : "-"} />
@@ -24,7 +25,7 @@ export default function StudentInfoSection({ data, formatThaiDate }: StudentInfo
       </Card>
 
       {/* ประวัติการศึกษา */}
-      <Card>
+      <Card className="w-full overflow-hidden"> {/* 👈 เติมตรงนี้ */}
         <CardHeader className="pb-3">
           <CardTitle className="text-lg">ประวัติการศึกษา</CardTitle>
         </CardHeader>
@@ -35,7 +36,7 @@ export default function StudentInfoSection({ data, formatThaiDate }: StudentInfo
       </Card>
 
       {/* ข้อมูลสำหรับติดต่อ */}
-      <Card>
+      <Card className="w-full overflow-hidden"> {/* 👈 เติมตรงนี้ */}
         <CardHeader className="pb-3">
           <CardTitle className="text-lg">ข้อมูลสำหรับติดต่อ</CardTitle>
         </CardHeader>

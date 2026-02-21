@@ -12,8 +12,8 @@ export default function ProfileCard({ data }: { data: StudentDetail }) {
 
   return (
     <Card>
-      <CardContent className="p-6 flex items-center justify-center">
-        <div className="w-full aspect-square max-w-[300px] rounded-lg bg-muted flex items-center justify-center text-muted-foreground text-6xl font-bold uppercase shadow-inner overflow-hidden">
+      <CardContent className="p-4 sm:p-6 flex items-center justify-center">
+        <div className="w-full aspect-square max-w-[180px] sm:max-w-[250px] md:max-w-[300px] rounded-full sm:rounded-xl bg-muted flex items-center justify-center text-muted-foreground text-5xl sm:text-6xl font-bold uppercase shadow-inner overflow-hidden transition-all duration-300">
           {imageUrl ? (
             <Image
               src={imageUrl}
@@ -21,6 +21,7 @@ export default function ProfileCard({ data }: { data: StudentDetail }) {
               className="w-full h-full object-cover"
               width={300}
               height={300}
+              priority
             />
           ) : (
             <>{data.std_info?.std_info_first_name?.charAt(0) || "?"}</>

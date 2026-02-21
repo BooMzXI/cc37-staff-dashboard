@@ -1,10 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export default function NoteCard({ applicationId }: { applicationId: string }) {
   const [isEditingNote, setIsEditingNote] = useState(false);
@@ -32,7 +44,7 @@ export default function NoteCard({ applicationId }: { applicationId: string }) {
       });
 
       if (!res.ok) throw new Error("Failed to update note");
-      alert(isNote ? "บันทึกหมายเหตุสำเร็จ!" : "ลบหมายเหตุสำเร็จ!");
+      
       setIsEditingNote(false);
 
       if (!isNote) setNoteText("");
@@ -46,9 +58,6 @@ export default function NoteCard({ applicationId }: { applicationId: string }) {
 
   return (
     <Card>
-      <CardHeader className="pb-3 flex flex-row items-center justify-between space-y-0">
-        <CardTitle className="text-lg">หมายเหตุจากสตาฟ</CardTitle>
-      </CardHeader>
       <CardContent>
         <div
           className={`grid transition-all duration-300 ease-in-out ${
@@ -71,32 +80,73 @@ export default function NoteCard({ applicationId }: { applicationId: string }) {
               <Button variant="outline" className="w-full flex-1" onClick={() => setIsEditingNote(true)}>
                 เพิ่มหมายเหตุ
               </Button>
-              <Button
-                variant="destructive"
-                className="w-full flex-1"
-                onClick={() => {
-                  if (confirm("ยืนยันการลบหมายเหตุ?")) {
-                    handleNoteSubmit(false, "");
-                  }
-                }}
-              >
-                ลบหมายเหตุ
-              </Button>
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button 
+                  variant="destructive" 
+                  className="w-full flex-1"
+                  disabled={isSubmittingNote || !noteText.trim()}
+                  >
+                    ลบหมายเหตุ
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>ยืนยันการลบหมายเหตุ?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      การกระทำนี้ไม่สามารถย้อนกลับได้ หมายเหตุของน้องคนนี้จะถูกลบออกจากระบบทันที
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                    <AlertDialogAction 
+                      onClick={() => handleNoteSubmit(false, "")}
+                      className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    >
+                      ยืนยันการลบ
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </>
           ) : (
             <>
-              <Button
-                className="w-full flex-1"
-                onClick={() => handleNoteSubmit(true, noteText)}
-                disabled={isSubmittingNote || !noteText.trim()}
-              >
-                {isSubmittingNote && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-                บันทึก
-              </Button>
+
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    className="w-full flex-1"
+                    disabled={isSubmittingNote || !noteText.trim()}
+                  >
+                    {isSubmittingNote && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                    บันทึก
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>ยืนยันการบันทึกหมายเหตุ?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      ระบบจะทำการบันทึกหรืออัปเดตหมายเหตุสำหรับผู้สมัครรายนี้ 
+                      สตาฟท่านอื่นจะสามารถมองเห็นข้อความนี้ได้
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => handleNoteSubmit(true, noteText)}>
+                      ยืนยันการบันทึก
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+
               <Button
                 variant="ghost"
                 className="w-full text-muted-foreground flex-1"
-                onClick={() => setIsEditingNote(false)}
+                onClick={() => {
+                    setIsEditingNote(false)
+                    setNoteText("");
+                }}
                 disabled={isSubmittingNote}
               >
                 ยกเลิก
