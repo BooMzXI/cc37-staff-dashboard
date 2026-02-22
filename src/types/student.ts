@@ -104,7 +104,6 @@ export interface StudentStatus {
   updated_at: string;
 }
 
-// 🌟 Interface หลักที่จะเอาไปใช้งาน
 export interface StudentDetail {
   std_application_id: string;
   std_application_submit: boolean;
