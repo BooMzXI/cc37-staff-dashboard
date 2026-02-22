@@ -14,8 +14,8 @@ interface ApplicationStatusCardProps {
 const fileTypeLabelMap: Record<string, string> = {
   file_national_id: "บัตรประชาชน",
   file_parent_permission: "ใบอนุญาตผู้ปกครอง",
-  file_pp1: "ปพ.1",
-  file_pp7: "ปพ.7",
+  file_pp_1: "ปพ.1",
+  file_pp_7: "ปพ.7",
   file_slip: "สลิปโอนเงิน",
 };
 

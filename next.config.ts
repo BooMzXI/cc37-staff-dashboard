@@ -7,7 +7,8 @@ const nextConfig: NextConfig = {
         hostname: "dev-api.comcamp.io",
         port: "",
         pathname: "/**",
-    }],
+    },
+  ],
   },
   async rewrites() {
     return [

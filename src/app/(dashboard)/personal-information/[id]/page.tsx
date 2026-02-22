@@ -39,7 +39,20 @@ export default function PersonalDetail() {
     };
 
     fetchStudentDetail();
-  }, [id, data?.std_status.std_info_note]);
+  }, [id]);
+
+  const handleNoteUpdated = (newNote: string | null) => {
+    setData((prevData) => {
+      if (!prevData) return null;
+      return {
+        ...prevData,
+        std_status: {
+          ...prevData.std_status,
+          std_info_note: newNote,
+        },
+      };
+    });
+  };
 
   if (loading) {
     return (
@@ -95,12 +108,13 @@ export default function PersonalDetail() {
               {/* Application status */}
               <ApplicationStatusCard
                 statusData={data.std_status}
-                updatedAt={data.updated_at}
+				files={data.std_file}
+                updatedAt={data.std_status?.updated_at}
                 formatThaiDateTime={formatThaiDateTime}
               />
 
               {/* Note */}
-              <NoteCard applicationId={data.std_application_id} note={data.std_status?.std_info_note ?? undefined} />
+              <NoteCard applicationId={data.std_application_id} note={data.std_status?.std_info_note ?? undefined} onNoteUpdated={handleNoteUpdated} />
             </div>
 
             {/* Right column */}
