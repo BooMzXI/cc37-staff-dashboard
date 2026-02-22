@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UpdateDialog } from "./UpdateDialog";
+import { DeleteDialog } from "./DeleteDialog";
 
 import { StaffUser } from "../column"; 
 
@@ -25,6 +26,7 @@ export function StaffActionCell({ row }: StaffActionCellProps) {
   const staff = row.original;
   
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [role, setRole] = useState(staff.role);
 
   return (
@@ -47,12 +49,7 @@ export function StaffActionCell({ row }: StaffActionCellProps) {
           
           <DropdownMenuItem 
             className="text-destructive focus:text-destructive"
-            onClick={() => {
-              if (confirm(`ยืนยันการลบผู้ใช้ ${staff.username}?`)) {
-                console.log("ลบ", staff.id);
-                // TODO: ยิง API DELETE ตรงนี้
-              }
-            }}
+            onSelect={() => setIsDeleteDialogOpen(true)}
           >
             <Trash className="mr-2 h-4 w-4" />
             ลบผู้ใช้งาน
@@ -68,7 +65,12 @@ export function StaffActionCell({ row }: StaffActionCellProps) {
         setRole={setRole}
         staff={staff}
       />
-      
+
+      <DeleteDialog 
+        isOpen={isDeleteDialogOpen}
+        setIsOpen={setIsDeleteDialogOpen}
+        staff={staff}
+      />
     </>
   );
 }

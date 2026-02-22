@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { config } from "@/config/config";
 
 export async function POST(request: NextRequest) {
   try {
@@ -9,7 +10,7 @@ export async function POST(request: NextRequest) {
     const cookie = headersList.get("cookie") || "";
     const authorization = headersList.get("authorization") || "";
 
-    const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/staff/account/update`;
+    const backendUrl = `${config.backend.baseUrl}/api/staff/account/update`;
     const res = await fetch(backendUrl, {
       method: "POST",
       headers: {

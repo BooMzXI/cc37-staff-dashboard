@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const cookie = headersList.get("cookie") || "";
     const authorization = headersList.get("authorization") || "";
 
-    const backendUrl = `${config.backend.baseUrl}/api/staff/account/create`;
+    const backendUrl = `${config.backend.baseUrl}/api/staff/account/delete`;
     const res = await fetch(backendUrl, {
       method: "POST",
       headers: {
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
 
     if (!res.ok) {
       const errorText = await res.text();
-      console.error("Backend POST Create Staff Failed:", errorText);
+      console.error("Backend DELETE Staff Failed:", errorText);
       return NextResponse.json({ error: "Backend error", details: errorText }, { status: res.status });
     }
 
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(data);
 
   } catch (error) {
-    console.error("Create Staff Route Error:", error);
+    console.error("Delete Staff Route Error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

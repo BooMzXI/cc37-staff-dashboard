@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { config } from "@/config/config";
 
 export async function GET() {
   try {
@@ -7,7 +8,7 @@ export async function GET() {
     const cookie = headersList.get("cookie") || "";
     const authorization = headersList.get("authorization") || "";
 
-    const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/staff/account`;
+    const backendUrl = `${config.backend.baseUrl}/api/staff/account`;
     const res = await fetch(backendUrl, {
       method: "GET",
       headers: {
