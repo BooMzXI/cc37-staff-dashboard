@@ -67,13 +67,14 @@ export default function ProfileCard({ data }: { data: StudentDetail }) {
             <Loader2 className="h-10 w-10 animate-spin text-muted-foreground/50" />
           ) : imgSrc && !imageError ? (
             <Image
-              src={imgSrc}
+              src={imgSrc.replace(/^http:\/\//i, 'https://')}
               alt={`รูปโปรไฟล์ของ ${decodedName}`}
               className="w-full h-full object-cover"
               width={300}
               height={300}
               priority
               unoptimized={true}
+              referrerPolicy="no-referrer"
               onError={() => setImageError(true)}
             />
           ) : (
