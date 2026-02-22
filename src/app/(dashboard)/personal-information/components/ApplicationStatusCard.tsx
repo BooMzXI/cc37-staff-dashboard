@@ -1,12 +1,12 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { StdStatus } from "@/types/student";
+import { StudentStatus } from "@/types/student";
 import { StatusBadge } from "./StatusBadge";
-import { StdFile } from "@/types/student";
+import { StudentFile } from "@/types/student";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 interface ApplicationStatusCardProps {
-  statusData?: StdStatus | null;
-  files?: StdFile[];
+  statusData?: StudentStatus | null;
+  files?: StudentFile[];
   updatedAt?: string;
   formatThaiDateTime: (date?: string) => string;
 }

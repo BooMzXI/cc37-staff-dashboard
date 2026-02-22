@@ -18,9 +18,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
-export default function NoteCard({ applicationId }: { applicationId: string }) {
+export default function NoteCard({ applicationId, note }: { applicationId: string; note?: string }) {
   const [isEditingNote, setIsEditingNote] = useState(false);
-  const [noteText, setNoteText] = useState("");
+  const [noteText, setNoteText] = useState(note || "");
   const [isSubmittingNote, setIsSubmittingNote] = useState(false);
 
   const handleNoteSubmit = async (isNote: boolean, content: string = "") => {
@@ -33,7 +33,7 @@ export default function NoteCard({ applicationId }: { applicationId: string }) {
 
     setIsSubmittingNote(true);
     try {
-      const res = await fetch("/api/staff/application/note", {
+      const res = await fetch("/api/note", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -53,6 +53,7 @@ export default function NoteCard({ applicationId }: { applicationId: string }) {
       alert("เกิดข้อผิดพลาดในการจัดการหมายเหตุ");
     } finally {
       setIsSubmittingNote(false);
+      window.location.reload()
     }
   };
 
@@ -145,7 +146,7 @@ export default function NoteCard({ applicationId }: { applicationId: string }) {
                 className="w-full text-muted-foreground flex-1"
                 onClick={() => {
                     setIsEditingNote(false)
-                    setNoteText("");
+                    setNoteText(note || "");
                 }}
                 disabled={isSubmittingNote}
               >

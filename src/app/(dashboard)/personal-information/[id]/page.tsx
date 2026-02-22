@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Loader2} from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
@@ -39,7 +39,7 @@ export default function PersonalDetail() {
     };
 
     fetchStudentDetail();
-  }, [id]);
+  }, [id, data?.std_status.std_info_note]);
 
   if (loading) {
     return (
@@ -82,14 +82,14 @@ export default function PersonalDetail() {
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
-            <h1 className="text-2xl font-bold text-foreground">
-              {`${data.std_info?.std_info_first_name || ""} ${data.std_info?.std_info_last_name || ""}`}
-            </h1>
+            <h2 className="text-lg font-semibold text-foreground">
+              ข้อมูลส่วนตัว
+            </h2>
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[1fr_1.5fr] w-full overflow-hidden">
+          <div className="grid gap-6 lg:grid-cols-[1fr_1.5fr] w-full overflow-hidden items-start">
             {/* Left column */}
-            <div className="space-y-6 ">
+            <div className="space-y-6 min-w-0 sticky top-6">
               {/* Photo placeholder */}
               <ProfileCard data={data} />
               {/* Application status */}
@@ -100,7 +100,7 @@ export default function PersonalDetail() {
               />
 
               {/* Note */}
-              <NoteCard applicationId={data.std_application_id} />
+              <NoteCard applicationId={data.std_application_id} note={data.std_status?.std_info_note ?? undefined} />
             </div>
 
             {/* Right column */}
@@ -111,10 +111,10 @@ export default function PersonalDetail() {
           </div>
           <div className="mt-6">
             <ActionFooterCard
-			  confirmStatus={data.std_application_confirm}
-			  updatedAt={data.updated_at}
-			  formatThaiDateTime={formatThaiDateTime}
-			/>
+              confirmStatus={data.std_application_confirm}
+              updatedAt={data.updated_at}
+              formatThaiDateTime={formatThaiDateTime}
+            />
           </div>
         </Card>
       </main>

@@ -1,129 +1,104 @@
-
-export interface StdUser {
+export interface StudentUser {
   id: string;
   name: string;
   email: string;
   emailVerified: boolean;
-  image: string | null;
+  image: string;
   role: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
-// ข้อมูลส่วนตัวเชิงลึก (Info)
-export interface StdInfo {
+export interface StudentInfo {
   std_application_id: string;
+  // ข้อมูลส่วนตัวพื้นฐาน
   std_info_prefix: string;
   std_info_first_name: string;
   std_info_last_name: string;
   std_info_nick_name: string;
   std_info_age: number;
-  std_info_birthdate: string;
+  std_info_birthdate: string; // YYYY-MM-DD
   std_info_gender: string;
+  std_info_sexuality: string;
+  std_info_religion: string;
   std_info_phone_number: string;
+  std_info_address: string;
+  std_info_shirt_size: string;
+  std_info_blood_group: string;
+  
+  // ข้อมูลการศึกษา
   std_info_education_level: string;
   std_info_education_institute: string;
+  std_info_education_plan: string;
+  std_info_grade_gpax: string;
+  std_info_grade_math: string;
+  std_info_grade_sci: string;
+  std_info_grade_eng: string;
+
+  // ข้อมูลผู้ปกครอง
+  std_info_parent_fullname: string;
+  std_info_parent_relation: string;
+  std_info_parent_phone_number: string;
+
+  // ข้อมูลสุขภาพและการเดินทาง
+  std_info_medical_insurance: string;
+  std_info_chronic_disease: string;
+  std_info_drug_allergy: string;
+  std_info_food_allergy: string;
+  std_info_travel_plan: string;
+
+  // ข้อมูลความพร้อมและอุปกรณ์
+  std_info_have_participated: boolean;
+  std_info_can_participate_every_day: boolean;
+  std_info_have_laptop: boolean;
+  std_info_laptop_os: string;
+  std_info_have_tablet: boolean;
+  std_info_have_mouse: boolean;
+
   created_at: string;
   updated_at: string;
 }
 
-// ข้อมูลไฟล์เอกสารที่อัปโหลด
-export interface StdFile {
-  std_application_id: string;
+export interface StudentFile {
+  std_file_key: string;
   std_file_originalname: string;
   std_file_mimetype: string;
-  std_file_key: string;
+  std_file_size: number;
   std_file_type: string;
   std_file_disabled: boolean;
   created_at: string;
   updated_at: string;
 }
 
-// ข้อมูลสตาฟ (คนตรวจ)
-export interface StfUser {
-  id: string;
-  name: string;
-  email: string;
-}
-
-// คะแนนและการตรวจคำถามฝ่ายทะเบียน
-export interface StfRegisQuestionScore {
-  id: number;
-  std_regis_answer_id: number;
-  stf_count: number;
-  stf_score: number;
-  stf_comment: string;
-  stf_user_id: string;
-  stf_user: StfUser;
-  created_at: string;
-  updated_at: string;
-}
-
-// คำถามฝ่ายทะเบียน
-export interface StdRegisQuestion {
-  std_application_id: string;
-  std_regis_answer_id: number;
-  std_regis_answer_section: string;
-  std_regis_answer: string;
-  stf_regis_question_score: StfRegisQuestionScore[];
-  created_at: string;
-  updated_at: string;
-}
-
-// คะแนนและการตรวจคำถามวิชาการ
-export interface StfAcademicQuestionScore {
-  id: number;
-  std_academic_answer_id: number;
-  stf_count: number;
-  stf_score: number;
-  stf_user_id: string;
-  stf_user: StfUser;
-  created_at: string;
-  updated_at: string;
-}
-
-// คำถามวิชาการ
-export interface StdAcademicQuestion {
-  std_application_id: string;
-  std_academic_answer_id: number;
-  std_academic_answer_section: string;
-  std_academic_answer: string;
-  stf_academic_question_score: StfAcademicQuestionScore[];
-  created_at: string;
-  updated_at: string;
-}
-
-// สถานะความคืบหน้าของการสมัคร (Checklist)
-export interface StdStatus {
-  std_application_id: string;
-  
+export interface StudentStatus {
   std_status_info_done: boolean;
   std_status_file_done: boolean;
+  std_status_payment_done: boolean;
+  std_application_id: string;
   std_status_regis_question_done: boolean;
   std_status_acdemic_question_done: boolean;
-  std_status_payment_done: boolean;
+  std_info_note: string | null;
 
   stf_regis_question_checked: boolean;
   stf_academic_question_checked: boolean;
   stf_question_result: number;
+  stf_question_result_detail: string | null;
+  stf_info_checked: boolean | null;
   created_at: string;
   updated_at: string;
 }
 
-
+// 🌟 Interface หลักที่จะเอาไปใช้งาน
 export interface StudentDetail {
   std_application_id: string;
   std_application_submit: boolean;
   std_application_confirm: boolean;
+  std_application_abort_reason: string | null;
   std_application_pass: boolean;
   std_application_result: string;
   std_user_id: string;
-  std_user: StdUser;
-  std_info: StdInfo;
-  std_file: StdFile[];
-  std_regis_question: StdRegisQuestion[];
-  std_academic_question: StdAcademicQuestion[];
-  std_status: StdStatus;
-  created_at: string;
+  
+  std_user: StudentUser;
+  std_info: StudentInfo;
+  std_file: StudentFile[];
+  std_status: StudentStatus;
   updated_at: string;
 }
