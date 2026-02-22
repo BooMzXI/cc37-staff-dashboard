@@ -14,18 +14,17 @@ interface ApplicationStatusCardProps {
 const fileTypeLabelMap: Record<string, string> = {
   file_national_id: "บัตรประชาชน",
   file_parent_permission: "ใบอนุญาตผู้ปกครอง",
-  file_pp1: "ปพ.1",
-  file_pp7: "ปพ.7",
+  file_pp_1: "ปพ.1",
+  file_pp_7: "ปพ.7",
   file_slip: "สลิปโอนเงิน",
 };
 
-export default function ApplicationStatusCard({ 
-  statusData, 
+export default function ApplicationStatusCard({
+  statusData,
   files,
-  updatedAt, 
-  formatThaiDateTime 
+  updatedAt,
+  formatThaiDateTime,
 }: ApplicationStatusCardProps) {
-  
   return (
     <Card>
       <CardHeader className="pb-3">
@@ -50,6 +49,12 @@ export default function ApplicationStatusCard({
             label="คำถามวิชาการ"
           />
           <StatusBadge
+            checked={
+              statusData?.std_status_academic_chaos_question_done || false
+            }
+            label="คำถามวิชาการ 2"
+          />
+          <StatusBadge
             checked={statusData?.std_status_payment_done || false}
             label="การชำระเงิน"
           />
@@ -67,20 +72,29 @@ export default function ApplicationStatusCard({
           <div className="bg-muted/30 p-4 rounded-lg border border-border mt-4 mb-4">
             <div className="flex flex-wrap gap-2">
               {files
-                .filter((f) => f.std_file_type !== "file_face" && !f.std_file_disabled)
+                .filter(
+                  (f) =>
+                    f.std_file_type !== "file_face" && !f.std_file_disabled,
+                )
                 .map((file) => {
                   const fileUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${file.std_file_key}`;
-                  const label = fileTypeLabelMap[file.std_file_type] || file.std_file_originalname;
+                  const label =
+                    fileTypeLabelMap[file.std_file_type] ||
+                    file.std_file_originalname;
 
                   return (
-                    <Button 
-                      key={file.std_file_key} 
-                      variant="outline" 
-                      size="sm" 
+                    <Button
+                      key={file.std_file_key}
+                      variant="outline"
+                      size="sm"
                       className="h-8 text-xs hover:bg-primary/5 hover:text-primary hover:border-primary transition-colors"
                       asChild
                     >
-                      <a href={fileUrl} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={fileUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         {label}
                         <ExternalLink className="ml-1.5 h-3 w-3" />
                       </a>
@@ -90,7 +104,7 @@ export default function ApplicationStatusCard({
             </div>
           </div>
         )}
-        
+
         {updatedAt && (
           <p className="text-xs text-muted-foreground mt-3 bg-muted/50 p-2 rounded-md">
             ตรวจสอบเมื่อ: {formatThaiDateTime(updatedAt)}

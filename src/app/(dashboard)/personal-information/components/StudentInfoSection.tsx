@@ -31,7 +31,7 @@ export default function StudentInfoSection({ data, formatThaiDate }: StudentInfo
               <CardTitle className="text-lg">👤 ข้อมูลส่วนตัว</CardTitle>
             </CardHeader>
             <CardContent className="pt-4">
-              <InfoRow label="รหัสผู้สมัคร" value={data.std_application_id} />
+              {/*<InfoRow label="รหัสผู้สมัคร" value={data.std_application_id} />*/}
               <InfoRow label="ชื่อ-นามสกุล" value={`${info?.std_info_prefix || ""} ${info?.std_info_first_name || ""} ${info?.std_info_last_name || ""}`} />
               <InfoRow label="ชื่อเล่น" value={info?.std_info_nick_name} />
               <InfoRow label="อายุ" value={info?.std_info_age ? `${info.std_info_age} ปี` : "-"} />

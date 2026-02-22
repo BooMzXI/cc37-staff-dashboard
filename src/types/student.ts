@@ -57,6 +57,23 @@ export interface StudentInfo {
   updated_at: string;
 }
 
+export interface StaffInfoCheck {
+  std_application_id: string;
+  stf_user_id: string;
+  std_info_status: "info_approve" | "info_reject" | "info_waiting" | string;
+  created_at: string;
+  updated_at: string;
+  stf_user: StaffUser;
+}
+
+export interface StaffUser {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  displayUsername: string;
+}
+
 export interface StudentFile {
   std_file_key: string;
   std_file_originalname: string;
@@ -75,18 +92,18 @@ export interface StudentStatus {
   std_application_id: string;
   std_status_regis_question_done: boolean;
   std_status_acdemic_question_done: boolean;
+  std_status_academic_chaos_question_done: boolean;
   std_info_note: string | null;
 
   stf_regis_question_checked: boolean;
   stf_academic_question_checked: boolean;
   stf_question_result: number;
   stf_question_result_detail: string | null;
-  stf_info_checked: boolean | null;
+  stf_info_check: StaffInfoCheck | null;
   created_at: string;
   updated_at: string;
 }
 
-// 🌟 Interface หลักที่จะเอาไปใช้งาน
 export interface StudentDetail {
   std_application_id: string;
   std_application_submit: boolean;
