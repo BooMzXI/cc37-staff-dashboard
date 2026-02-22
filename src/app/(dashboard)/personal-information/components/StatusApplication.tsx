@@ -1,45 +1,26 @@
 import { CheckCircle2, Clock, XCircle } from "lucide-react";
+import { StaffInfoCheck } from "@/types/student";
 
-export const StatusApplication = ({
-  status,
-  result,
-}: {
-  status: boolean;
-  result?: string;
-}) => {
-  const isPending = result === "waiting_for_announcement";
+export const statusMap: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
+  info_approve: { label: "ข้อมูลถูกต้อง", icon: <CheckCircle2 className="h-7 w-7" />, color: "text-green-600" },
+  info_reject: { label: "ข้อมูลไม่ถูกต้อง", icon: <XCircle className="h-7 w-7" />, color: "text-red-600" },
+  info_waiting: { label: "รอตรวจสอบ", icon: <Clock className="h-7 w-7" />, color: "text-amber-500" },
+};
 
-  if (isPending) {
-    return (
-      <div className="flex flex-col items-center justify-center space-y-3 py-6">
-        <div className="flex items-center gap-3 text-2xl font-bold text-amber-500">
-          <span>รอประกาศผล</span>
-          <Clock className="h-10 w-10" />
-        </div>
-        <p className="text-muted-foreground">ผลการตัดสิน: {result}</p>
-      </div>
-    );
-  }
+export const StatusApplication = ({ statusInfo }: { statusInfo?: StaffInfoCheck | null }) => {
+  const currentStatus = statusInfo?.std_info_status || "info_waiting";
+  const display = statusMap[currentStatus] || statusMap["info_waiting"];
 
   return (
     <div className="flex flex-col items-center justify-center space-y-3 py-6">
-      <div
-        className={`flex items-center gap-3 text-2xl font-bold ${
-          status ? "text-green-600" : "text-destructive"
-        }`}
-      >
-        <span>{status ? "ผ่านการคัดเลือก" : "ไม่ผ่านการคัดเลือก"}</span>
-        {status ? (
-          <CheckCircle2 className="h-10 w-10" />
-        ) : (
-          <XCircle className="h-10 w-10" />
-        )}
+      <div className={`flex items-center gap-3 text-2xl font-bold ${display.color}`}>
+        <span>{display.label}</span>
+        {display.icon}
       </div>
-
-      {result && (
-        <p className="text-muted-foreground">
-          ผลการตัดสิน:{" "}
-          <span className="font-medium text-foreground">{result}</span>
+      
+      {statusInfo?.stf_user?.name && (
+        <p className="text-sm text-muted-foreground mt-2">
+          ตรวจสอบล่าสุดโดย: {statusInfo.stf_user.name}
         </p>
       )}
     </div>

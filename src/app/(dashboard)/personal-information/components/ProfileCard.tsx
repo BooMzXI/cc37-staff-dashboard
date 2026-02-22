@@ -52,6 +52,8 @@ export default function ProfileCard({ data }: { data: StudentDetail }) {
   const decodedName = getDecodedName();
   const initialLetter = decodedName.charAt(0) || "?";
 
+  const ImageUrl = data.std_user?.image
+
   return (
     <Card>
       <CardContent className="p-4 sm:p-6 flex items-center justify-center">
@@ -59,9 +61,9 @@ export default function ProfileCard({ data }: { data: StudentDetail }) {
           
           {isLoading ? (
             <Loader2 className="h-10 w-10 animate-spin text-muted-foreground/50" />
-          ) : imageUrl ? (
+          ) : ImageUrl ? (
             <Image
-              src={imageUrl}
+              src={ImageUrl}
               alt={`รูปโปรไฟล์ของ ${decodedName}`}
               className="w-full h-full object-cover"
               width={300}

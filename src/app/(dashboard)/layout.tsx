@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { Suspense } from "react";
 import DashboardNavbar, { AuthSession } from "@/components/DashboardNavbar";
 import { authClient } from "@/lib/auth-client";
+import { Toaster } from "@/components/ui/sonner";
 
 async function DashboardShell({
   children,
@@ -32,6 +33,7 @@ export default function DashboardLayout({
         <div className="mx-auto max-w-7xl px-4 py-8 lg:px-6 container">
           <div className="mt-5">
             {children}
+            <Toaster position="top-right" richColors />
           </div>  
         </div>
         </DashboardShell>

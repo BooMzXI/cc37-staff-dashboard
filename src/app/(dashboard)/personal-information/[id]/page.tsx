@@ -13,6 +13,7 @@ import ApplicationStatusCard from "../components/ApplicationStatusCard";
 import NoteCard from "../components/NoteCard";
 import StudentInfoSection from "../components/StudentInfoSection";
 import ActionFooterCard from "../components/ActionFooterCard";
+import { StaffInfoCheck } from "@/types/student";
 
 export default function PersonalDetail() {
   const params = useParams();
@@ -49,6 +50,24 @@ export default function PersonalDetail() {
         std_status: {
           ...prevData.std_status,
           std_info_note: newNote,
+        },
+      };
+    });
+  };
+
+  const handleStatusUpdated = (newInfoCheckData: StaffInfoCheck) => {
+    setData((prevData) => {
+      if (!prevData) return null;
+      const oldInfoCheck = prevData.std_status.stf_info_check;
+
+      return {
+        ...prevData,
+        std_status: {
+          ...prevData.std_status,
+          stf_info_check: {
+            ...(oldInfoCheck || {}),
+            ...newInfoCheckData,
+          } as StaffInfoCheck,
         },
       };
     });
@@ -125,9 +144,11 @@ export default function PersonalDetail() {
           </div>
           <div className="mt-6">
             <ActionFooterCard
-              confirmStatus={data.std_application_confirm}
-              updatedAt={data.updated_at}
+              applicationId={data.std_application_id}
+              infoCheckData={data.std_status?.stf_info_check}
+              updatedAt={data.std_status.stf_info_check?.updated_at}
               formatThaiDateTime={formatThaiDateTime}
+              onStatusUpdated={handleStatusUpdated}
             />
           </div>
         </Card>

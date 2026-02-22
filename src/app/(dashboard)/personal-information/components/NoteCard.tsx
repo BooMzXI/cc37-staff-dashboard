@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 import {
   AlertDialog,
@@ -35,13 +36,13 @@ export default function NoteCard({
     if (!applicationId) return;
 
     if (isNote && !content.trim()) {
-      alert("กรุณาพิมพ์หมายเหตุก่อนบันทึก");
+      toast.warning("กรุณาพิมพ์หมายเหตุก่อนบันทึก");
       return;
     }
 
     setIsSubmittingNote(true);
     try {
-      const res = await fetch("/api/note", {
+      const res = await fetch("/api/staff/note", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -52,6 +53,11 @@ export default function NoteCard({
       });
 
       if (!res.ok) throw new Error("Failed to update note");
+      if (isNote) {
+        toast.success("บันทึกหมายเหตุสำเร็จ");
+      } else {
+        toast.success("ลบหมายเหตุเรียบร้อยแล้ว");
+      }
 
       setIsEditingNote(false);
 
