@@ -7,16 +7,19 @@ import { Loader2 } from "lucide-react";
 import { StudentDetail } from "@/types/student";
 
 export default function ProfileCard({ data }: { data: StudentDetail }) {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imgSrc, setImgSrc] = useState<string | null>(data.std_user?.image || null);
   const [isLoading, setIsLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
 
   const hasProfileFile = data.std_file?.some(
     (file) => file.std_file_type === "file_face"
   );
 
   useEffect(() => {
+    setImageError(false);
+    const googleImg = data.std_user?.image || null;
     if (!hasProfileFile) {
-      setImageUrl(data.std_user?.image || null);
+      setImgSrc(googleImg);
       setIsLoading(false);
       return;
     }
@@ -28,10 +31,13 @@ export default function ProfileCard({ data }: { data: StudentDetail }) {
         
         const result = await res.json();
         if (result && result.length > 0 && result[0].file_url) {
-          setImageUrl(result[0].file_url);
+          setImgSrc(result[0].file_url);
+        } else {
+          setImgSrc(googleImg);
         }
       } catch (error) {
         console.error("Error loading image URL:", error);
+        setImgSrc(googleImg);
       } finally {
         setIsLoading(false);
       }
@@ -52,8 +58,6 @@ export default function ProfileCard({ data }: { data: StudentDetail }) {
   const decodedName = getDecodedName();
   const initialLetter = decodedName.charAt(0) || "?";
 
-  const ImageUrl = data.std_user?.image
-
   return (
     <Card>
       <CardContent className="p-4 sm:p-6 flex items-center justify-center">
@@ -61,15 +65,16 @@ export default function ProfileCard({ data }: { data: StudentDetail }) {
           
           {isLoading ? (
             <Loader2 className="h-10 w-10 animate-spin text-muted-foreground/50" />
-          ) : ImageUrl ? (
+          ) : imgSrc && !imageError ? (
             <Image
-              src={ImageUrl}
+              src={imgSrc}
               alt={`รูปโปรไฟล์ของ ${decodedName}`}
               className="w-full h-full object-cover"
               width={300}
               height={300}
               priority
               unoptimized={true}
+              onError={() => setImageError(true)}
             />
           ) : (
             <>{initialLetter}</>
