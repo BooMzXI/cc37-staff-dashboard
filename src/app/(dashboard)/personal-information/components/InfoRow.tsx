@@ -25,7 +25,7 @@ export const InfoRow = ({
       if (decoded.trim() === "ไม่สะดวกนำมา") {
         return <CircleX className="w-4 h-4 text-red-500" />;
       }
-      decoded = decoded.replace(/\s*รายละเอียดเพิ่มเติม\s*["']?-["']?/g, "");
+      decoded = decoded.replace(/\s*รายละเอียดเพิ่มเติม\s*(?:["']?-["']?|""|''|["']?ไม่มี["']?)/g, "");
       if (decoded.trim() === "" || decoded.trim() === "-") {
         return "-";
       }
