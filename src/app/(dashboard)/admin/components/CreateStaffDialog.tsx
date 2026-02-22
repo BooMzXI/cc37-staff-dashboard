@@ -32,7 +32,7 @@ export function CreateStaffDialog({ open, onOpenChange, onSuccess }: CreateStaff
     name: "",
     username: "",
     password: "",
-    role: "user", // ค่าเริ่มต้น
+    role: "user",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
