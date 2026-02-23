@@ -20,7 +20,7 @@ export default function Dashboard() {
 		const fetchStats = async () => {
 			try {
 				const res = await fetch(
-					`${process.env.NEXT_PUBLIC_API_URL}/api/statistic`,
+					`/api/statistic`,
 					{
 						credentials: "include",
 					},
