@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StudentDetail } from "@/types/student";
 import { InfoRow } from "./InfoRow";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { UserRound, GraduationCap, UsersRound, HeartPulse, Laptop } from "lucide-react";
 
 interface StudentInfoProps {
   data: StudentDetail;
@@ -28,7 +29,7 @@ export default function StudentInfoSection({ data, formatThaiDate }: StudentInfo
         <TabsContent value="personal" className="mt-0">
           <Card className="w-full overflow-hidden border-t-4 border-t-primary">
             <CardHeader className="pb-3 bg-muted/10">
-              <CardTitle className="text-lg">👤 ข้อมูลส่วนตัว</CardTitle>
+              <CardTitle className="text-lg flex text-center item-center"><UserRound className="w-5 h-5 mr-3 text-center mt-1"/> ข้อมูลส่วนตัว</CardTitle>
             </CardHeader>
             <CardContent className="pt-4">
               {/*<InfoRow label="รหัสผู้สมัคร" value={data.std_application_id} />*/}
@@ -50,7 +51,7 @@ export default function StudentInfoSection({ data, formatThaiDate }: StudentInfo
         <TabsContent value="education" className="mt-0">
           <Card className="w-full overflow-hidden border-t-4 border-t-blue-500">
             <CardHeader className="pb-3 bg-muted/10">
-              <CardTitle className="text-lg">🎓 ประวัติการศึกษา</CardTitle>
+              <CardTitle className="text-lg flex items-center"><GraduationCap className="w-5 h-5 mr-3"/> ประวัติการศึกษา</CardTitle>
             </CardHeader>
             <CardContent className="pt-4">
               <InfoRow label="ชั้นการศึกษา" value={info?.std_info_education_level} />
@@ -68,7 +69,7 @@ export default function StudentInfoSection({ data, formatThaiDate }: StudentInfo
         <TabsContent value="parent" className="mt-0">
           <Card className="w-full overflow-hidden border-t-4 border-t-green-500">
             <CardHeader className="pb-3 bg-muted/10">
-              <CardTitle className="text-lg">👨‍👩‍👧 ข้อมูลผู้ปกครอง</CardTitle>
+              <CardTitle className="text-lg flex center"><UsersRound className="w-5 h-5 mr-3 mt-1"/> ข้อมูลผู้ปกครอง</CardTitle>
             </CardHeader>
             <CardContent className="pt-4">
               <InfoRow label="ชื่อ-นามสกุล" value={info?.std_info_parent_fullname} />
@@ -82,7 +83,7 @@ export default function StudentInfoSection({ data, formatThaiDate }: StudentInfo
         <TabsContent value="health" className="mt-0">
           <Card className="w-full overflow-hidden border-t-4 border-t-red-500">
             <CardHeader className="pb-3 bg-muted/10">
-              <CardTitle className="text-lg">🏥 สุขภาพและการเดินทาง</CardTitle>
+              <CardTitle className="text-lg flex item-center"><HeartPulse className="w-5 h-5 mr-3 mt-1"/> สุขภาพและการเดินทาง</CardTitle>
             </CardHeader>
             <CardContent className="pt-4">
               <InfoRow label="กรุ๊ปเลือด" value={info?.std_info_blood_group} />
@@ -99,7 +100,7 @@ export default function StudentInfoSection({ data, formatThaiDate }: StudentInfo
         <TabsContent value="device" className="mt-0">
           <Card className="w-full overflow-hidden border-t-4 border-t-purple-500">
             <CardHeader className="pb-3 bg-muted/10">
-              <CardTitle className="text-lg">💻 อุปกรณ์และความพร้อม</CardTitle>
+              <CardTitle className="text-lg flex item-center"><Laptop className="w-5 h-5 mr-3 mt-1"/> อุปกรณ์และความพร้อม</CardTitle>
             </CardHeader>
             <CardContent className="pt-4">
               <InfoRow label="มีแล็ปท็อป" value={info?.std_info_have_laptop} />

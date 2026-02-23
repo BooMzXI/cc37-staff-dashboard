@@ -14,7 +14,7 @@ export default function PersonalInformation() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/personal-information`,
+          `/api/personal-information`,
           {
             method: "GET",
             credentials: "include",
@@ -44,8 +44,8 @@ export default function PersonalInformation() {
   return (
     <>
       <PageTitle
-        title="Personal Information"
-        description={`ข้อมูลส่วนตัวของนักเรียน`}
+        title="Personal Confirmation"
+        description={`การยืนยันใบสมัครของนักเรียน`}
       />
       <div className="mt-6 rounded-lg shadow-sm">
         <DataTable columns={columns} data={data} />

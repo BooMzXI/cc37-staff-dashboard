@@ -5,22 +5,10 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, Eye, CircleX, CircleCheckBig, Clock } from "lucide-react";
 import Link from "next/link";
 
-/*export type information = {
-  id: string
-  std_name: string
-  std_gender: string
-  std_phone: string
-  email: string
-  status: "pending" | "success"
-  isCorrect: boolean
-  timeChecked: string
-  CheckedBy?: string
-}*/
-
 export interface StudentApplication {
   std_application_id: string;
   std_application_submit: boolean;
-  std_application_confirmed: boolean;
+  //std_application_confirmed: boolean;
   std_user: {
     name: string;
     email: string;
@@ -116,7 +104,7 @@ export const columns: ColumnDef<StudentApplication>[] = [
       );
     },
   },
-  {
+  /*{
     accessorKey: "std_application_confirmed",
     accessorFn: (row) => row.std_application_confirmed,
     header: ({ column }) => {
@@ -147,7 +135,7 @@ export const columns: ColumnDef<StudentApplication>[] = [
         </div>
       );
     },
-  },
+  },*/
 {
     id: "stf_info_check",
     accessorFn: (row) =>
