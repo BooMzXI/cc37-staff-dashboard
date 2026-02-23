@@ -4,20 +4,23 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 
+
 import { STATS_CONFIG, type StatisticData } from "@/config/dashboard-stats";
 import PageTitle from "@/components/PageTitle";
 import { authClient } from "@/lib/auth-client";
+
 
 export default function Dashboard() {
 	const [data, setData] = useState<StatisticData | null>(null);
 	const [loading, setLoading] = useState(true);
 	const { data: session } = authClient.useSession();
 
+
 	useEffect(() => {
 		const fetchStats = async () => {
 			try {
 				const res = await fetch(
-					`${process.env.NEXT_PUBLIC_API_URL}/api/staff/statistic`,
+					`${process.env.NEXT_PUBLIC_API_URL}/api/statistic`,
 					{
 						credentials: "include",
 					},
@@ -67,7 +70,6 @@ export default function Dashboard() {
 									</span>
 									<Icon className="h-4 w-4 text-muted-foreground" />
 								</div>
-
 								<div className="mt-2 text-2xl font-bold text-card-foreground">
 									{value}
 								</div>
