@@ -80,7 +80,7 @@ export function CreateStaffDialog({ open, onOpenChange, onSuccess }: CreateStaff
               type="email" 
               required 
               value={formData.email}
-              placeholder="example: email@gmail.com"
+              placeholder="email@gmail.com"
               onChange={(e) => setFormData({...formData, email: e.target.value})}
             />
           </div>
@@ -89,7 +89,7 @@ export function CreateStaffDialog({ open, onOpenChange, onSuccess }: CreateStaff
             <Input 
               required 
               value={formData.name}
-              placeholder="example: Tawawee"
+              placeholder="กรอกชื่อ-นามสกุลที่ต้องการสมัคร"
               onChange={(e) => setFormData({...formData, name: e.target.value})}
             />
           </div>
@@ -98,7 +98,7 @@ export function CreateStaffDialog({ open, onOpenChange, onSuccess }: CreateStaff
             <Input 
               required 
               value={formData.username}
-              placeholder="example: Tawawee"
+              placeholder="กรอก Username ที่ต้องการสมัคร"
               onChange={(e) => setFormData({...formData, username: e.target.value})}
             />
           </div>
@@ -108,6 +108,7 @@ export function CreateStaffDialog({ open, onOpenChange, onSuccess }: CreateStaff
               type="password" 
               required 
               value={formData.password}
+              placeholder="*******"
               onChange={(e) => setFormData({...formData, password: e.target.value})}
             />
           </div>
