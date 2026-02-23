@@ -4,7 +4,7 @@ import { adminClient } from "better-auth/client/plugins"
 import { config } from "@/config/config"
 
 export const authClient = createAuthClient({
-    baseURL: config.betterauth.baseUrl,
+    baseURL: config.backend.baseUrl,
     plugins: [
         usernameClient(),
         adminClient()
