@@ -4,7 +4,7 @@ import PageTitle from "@/components/PageTitle";
 import React, { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import { DataTable } from "@/components/DataTable";
-import { columns, StudentApplication } from "./column"; //import ข้อมูลคอลัมน์และประเภทข้อมูลจากไฟล์ column.ts เดี่ยวใช้จริงในอนาคตถ้ามีการดึงข้อมูลจาก API มาแสดงแทน mock data
+import { columns, StudentApplication } from "./column";
 
 export default function PersonalInformation() {
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ export default function PersonalInformation() {
     const fetchData = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/personal-information`,
+          `/api/personal-information`,
           {
             method: "GET",
             credentials: "include",
