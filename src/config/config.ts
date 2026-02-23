@@ -5,5 +5,5 @@ export const config = {
     backend: {
         baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL
     },
-    isProd: process.env.ENV === "PROD" ? true : false,
+    isProd: process.env.NEXT_PUBLIC_ENV === "PROD",
 }

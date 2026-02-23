@@ -2,10 +2,15 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { authClient } from "./lib/auth-client";
 import { headers } from "next/headers";
+import { config as appConfig } from "./config/config";
 
 export async function proxy(request: NextRequest) {
-  const sessionToken = request.cookies.get("__Secure-better-auth.session_token");
-  // const { data } = await authClient.getSession({
+  let sessionToken = request.cookies.get("better-auth.session_token");
+  if(appConfig.isProd){
+    sessionToken = request.cookies.get("__Secure-better-auth.session_token");
+  }
+
+  // const { data : sessionToken  } = await authClient.getSession({
   //     fetchOptions: { headers: await headers() }
   // });
 
