@@ -52,7 +52,7 @@ export default function ApplicationStatusCard({
             checked={
               statusData?.std_status_academic_chaos_question_done || false
             }
-            label="คำถามวิชาการ 2"
+            label="คำถามเชาว์"
           />
           <StatusBadge
             checked={statusData?.std_status_payment_done || false}
