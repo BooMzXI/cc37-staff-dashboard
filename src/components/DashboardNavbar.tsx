@@ -1,8 +1,7 @@
 "use client";
 
-import { Session, User } from "better-auth";
-import { Moon, Sun } from "lucide-react";
-import Image from "next/image";
+import type { Session, User } from "better-auth";
+import { Menu, Moon, Sun } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -10,6 +9,7 @@ import { MENU_ITEMS } from "@/config/menu-items";
 import { authClient } from "@/lib/auth-client";
 import { useTheme } from "./ThemeProvider";
 import { Button } from "./ui/button";
+import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger } from "./ui/drawer";
 
 export type AuthSession = {
 	session: Session;
@@ -60,7 +60,7 @@ const DashboardNavbar = ({ role }: { role: string | undefined | null }) => {
 						<img className="w-10" src={"https://storage.comcamp.io/web-assets/Comcamp-Logo.png"} alt=""></img>
 					</Link>
 
-					<div className="hidden md:flex items-center gap-1">
+					<div className="hidden lg:flex items-center gap-1">
 						{filteredMenu.map((item) => {
 							const Icon = item.icon as React.ComponentType<{
 								className?: string;
@@ -85,10 +85,50 @@ const DashboardNavbar = ({ role }: { role: string | undefined | null }) => {
 						{mounted && (theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />)}
 					</button>
 
-					<div className="mx-2 h-6 w-px bg-border" />
-					<Button variant="ghost" className="cursor-pointer" size="sm" onClick={handleSignOut}>
+					<div className="mx-2 h-6 w-px bg-border hidden lg:flex" />
+					<Button variant="ghost" className="cursor-pointer hidden lg:flex" size="sm" onClick={handleSignOut}>
 						Sign Out
 					</Button>
+					<Drawer direction="right">
+						<DrawerTrigger asChild>
+							<button type="button" className="cursor-pointer lg:hidden flex h-10 w-10 items-center justify-center rounded-lg hover:bg-accent active:bg-accent/80 transition-colors duration-200" aria-label="Open menu">
+								<Menu size={24} />
+							</button>
+						</DrawerTrigger>
+						<DrawerContent className="inset-y-0 inset-x-auto right-0 w-3/4 max-w-sm h-full mt-0 rounded-l-[10px] rounded-t-none">
+							<DrawerHeader>
+								<div className="w-full flex flex-col">
+									<img className="w-24 mx-auto" src={"https://storage.comcamp.io/web-assets/Comcamp-Logo.png"} alt=""></img>
+									{/* <DrawerTitle className="mt-5">Navigation Menu</DrawerTitle> */}
+								</div>
+							</DrawerHeader>
+							<div className="flex-1 overflow-y-auto py-4">
+								<div className="flex flex-col gap-1 px-2">
+									{filteredMenu.map((item) => {
+										const Icon = item.icon as React.ComponentType<{
+											className?: string;
+										}>;
+										return (
+											<DrawerClose asChild key={item.title}>
+												<Link href={item.url} className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
+													<Icon className="h-5 w-5" />
+													{item.title}
+												</Link>
+											</DrawerClose>
+										);
+									})}
+								</div>
+							</div>
+							<DrawerFooter>
+								<Button variant="outline" onClick={handleSignOut}>
+									Sign Out
+								</Button>
+								<DrawerClose asChild>
+									<Button variant="ghost">ปิด</Button>
+								</DrawerClose>
+							</DrawerFooter>
+						</DrawerContent>
+					</Drawer>
 				</div>
 			</div>
 		</nav>
