@@ -6,6 +6,7 @@ import { DataTable } from "@/components/DataTable";
 import PageTitle from "@/components/PageTitle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { config } from "@/config/config";
 import { authClient } from "@/lib/auth-client";
 import { columns, StaffUser } from "./column";
 import { CreateStaffDialog } from "./components/CreateStaffDialog";
@@ -24,7 +25,7 @@ export default function AdminPage() {
 
 	const handleGetStaffData = useCallback(async () => {
 		try {
-			const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/staff`, {
+			const res = await fetch(`${config.backend.baseUrl}/api/staff/account`, {
 				credentials: "include",
 			});
 			if (!res.ok) throw new Error("Failed to fetch staff data");

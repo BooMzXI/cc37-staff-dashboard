@@ -66,7 +66,7 @@ const DashboardNavbar = ({ role }: { role: string | undefined | null }) => {
 								className?: string;
 							}>;
 							return (
-								<Link key={item.title} href={item.url} className="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
+								<Link key={item.title} href={item.url} className="flex items-center gap-2 rounded-md px-3 py-1.5 text-xs xl:text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground">
 									<Icon className="h-4 w-4" />
 									{item.title}
 								</Link>

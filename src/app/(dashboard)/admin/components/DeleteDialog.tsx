@@ -2,7 +2,9 @@
 
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { config } from "@/config/config";
 import { StaffUser } from "../column";
 
 interface DeleteDialogProps {
@@ -18,24 +20,25 @@ export function DeleteDialog({ isOpen, setIsOpen, staff }: DeleteDialogProps) {
 		setIsDeleting(true);
 
 		try {
-			const res = await fetch("/api/admin/delete", {
+			const res = await fetch(`${config.backend.baseUrl}/api/auth/admin/remove-user`, {
+				credentials: "include",
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
-					id: staff.id,
-					is_confirm: true,
+					userId: staff.id,
 				}),
 			});
 
 			if (!res.ok) throw new Error("Failed to delete account");
 
-			alert(`ลบบัญชีของ @${staff.username} สำเร็จ!`);
+			toast.success(`ลบบัญชีของ @${staff.username} สำเร็จ!`);
+
 			setIsOpen(false);
 
 			window.location.reload();
 		} catch (error) {
 			console.error(error);
-			alert("เกิดข้อผิดพลาดในการลบผู้ใช้งาน");
+			toast.error("เกิดข้อผิดพลาดในการลบผู้ใช้งาน");
 		} finally {
 			setIsDeleting(false);
 		}

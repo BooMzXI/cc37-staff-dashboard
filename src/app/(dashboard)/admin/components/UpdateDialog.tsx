@@ -2,10 +2,12 @@
 
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { config } from "@/config/config";
 import { StaffUser } from "../column";
 
 type Role = "user" | "admin" | "staff" | "academic" | "regis";
@@ -24,27 +26,37 @@ export function UpdateDialog({ isOpen, setIsOpen, role, setRole, staff }: { isOp
 		setIsSubmitting(true);
 
 		try {
-			const payload: UpdatePayload = {
-				id: staff.id,
-				password: password || "",
-				role: role,
-			};
-			const res = await fetch("/api/admin/update", {
+			const res = await fetch(`${config.backend.baseUrl}/api/staff/account/update`, {
+				credentials: "include",
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(payload),
+				body: JSON.stringify({
+					id: staff.id,
+					role: role,
+				}),
 			});
+			if (password.length !== 0) {
+				const res = await fetch(`${config.backend.baseUrl}/admin/set-user-password`, {
+					credentials: "include",
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
+						newPassword: password,
+						userId: staff.id,
+					}),
+				});
+			}
 
 			if (!res.ok) throw new Error("Failed to update account");
 
-			alert("อัปเดตข้อมูลสำเร็จ!");
+			toast.success("อัปเดตข้อมูลสำเร็จ!");
 			setIsOpen(false);
 			setPassword("");
 
 			window.location.reload();
 		} catch (error) {
 			console.error(error);
-			alert("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
+			toast.error("เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
 		} finally {
 			setIsSubmitting(false);
 		}

@@ -2,10 +2,12 @@
 
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { config } from "@/config/config";
 
 interface CreateStaffDialogProps {
 	open: boolean;
@@ -20,7 +22,7 @@ export function CreateStaffDialog({ open, onOpenChange, onSuccess }: CreateStaff
 		name: "",
 		username: "",
 		password: "",
-		role: "user",
+		role: "staff",
 	});
 
 	const handleSubmit = async (e: React.FormEvent) => {
@@ -28,7 +30,8 @@ export function CreateStaffDialog({ open, onOpenChange, onSuccess }: CreateStaff
 		setIsSubmitting(true);
 
 		try {
-			const res = await fetch(`/api/admin/add`, {
+			const res = await fetch(`${config.backend.baseUrl}/api/staff/account/create`, {
+				credentials: "include",
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -42,10 +45,11 @@ export function CreateStaffDialog({ open, onOpenChange, onSuccess }: CreateStaff
 			onOpenChange(false);
 			if (onSuccess) onSuccess();
 
-			setFormData({ email: "", name: "", username: "", password: "", role: "user" });
+			setFormData({ email: "", name: "", username: "", password: "", role: "staff" });
+			toast.success(`ผู้ใช้งาน ${formData.username} สำเร็จ`);
 		} catch (error) {
 			console.error(error);
-			alert("เกิดข้อผิดพลาดในการสร้างผู้ใช้งาน");
+			toast.error("เกิดข้อผิดพลาดในการสร้างผู้ใช้งาน");
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -55,8 +59,8 @@ export function CreateStaffDialog({ open, onOpenChange, onSuccess }: CreateStaff
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>เพิ่มบัญชีผู้ใช้งานใหม่</DialogTitle>
-					<DialogDescription>กรอกข้อมูลเพื่อสร้างบัญชีสำหรับทีมงาน กรุณากำหนดสิทธิ์ (Role) ให้ถูกต้อง</DialogDescription>
+					<DialogTitle>เพิ่มบัญชีใหม่</DialogTitle>
+					<DialogDescription className="text-sm !mt-3">กรอกข้อมูลเพื่อสร้างบัญชีสำหรับทีมงาน กรุณากำหนดสิทธิ์ (Role) ให้ถูกต้อง</DialogDescription>
 				</DialogHeader>
 
 				<form onSubmit={handleSubmit} className="space-y-4 mt-2">
@@ -84,7 +88,6 @@ export function CreateStaffDialog({ open, onOpenChange, onSuccess }: CreateStaff
 								<SelectValue placeholder="Role" />
 							</SelectTrigger>
 							<SelectContent>
-								<SelectItem value="user">User</SelectItem>
 								<SelectItem value="admin">Admin</SelectItem>
 								<SelectItem value="staff">Staff</SelectItem>
 								<SelectItem value="academic">Academic</SelectItem>

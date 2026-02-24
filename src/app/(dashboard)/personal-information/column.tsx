@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, CircleCheckBig, CircleX, Clock, Eye } from "lucide-react";
+import { ArrowUpDown, CircleCheckBig, CircleX, Clock, Eye, Search } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -158,7 +158,7 @@ export const columns: ColumnDef<StudentApplication>[] = [
 			return (
 				<Link href={`/personal-information/${application.std_application_id}`}>
 					<Button variant="ghost" size="icon" className="hover:bg-primary/10 cursor-pointer">
-						<Eye className="h-4 w-4" />
+						<Search className="h-4 w-4" />
 					</Button>
 				</Link>
 			);
