@@ -8,7 +8,8 @@
 		"start": "next start",
 		"check": "pnpm exec biome check --write",
 		"lint": "pnpm exec biome lint --write",
-		"format": "pnpm exec biome format --write"
+		"format": "pnpm exec biome format --write",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.2",
@@ -46,6 +47,8 @@
 		"autoprefixer": "^10.4.24",
 		"eslint": "^9",
 		"eslint-config-next": "16.1.6",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.2.7",
 		"postcss": "^8.5.6",
 		"shadcn": "^3.8.4",
 		"tailwindcss": "^3.4.19",

@@ -1,9 +1,9 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { StudentStatus } from "@/types/student";
-import { StatusBadge } from "./StatusBadge";
-import { StudentFile } from "@/types/student";
-import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { StudentFile, StudentStatus } from "@/types/student";
+import { StatusBadge } from "./StatusBadge";
+
 interface ApplicationStatusCardProps {
 	statusData?: StudentStatus | null;
 	files?: StudentFile[];

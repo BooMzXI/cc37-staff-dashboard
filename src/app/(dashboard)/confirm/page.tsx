@@ -1,9 +1,9 @@
 "use client";
 
-import PageTitle from "@/components/PageTitle";
-import React, { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
+import PageTitle from "@/components/PageTitle";
 import { columns, StudentConfirmation } from "./column";
 
 export default function PersonalInformation() {

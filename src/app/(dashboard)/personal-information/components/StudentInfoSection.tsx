@@ -1,8 +1,8 @@
+import { GraduationCap, HeartPulse, Laptop, UserRound, UsersRound } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { StudentDetail } from "@/types/student";
 import { InfoRow } from "./InfoRow";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserRound, GraduationCap, UsersRound, HeartPulse, Laptop } from "lucide-react";
 
 interface StudentInfoProps {
 	data: StudentDetail;

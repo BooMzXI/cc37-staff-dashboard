@@ -1,9 +1,9 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
-import { Loader2 } from "lucide-react";
 import { StudentDetail } from "@/types/student";
 
 export default function ProfileCard({ data }: { data: StudentDetail }) {

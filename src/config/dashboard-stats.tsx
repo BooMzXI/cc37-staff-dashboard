@@ -1,4 +1,4 @@
-import { Users, FileText, CheckCircle, CreditCard, FileCheck, type LucideIcon } from "lucide-react";
+import { CheckCircle, CreditCard, FileCheck, FileText, type LucideIcon, Users } from "lucide-react";
 
 export interface StatisticData {
 	user: number;

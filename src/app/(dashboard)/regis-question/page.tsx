@@ -1,11 +1,11 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
 import PageTitle from "@/components/PageTitle";
-import { useState, useEffect } from "react";
-import { Loader2 } from "lucide-react";
-import { columns, StudentRegisQuestion } from "./column";
 import { config } from "@/config/config";
+import { columns, StudentRegisQuestion } from "./column";
 
 export default function RegisQuestionPage() {
 	const [loading, setLoading] = useState(true);

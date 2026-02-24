@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Eye, CircleX, CircleCheckBig, Clock } from "lucide-react";
+import { ArrowUpDown, CircleCheckBig, CircleX, Clock, Eye } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export interface StudentApplication {
 	std_application_id: string;

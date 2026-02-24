@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
-
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function NoteCard({ applicationId, note, onNoteUpdated }: { applicationId: string; note?: string; onNoteUpdated: (newNote: string | null) => void }) {
 	const [isEditingNote, setIsEditingNote] = useState(false);

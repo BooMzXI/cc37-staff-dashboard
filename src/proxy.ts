@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { authClient } from "./lib/auth-client";
 import { headers } from "next/headers";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { config as appConfig } from "./config/config";
+import { authClient } from "./lib/auth-client";
 
 export async function proxy(request: NextRequest) {
 	let sessionToken = request.cookies.get("better-auth.session_token");

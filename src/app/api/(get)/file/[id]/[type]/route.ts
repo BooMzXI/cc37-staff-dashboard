@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import { config } from "@/config/config";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string; type: string }> }) {
