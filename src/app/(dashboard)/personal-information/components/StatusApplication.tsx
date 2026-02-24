@@ -2,9 +2,21 @@ import { CheckCircle2, Clock, XCircle } from "lucide-react";
 import { StaffInfoCheck } from "@/types/student";
 
 export const statusMap: Record<string, { label: string; icon: React.ReactNode; color: string }> = {
-	info_approve: { label: "ข้อมูลถูกต้อง", icon: <CheckCircle2 className="h-7 w-7" />, color: "text-green-600" },
-	info_reject: { label: "ข้อมูลไม่ถูกต้อง", icon: <XCircle className="h-7 w-7" />, color: "text-red-600" },
-	info_waiting: { label: "รอตรวจสอบ", icon: <Clock className="h-7 w-7" />, color: "text-amber-500" },
+	info_approve: {
+		label: "ข้อมูลถูกต้อง",
+		icon: <CheckCircle2 className="h-7 w-7" />,
+		color: "text-green-600",
+	},
+	info_reject: {
+		label: "ข้อมูลไม่ถูกต้อง",
+		icon: <XCircle className="h-7 w-7" />,
+		color: "text-red-600",
+	},
+	info_waiting: {
+		label: "รอตรวจสอบ",
+		icon: <Clock className="h-7 w-7" />,
+		color: "text-amber-500",
+	},
 };
 
 export const StatusApplication = ({ statusInfo }: { statusInfo?: StaffInfoCheck | null }) => {

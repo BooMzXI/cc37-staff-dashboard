@@ -90,13 +90,16 @@ export function Question5({ answer }: { answer: string }): React.JSX.Element {
 			</div>
 			<div className="font-normal text-base mt-3">รายละเอียดภารกิจ :</div>
 			<div className="flex flex-row mt-1 items-center">
-				<div className="mx-3 w-[5px] h-[5px] bg-white rounded-full"></div>กุญแจดอกที่ 1: อยู่ที่กระท่อมของแม่มดในป่าดงดิบ ซึ่งมีการร่ายเวทพรางตาที่มองไม่เห็นด้วยตาเปล่า
+				<div className="mx-3 w-[5px] h-[5px] bg-white rounded-full"></div>
+				กุญแจดอกที่ 1: อยู่ที่กระท่อมของแม่มดในป่าดงดิบ ซึ่งมีการร่ายเวทพรางตาที่มองไม่เห็นด้วยตาเปล่า
 			</div>
 			<div className="flex flex-row mt-1 items-center">
-				<div className="mx-3 w-[5px] h-[5px] bg-white rounded-full"></div>กุญแจดอกที่ 2: อยู่ในโลงศพฟาโรห์ ชั้นใต้ดินของพีระมิดในทะเลทราย ซึ่งมีกับดักธนูอาบยาพิษรอทำงานอยู่
+				<div className="mx-3 w-[5px] h-[5px] bg-white rounded-full"></div>
+				กุญแจดอกที่ 2: อยู่ในโลงศพฟาโรห์ ชั้นใต้ดินของพีระมิดในทะเลทราย ซึ่งมีกับดักธนูอาบยาพิษรอทำงานอยู่
 			</div>
 			<div className="flex flex-row mt-1 items-center">
-				<div className="mx-3 w-[5px] h-[5px] bg-white rounded-full"></div>กล่องสมบัติ : อยู่ในซากเรืออัปปางใต้มหาสมุทรที่มีกระแสน้ำแปรปรวนอย่างรุนแรง
+				<div className="mx-3 w-[5px] h-[5px] bg-white rounded-full"></div>
+				กล่องสมบัติ : อยู่ในซากเรืออัปปางใต้มหาสมุทรที่มีกระแสน้ำแปรปรวนอย่างรุนแรง
 			</div>
 			<div className="font-normal text-base mt-3">เงื่อนไขเพิ่มเติม:</div>
 			<div className="font-normal text-base mt-1 ml-6">น้องต้องเลือกความสามารถของสัตว์ที่มีอยู่จริงและยังไม่สูญพันธุ์ทั้งหมด 2 ชนิด (เลือกได้กี่ความสามารถก็ได้จากสัตว์ชนิดนั้น)</div>
