@@ -30,7 +30,7 @@ export const MENU_ITEMS: MenuItem[] = [
   },
   {
     title: "คำถามทะเบียน",
-    url: "/questions",
+    url: "/regis-question",
     icon: FileQuestionMark,
     roles: [ROLES.ADMIN, ROLES.REGISTRATION],
   },
