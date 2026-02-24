@@ -50,8 +50,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					<TableHeader>
 						{table.getHeaderGroups().map((headerGroup) => (
 							<TableRow key={headerGroup.id}>
-								{headerGroup.headers.map((header) => {
-									return <TableHead key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>;
+								{headerGroup.headers.map((header, i) => {
+									return <TableHead key={i}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>;
 								})}
 							</TableRow>
 						))}
@@ -60,8 +60,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
 								<TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-									{row.getVisibleCells().map((cell) => (
-										<TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+									{row.getVisibleCells().map((cell, i) => (
+										<TableCell key={i}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
 									))}
 								</TableRow>
 							))
