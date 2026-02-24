@@ -24,7 +24,7 @@ export const formatThaiDateTime = (dateString?: string) => {
 	if (!dateString) return "ยังไม่มีการตรวจสอบ";
 
 	const date = new Date(dateString);
-	if (isNaN(date.getTime())) return "รูปแบบเวลาไม่ถูกต้อง";
+	if (Number.isNaN(date.getTime())) return "รูปแบบเวลาไม่ถูกต้อง";
 
 	const thaiMonths = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
 
