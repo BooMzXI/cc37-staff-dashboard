@@ -159,7 +159,7 @@ export default function RegisAnswerGradingPage() {
 						<div className="text-center sticky z-10 top-0 bg-background pb-4">เกณฑ์การให้คะแนน</div>
 						<div className="pr-5">
 							{answer
-								.sort((a, b) => parseInt(a.std_regis_answer_section.replace("regis_", "")) - parseInt(b.std_regis_answer_section.replace("regis_", "")))
+								.sort((a, b) => parseInt(a.std_regis_answer_section.replace("regis_", ""), 10) - parseInt(b.std_regis_answer_section.replace("regis_", ""), 10))
 								.map((ans, i) => (
 									<Grading
 										key={i}

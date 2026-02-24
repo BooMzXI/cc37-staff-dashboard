@@ -37,6 +37,9 @@
 				"noUnusedPrivateClassMembers": "off",
 				"noUnusedFunctionParameters": "off",
 				"useHookAtTopLevel": "off"
+			},
+			"complexity": {
+				"noUselessFragments": "off"
 			}
 		}
 	},
