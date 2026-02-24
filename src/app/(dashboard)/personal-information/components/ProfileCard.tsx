@@ -75,7 +75,7 @@ export default function ProfileCard({ data }: { data: StudentDetail }) {
 							onError={() => setImageError(true)}
 						/>
 					) : (
-						<>{initialLetter}</>
+						initialLetter
 					)}
 				</div>
 			</CardContent>
