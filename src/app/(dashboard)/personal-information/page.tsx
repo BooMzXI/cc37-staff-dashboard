@@ -4,6 +4,7 @@ import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
 import PageTitle from "@/components/PageTitle";
+import { config } from "@/config/config";
 import { columns, StudentApplication } from "./column";
 
 export default function PersonalInformation() {
@@ -13,7 +14,7 @@ export default function PersonalInformation() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const res = await fetch(`/api/personal-information`, {
+				const res = await fetch(`${config.backend.baseUrl}/api/staff/application/all`, {
 					method: "GET",
 					credentials: "include",
 				});

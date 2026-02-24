@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { config } from "@/config/config";
 import { formatThaiDate, formatThaiDateTime } from "@/lib/utils";
 import { StaffInfoCheck, StudentDetail } from "@/types/student";
 import ActionFooterCard from "../components/ActionFooterCard";
@@ -25,7 +26,11 @@ export default function PersonalDetail() {
 
 		const fetchStudentDetail = async () => {
 			try {
-				const res = await fetch(`/api/personal-detail/${id}`);
+				const res = await fetch(`${config.backend.baseUrl}/api/staff/application/${id}`, {
+					method: "GET",
+					credentials: "include",
+					cache: "no-store",
+				});
 				if (!res.ok) throw new Error("Failed to fetch detail");
 
 				const data = await res.json();

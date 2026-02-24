@@ -3,6 +3,7 @@
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/PageTitle";
+import { config } from "@/config/config";
 import { STATS_CONFIG, type StatisticData } from "@/config/dashboard-stats";
 import { authClient } from "@/lib/auth-client";
 
@@ -14,7 +15,7 @@ export default function Dashboard() {
 	useEffect(() => {
 		const fetchStats = async () => {
 			try {
-				const res = await fetch(`/api/statistic`, {
+				const res = await fetch(`${config.backend.baseUrl}/api/staff/statistic`, {
 					credentials: "include",
 				});
 				if (!res.ok) throw new Error("Failed to fetch");

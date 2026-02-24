@@ -7,6 +7,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
+import { config } from "@/config/config";
 
 export default function NoteCard({ applicationId, note, onNoteUpdated }: { applicationId: string; note?: string; onNoteUpdated: (newNote: string | null) => void }) {
 	const [isEditingNote, setIsEditingNote] = useState(false);
@@ -23,7 +24,7 @@ export default function NoteCard({ applicationId, note, onNoteUpdated }: { appli
 
 		setIsSubmittingNote(true);
 		try {
-			const res = await fetch("/api/staff/note", {
+			const res = await fetch(`${config.backend.baseUrl}/api/staff/application/note`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
@@ -31,6 +32,7 @@ export default function NoteCard({ applicationId, note, onNoteUpdated }: { appli
 					is_note: isNote,
 					app_note: content,
 				}),
+				credentials: "include",
 			});
 
 			if (!res.ok) throw new Error("Failed to update note");

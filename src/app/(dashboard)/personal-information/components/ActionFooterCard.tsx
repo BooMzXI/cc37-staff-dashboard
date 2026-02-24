@@ -7,6 +7,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { config } from "@/config/config";
 import { StaffInfoCheck } from "@/types/student";
 import { StatusApplication, statusMap } from "./StatusApplication";
 
@@ -34,13 +35,14 @@ export default function ActionFooterCard({ applicationId, infoCheckData, updated
 		setIsDialogOpen(false);
 
 		try {
-			const res = await fetch("/api/staff/info-update", {
+			const res = await fetch(`${config.backend.baseUrl}/api/staff/status/info/check`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					application_id: applicationId,
 					status: pendingStatus,
 				}),
+				credentials: "include",
 			});
 
 			if (!res.ok) throw new Error("Failed to update status");
