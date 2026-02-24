@@ -9,7 +9,7 @@ export const statusMap: Record<string, { label: string; icon: React.ReactNode; c
 
 export const StatusApplication = ({ statusInfo }: { statusInfo?: StaffInfoCheck | null }) => {
 	const currentStatus = statusInfo?.std_info_status || "info_waiting";
-	const display = statusMap[currentStatus] || statusMap["info_waiting"];
+	const display = statusMap[currentStatus] || statusMap.info_waiting;
 
 	return (
 		<div className="flex flex-col items-center justify-center space-y-3 py-6">
