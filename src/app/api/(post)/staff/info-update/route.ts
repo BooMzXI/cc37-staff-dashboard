@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 
 		if (!authorization && cookie) {
 			const tokenMatch = cookie.match(/(?:^|;\s*)(?:__Secure-)?better-auth\.session_token=([^;]+)/);
-			if (tokenMatch && tokenMatch[1]) {
+			if (tokenMatch?.[1]) {
 				authorization = `Bearer ${tokenMatch[1]}`;
 			}
 		}
