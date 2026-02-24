@@ -15,6 +15,9 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
+			"performance": {
+				"noImgElement": "off"
+			},
 			"suspicious": {
 				"noExplicitAny": "off",
 				"noArrayIndexKey": "off",
