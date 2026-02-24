@@ -18,6 +18,11 @@
 			"suspicious": {
 				"noExplicitAny": "off",
 				"noArrayIndexKey": "off"
+				
+			},
+			"a11y": {
+				"useSemanticElements": "off",
+				"noRedundantRoles": "off"
 			},
 			"style": {
 				"useImportType": "off"
