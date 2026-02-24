@@ -102,8 +102,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 			const result = row.original.std_regis_question.filter((sec) => sec.std_regis_answer_section === "regis_1");
 
 			return (
-				<>
-					<Popover>
+				<Popover>
 						<PopoverTrigger asChild>
 							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
 						</PopoverTrigger>
@@ -124,8 +123,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 									))
 								: ""}
 						</PopoverContent>
-					</Popover>
-				</>
+				</Popover>
 			);
 		},
 	},
@@ -142,8 +140,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 			const result = row.original.std_regis_question.filter((sec) => sec.std_regis_answer_section === "regis_2");
 
 			return (
-				<>
-					<Popover>
+				<Popover>
 						<PopoverTrigger asChild>
 							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
 						</PopoverTrigger>
@@ -164,8 +161,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 									))
 								: ""}
 						</PopoverContent>
-					</Popover>
-				</>
+				</Popover>
 			);
 		},
 	},
@@ -182,8 +178,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 			const result = row.original.std_regis_question.filter((sec) => sec.std_regis_answer_section === "regis_3");
 
 			return (
-				<>
-					<Popover>
+				<Popover>
 						<PopoverTrigger asChild>
 							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
 						</PopoverTrigger>
@@ -204,8 +199,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 									))
 								: ""}
 						</PopoverContent>
-					</Popover>
-				</>
+				</Popover>
 			);
 		},
 	},
@@ -222,8 +216,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 			const result = row.original.std_regis_question.filter((sec) => sec.std_regis_answer_section === "regis_4");
 
 			return (
-				<>
-					<Popover>
+				<Popover>
 						<PopoverTrigger asChild>
 							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
 						</PopoverTrigger>
@@ -244,8 +237,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 									))
 								: ""}
 						</PopoverContent>
-					</Popover>
-				</>
+				</Popover>
 			);
 		},
 	},
@@ -262,8 +254,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 			const result = row.original.std_regis_question.filter((sec) => sec.std_regis_answer_section === "regis_5");
 
 			return (
-				<>
-					<Popover>
+				<Popover>
 						<PopoverTrigger asChild>
 							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
 						</PopoverTrigger>
@@ -284,8 +275,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 									))
 								: ""}
 						</PopoverContent>
-					</Popover>
-				</>
+				</Popover>
 			);
 		},
 	},
@@ -302,8 +292,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 			const result = row.original.std_regis_question.filter((sec) => sec.std_regis_answer_section === "regis_6");
 
 			return (
-				<>
-					<Popover>
+				<Popover>
 						<PopoverTrigger asChild>
 							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
 						</PopoverTrigger>
@@ -324,8 +313,7 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 									))
 								: ""}
 						</PopoverContent>
-					</Popover>
-				</>
+				</Popover>
 			);
 		},
 	},
