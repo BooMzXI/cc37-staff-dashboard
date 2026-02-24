@@ -1,13 +1,13 @@
 "use client";
 
-import PageTitle from "@/components/PageTitle";
 import { ArrowLeft, Check } from "lucide-react";
-import { Question1, Question2, Question3, Question4, Question5, Question6 } from "./question";
 import { useParams, useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
-import { Grading } from "./grading";
 import { useEffect, useState } from "react";
+import PageTitle from "@/components/PageTitle";
+import { Input } from "@/components/ui/input";
 import { config } from "@/config/config";
+import { Grading } from "./grading";
+import { Question1, Question2, Question3, Question4, Question5, Question6 } from "./question";
 
 export interface StaffUser {
 	id: string;

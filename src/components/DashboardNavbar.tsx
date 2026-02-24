@@ -1,15 +1,15 @@
 "use client";
 
-import { useTheme } from "./ThemeProvider";
-import { Sun, Moon } from "lucide-react";
-import React from "react";
-import Link from "next/link";
-import { MENU_ITEMS } from "@/config/menu-items";
 import { Session, User } from "better-auth";
-import { Button } from "./ui/button";
-import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
+import { Moon, Sun } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { MENU_ITEMS } from "@/config/menu-items";
+import { authClient } from "@/lib/auth-client";
+import { useTheme } from "./ThemeProvider";
+import { Button } from "./ui/button";
 
 export type AuthSession = {
 	session: Session;

@@ -1,5 +1,5 @@
+import { BookOpen, FileQuestionMark, Home, Settings, ShieldCheck, Users } from "lucide-react";
 import { ROLES } from "@/constants/roles";
-import { Home, Users, BookOpen, Settings, ShieldCheck, FileQuestionMark } from "lucide-react";
 
 export type MenuItem = {
 	title: string;

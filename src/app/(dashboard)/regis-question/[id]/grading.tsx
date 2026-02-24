@@ -1,9 +1,9 @@
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { config } from "@/config/config";
 import axios from "axios";
 import { Check } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { config } from "@/config/config";
 
 interface Grading {
 	application_id: string;

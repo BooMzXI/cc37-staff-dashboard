@@ -1,11 +1,9 @@
 "use client";
 
-import React from "react";
-import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-
-import { STATS_CONFIG, type StatisticData } from "@/config/dashboard-stats";
+import React, { useEffect, useState } from "react";
 import PageTitle from "@/components/PageTitle";
+import { STATS_CONFIG, type StatisticData } from "@/config/dashboard-stats";
 import { authClient } from "@/lib/auth-client";
 
 export default function Dashboard() {

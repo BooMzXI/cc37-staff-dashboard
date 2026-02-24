@@ -1,8 +1,8 @@
 import { headers } from "next/headers";
 import { Suspense } from "react";
 import DashboardNavbar, { AuthSession } from "@/components/DashboardNavbar";
-import { authClient } from "@/lib/auth-client";
 import { Toaster } from "@/components/ui/sonner";
+import { authClient } from "@/lib/auth-client";
 
 async function DashboardShell({ children }: { children: React.ReactNode }) {
 	const headersList = await headers();

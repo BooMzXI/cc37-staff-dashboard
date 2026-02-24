@@ -1,19 +1,17 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Loader2 } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useEffect, useState } from "react";
-import { StudentDetail } from "@/types/student";
 import { formatThaiDate, formatThaiDateTime } from "@/lib/utils";
-
-import ProfileCard from "../components/ProfileCard";
+import { StaffInfoCheck, StudentDetail } from "@/types/student";
+import ActionFooterCard from "../components/ActionFooterCard";
 import ApplicationStatusCard from "../components/ApplicationStatusCard";
 import NoteCard from "../components/NoteCard";
+import ProfileCard from "../components/ProfileCard";
 import StudentInfoSection from "../components/StudentInfoSection";
-import ActionFooterCard from "../components/ActionFooterCard";
-import { StaffInfoCheck } from "@/types/student";
 
 export default function PersonalDetail() {
 	const params = useParams();

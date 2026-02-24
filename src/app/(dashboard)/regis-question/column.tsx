@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Search, ClipboardCheck, FileText } from "lucide-react";
+import { ArrowUpDown, ClipboardCheck, FileText, Search } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
@@ -103,26 +103,26 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 
 			return (
 				<Popover>
-						<PopoverTrigger asChild>
-							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
-						</PopoverTrigger>
-						<PopoverContent align="center" side="top">
-							<div className="grid grid-cols-3 items-center">
-								<div className="text-center">ผู้ตรวจ</div>
-								<div className="text-center">คะแนน</div>
-								<div className="text-center">วันที่ตรวจ</div>
-							</div>
-							<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
-							{result.length !== 0
-								? result[0].stf_regis_question_score.map((sc, i) => (
-										<div className="grid grid-cols-3 items-center" key={i}>
-											<div className="text-center text-sm">{sc.stf_user.username}</div>
-											<div className="text-center">{sc.stf_score}</div>
-											<div className="text-center">{sc.created_at}</div>
-										</div>
-									))
-								: ""}
-						</PopoverContent>
+					<PopoverTrigger asChild>
+						<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
+					</PopoverTrigger>
+					<PopoverContent align="center" side="top">
+						<div className="grid grid-cols-3 items-center">
+							<div className="text-center">ผู้ตรวจ</div>
+							<div className="text-center">คะแนน</div>
+							<div className="text-center">วันที่ตรวจ</div>
+						</div>
+						<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
+						{result.length !== 0
+							? result[0].stf_regis_question_score.map((sc, i) => (
+									<div className="grid grid-cols-3 items-center" key={i}>
+										<div className="text-center text-sm">{sc.stf_user.username}</div>
+										<div className="text-center">{sc.stf_score}</div>
+										<div className="text-center">{sc.created_at}</div>
+									</div>
+								))
+							: ""}
+					</PopoverContent>
 				</Popover>
 			);
 		},
@@ -141,26 +141,26 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 
 			return (
 				<Popover>
-						<PopoverTrigger asChild>
-							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
-						</PopoverTrigger>
-						<PopoverContent align="center" side="top">
-							<div className="grid grid-cols-3 items-center">
-								<div className="text-center">ผู้ตรวจ</div>
-								<div className="text-center">คะแนน</div>
-								<div className="text-center">วันที่ตรวจ</div>
-							</div>
-							<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
-							{result.length !== 0
-								? result[0].stf_regis_question_score.map((sc, i) => (
-										<div className="grid grid-cols-3 items-center" key={i}>
-											<div className="text-center text-sm">{sc.stf_user.username}</div>
-											<div className="text-center">{sc.stf_score}</div>
-											<div className="text-center">{sc.created_at}</div>
-										</div>
-									))
-								: ""}
-						</PopoverContent>
+					<PopoverTrigger asChild>
+						<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
+					</PopoverTrigger>
+					<PopoverContent align="center" side="top">
+						<div className="grid grid-cols-3 items-center">
+							<div className="text-center">ผู้ตรวจ</div>
+							<div className="text-center">คะแนน</div>
+							<div className="text-center">วันที่ตรวจ</div>
+						</div>
+						<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
+						{result.length !== 0
+							? result[0].stf_regis_question_score.map((sc, i) => (
+									<div className="grid grid-cols-3 items-center" key={i}>
+										<div className="text-center text-sm">{sc.stf_user.username}</div>
+										<div className="text-center">{sc.stf_score}</div>
+										<div className="text-center">{sc.created_at}</div>
+									</div>
+								))
+							: ""}
+					</PopoverContent>
 				</Popover>
 			);
 		},
@@ -179,26 +179,26 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 
 			return (
 				<Popover>
-						<PopoverTrigger asChild>
-							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
-						</PopoverTrigger>
-						<PopoverContent align="center" side="top">
-							<div className="grid grid-cols-3 items-center">
-								<div className="text-center">ผู้ตรวจ</div>
-								<div className="text-center">คะแนน</div>
-								<div className="text-center">วันที่ตรวจ</div>
-							</div>
-							<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
-							{result.length !== 0
-								? result[0].stf_regis_question_score.map((sc, i) => (
-										<div className="grid grid-cols-3 items-center" key={i}>
-											<div className="text-center text-sm">{sc.stf_user.username}</div>
-											<div className="text-center">{sc.stf_score}</div>
-											<div className="text-center">{sc.created_at}</div>
-										</div>
-									))
-								: ""}
-						</PopoverContent>
+					<PopoverTrigger asChild>
+						<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
+					</PopoverTrigger>
+					<PopoverContent align="center" side="top">
+						<div className="grid grid-cols-3 items-center">
+							<div className="text-center">ผู้ตรวจ</div>
+							<div className="text-center">คะแนน</div>
+							<div className="text-center">วันที่ตรวจ</div>
+						</div>
+						<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
+						{result.length !== 0
+							? result[0].stf_regis_question_score.map((sc, i) => (
+									<div className="grid grid-cols-3 items-center" key={i}>
+										<div className="text-center text-sm">{sc.stf_user.username}</div>
+										<div className="text-center">{sc.stf_score}</div>
+										<div className="text-center">{sc.created_at}</div>
+									</div>
+								))
+							: ""}
+					</PopoverContent>
 				</Popover>
 			);
 		},
@@ -217,26 +217,26 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 
 			return (
 				<Popover>
-						<PopoverTrigger asChild>
-							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
-						</PopoverTrigger>
-						<PopoverContent align="center" side="top">
-							<div className="grid grid-cols-3 items-center">
-								<div className="text-center">ผู้ตรวจ</div>
-								<div className="text-center">คะแนน</div>
-								<div className="text-center">วันที่ตรวจ</div>
-							</div>
-							<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
-							{result.length !== 0
-								? result[0].stf_regis_question_score.map((sc, i) => (
-										<div className="grid grid-cols-3 items-center" key={i}>
-											<div className="text-center text-sm">{sc.stf_user.username}</div>
-											<div className="text-center">{sc.stf_score}</div>
-											<div className="text-center">{sc.created_at}</div>
-										</div>
-									))
-								: ""}
-						</PopoverContent>
+					<PopoverTrigger asChild>
+						<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
+					</PopoverTrigger>
+					<PopoverContent align="center" side="top">
+						<div className="grid grid-cols-3 items-center">
+							<div className="text-center">ผู้ตรวจ</div>
+							<div className="text-center">คะแนน</div>
+							<div className="text-center">วันที่ตรวจ</div>
+						</div>
+						<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
+						{result.length !== 0
+							? result[0].stf_regis_question_score.map((sc, i) => (
+									<div className="grid grid-cols-3 items-center" key={i}>
+										<div className="text-center text-sm">{sc.stf_user.username}</div>
+										<div className="text-center">{sc.stf_score}</div>
+										<div className="text-center">{sc.created_at}</div>
+									</div>
+								))
+							: ""}
+					</PopoverContent>
 				</Popover>
 			);
 		},
@@ -255,26 +255,26 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 
 			return (
 				<Popover>
-						<PopoverTrigger asChild>
-							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
-						</PopoverTrigger>
-						<PopoverContent align="center" side="top">
-							<div className="grid grid-cols-3 items-center">
-								<div className="text-center">ผู้ตรวจ</div>
-								<div className="text-center">คะแนน</div>
-								<div className="text-center">วันที่ตรวจ</div>
-							</div>
-							<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
-							{result.length !== 0
-								? result[0].stf_regis_question_score.map((sc, i) => (
-										<div className="grid grid-cols-3 items-center" key={i}>
-											<div className="text-center text-sm">{sc.stf_user.username}</div>
-											<div className="text-center">{sc.stf_score}</div>
-											<div className="text-center">{sc.created_at}</div>
-										</div>
-									))
-								: ""}
-						</PopoverContent>
+					<PopoverTrigger asChild>
+						<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
+					</PopoverTrigger>
+					<PopoverContent align="center" side="top">
+						<div className="grid grid-cols-3 items-center">
+							<div className="text-center">ผู้ตรวจ</div>
+							<div className="text-center">คะแนน</div>
+							<div className="text-center">วันที่ตรวจ</div>
+						</div>
+						<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
+						{result.length !== 0
+							? result[0].stf_regis_question_score.map((sc, i) => (
+									<div className="grid grid-cols-3 items-center" key={i}>
+										<div className="text-center text-sm">{sc.stf_user.username}</div>
+										<div className="text-center">{sc.stf_score}</div>
+										<div className="text-center">{sc.created_at}</div>
+									</div>
+								))
+							: ""}
+					</PopoverContent>
 				</Popover>
 			);
 		},
@@ -293,26 +293,26 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 
 			return (
 				<Popover>
-						<PopoverTrigger asChild>
-							<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
-						</PopoverTrigger>
-						<PopoverContent align="center" side="top">
-							<div className="grid grid-cols-3 items-center">
-								<div className="text-center">ผู้ตรวจ</div>
-								<div className="text-center">คะแนน</div>
-								<div className="text-center">วันที่ตรวจ</div>
-							</div>
-							<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
-							{result.length !== 0
-								? result[0].stf_regis_question_score.map((sc, i) => (
-										<div className="grid grid-cols-3 items-center" key={i}>
-											<div className="text-center text-sm">{sc.stf_user.username}</div>
-											<div className="text-center">{sc.stf_score}</div>
-											<div className="text-center">{sc.created_at}</div>
-										</div>
-									))
-								: ""}
-						</PopoverContent>
+					<PopoverTrigger asChild>
+						<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
+					</PopoverTrigger>
+					<PopoverContent align="center" side="top">
+						<div className="grid grid-cols-3 items-center">
+							<div className="text-center">ผู้ตรวจ</div>
+							<div className="text-center">คะแนน</div>
+							<div className="text-center">วันที่ตรวจ</div>
+						</div>
+						<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
+						{result.length !== 0
+							? result[0].stf_regis_question_score.map((sc, i) => (
+									<div className="grid grid-cols-3 items-center" key={i}>
+										<div className="text-center text-sm">{sc.stf_user.username}</div>
+										<div className="text-center">{sc.stf_score}</div>
+										<div className="text-center">{sc.created_at}</div>
+									</div>
+								))
+							: ""}
+					</PopoverContent>
 				</Popover>
 			);
 		},

@@ -1,15 +1,14 @@
 "use client";
 
+import { CheckCircle2, Clock, Loader2, XCircle } from "lucide-react";
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { toast } from "sonner";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { CheckCircle2, XCircle, Clock, Loader2 } from "lucide-react";
 import { StaffInfoCheck } from "@/types/student";
 import { StatusApplication, statusMap } from "./StatusApplication";
-import { toast } from "sonner";
-
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 interface ActionFooterProps {
 	applicationId: string;
