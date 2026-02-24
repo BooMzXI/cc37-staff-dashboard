@@ -2,8 +2,7 @@ import React from "react";
 
 export function Question1({ answer }: { answer: string }): React.JSX.Element {
 	return (
-		<>
-			<div className="flex flex-col mt-10">
+		<div className="flex flex-col mt-10">
 				<div className="font-normal text-base flex flex-row items-baseline">
 					<div className="text-3xl mr-3">1.</div> <div>น้องคาดหวังอะไรจากค่ายน้องคาดหวังอะไรจากค่าย</div>
 				</div>
@@ -12,15 +11,13 @@ export function Question1({ answer }: { answer: string }): React.JSX.Element {
 					<div className="break-all w-full text-base text-[#7b7b7b]">{answer}</div>
 				</div>
 				<div className="w-auto mt-8 h-[1px] bg-white "></div>
-			</div>
-		</>
+		</div>
 	);
 }
 
 export function Question2({ answer }: { answer: string }): React.JSX.Element {
 	return (
-		<>
-			<div className="flex flex-col mt-10">
+		<div className="flex flex-col mt-10">
 				<div className="font-normal text-base flex flex-row items-baseline">
 					<div className="text-3xl mr-3">2.</div>{" "}
 					<div>น้องได้เข้าร่วมการแข่งขันซึ่งต้องทำ Project เป็นทีม ทีมละ 5 คน โดยที่สมาชิกในทีมไม่เคยรู้จักกันมาก่อน ในกลุ่มมีสมาชิกคนหนึ่งที่มีความสามารถสูงกว่าเพื่อน ๆ เขาทำงานทุกอย่างแทนเพื่อนในกลุ่ม ส่งผลให้เพื่อนที่เหลือ รวมถึงตัวน้องรู้สึกว่าไม่ได้มีส่วนร่วมในการทำงาน</div>
@@ -31,15 +28,13 @@ export function Question2({ answer }: { answer: string }): React.JSX.Element {
 					<div className="break-all w-full text-base text-[#7b7b7b]">{answer}</div>
 				</div>
 				<div className="w-auto mt-8 h-[1px] bg-white "></div>
-			</div>
-		</>
+		</div>
 	);
 }
 
 export function Question3({ answer }: { answer: string }): React.JSX.Element {
 	return (
-		<>
-			<div className="flex flex-col mt-10">
+		<div className="flex flex-col mt-10">
 				<div className="font-normal text-base flex flex-row items-baseline">
 					<div className="text-3xl mr-3">3.</div>{" "}
 					<div>
@@ -53,15 +48,13 @@ export function Question3({ answer }: { answer: string }): React.JSX.Element {
 					<div className="break-all w-full text-base text-[#7b7b7b]">{answer}</div>
 				</div>
 				<div className="w-auto mt-8 h-[1px] bg-white "></div>
-			</div>
-		</>
+		</div>
 	);
 }
 
 export function Question4({ answer }: { answer: string }): React.JSX.Element {
 	return (
-		<>
-			<div className="flex flex-col mt-10">
+		<div className="flex flex-col mt-10">
 				<div className="font-normal text-base flex flex-row items-baseline">
 					<div className="text-3xl mr-3">4.</div>{" "}
 					<div>
@@ -75,15 +68,13 @@ export function Question4({ answer }: { answer: string }): React.JSX.Element {
 					<div className="break-all w-full text-base text-[#7b7b7b]">{answer}</div>
 				</div>
 				<div className="w-auto mt-8 h-[1px] bg-white "></div>
-			</div>
-		</>
+		</div>
 	);
 }
 
 export function Question5({ answer }: { answer: string }): React.JSX.Element {
 	return (
-		<>
-			<div className="flex flex-col mt-10">
+		<div className="flex flex-col mt-10">
 				<div className="font-normal text-base flex flex-row items-baseline">
 					<div className="text-3xl mr-3">5.</div> <div>น้องจะต้องเดินทางเพื่อออกตามหากุญแจ 2 ดอก เพื่อนำไปเปิดกล่องสมบัติชิ้นสุดท้ายของตระกูลที่ถูกโจรสลัดขโมยไปเมื่อหลายสิบปีก่อน</div>
 				</div>
@@ -116,15 +107,13 @@ export function Question5({ answer }: { answer: string }): React.JSX.Element {
 					<div className="break-all w-full text-base text-[#7b7b7b]">{answer}</div>
 				</div>
 				<div className="w-auto mt-8 h-[1px] bg-white "></div>
-			</div>
-		</>
+		</div>
 	);
 }
 
 export function Question6({ answer }: { answer: string }): React.JSX.Element {
 	return (
-		<>
-			<div className="flex flex-col mt-10">
+		<div className="flex flex-col mt-10">
 				<div className="font-normal text-base flex flex-row items-baseline">
 					<div className="text-3xl mr-3">6.</div>{" "}
 					<div>
@@ -137,7 +126,6 @@ export function Question6({ answer }: { answer: string }): React.JSX.Element {
 					<div className="break-all w-full text-base text-[#7b7b7b]">{answer}</div>
 				</div>
 				<div className="w-auto mt-8 h-[1px] bg-white "></div>
-			</div>
-		</>
+		</div>
 	);
 }
