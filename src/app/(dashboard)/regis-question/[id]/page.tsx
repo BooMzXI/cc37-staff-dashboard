@@ -1,13 +1,13 @@
 "use client";
 
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft, Check, Loader2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import PageTitle from "@/components/PageTitle";
 import { Input } from "@/components/ui/input";
 import { config } from "@/config/config";
-import { Grading } from "./grading";
-import { Question1, Question2, Question3, Question4, Question5, Question6 } from "./question";
+import { Grading } from "./components/Grading";
+import { Question1, Question2, Question3, Question4, Question5, Question6 } from "./components/Question";
 
 export interface StaffUser {
 	id: string;
@@ -47,45 +47,52 @@ export interface RegisAnswer {
 	stf_regis_question_score: RegisQuestionScore[];
 }
 
+export interface Question {
+	section: string;
+	fullscore: string;
+	question: string;
+	criteria: string;
+}
+
 const question = [
 	{
 		section: "regis_1",
 		fullScore: "5",
 		question: "น้องคาดหวังอะไรจากค่ายน้องคาดหวังอะไรจากค่าย",
-		criteria: "ไม่รู้",
+		criteria: "ด้านความคาดหวัง",
 	},
 	{
 		section: "regis_2",
-		fullScore: "5",
+		fullScore: "10",
 		question: "น้องได้เข้าร่วมการแข่งขันซึ่งต้องทำ Project เป็นทีม ทีมละ 5 คน โดยที่สมาชิกในทีมไม่เคยรู้จักกันมาก่อน ในกลุ่มมีสมาชิกคนหนึ่งที่มีความสามารถสูงกว่าเพื่อน ๆ เขาทำงานทุกอย่างแทนเพื่อนในกลุ่ม ส่งผลให้เพื่อนที่เหลือ รวมถึงตัวน้องรู้สึกว่าไม่ได้มีส่วนร่วมในการทำงาน",
-		criteria: "ไม่รู้",
+		criteria: "ด้านการทำงานเป็นทีม",
 	},
 	{
 		section: "regis_3",
-		fullScore: "5",
+		fullScore: "15",
 		question:
 			"มดน้อยได้รับโอกาสเข้าไปเป็นมดฝึกงานในรังที่มดน้อยใฝ่ฝัน โดยราชินีมดมีอำนาจสูงสุด แต่เมื่อเริ่มงานมดน้อยกลับพบปัญหากับหัวหน้ามดงานซึ่งเป็นที่โปรดปรานของราชินี โดยหัวหน้ามดงานตัวนั้นมีพฤติกรรมเอารัดเอาเปรียบ รวมไปถึงการมอบหมายงานเกินกว่าขอบเขตที่ระบุไว้ในสัญญา นอกจากนี้ ยังได้ค่าจ้างซึ่งเป็นจำนวนน้ำตาลที่ไม่เหมาะสมกับขอบเขตของงานที่ทำ แม้มดน้อยจะรู้สึกว่าสิ่งนี้ไม่ยุติธรรมและไม่โปร่งใส แต่หัวหน้ามดงานดังกล่าวเป็นผู้ประเมินผลการฝึกงาน ซึ่งอาจส่งผลต่ออนาคตของมดน้อย",
-		criteria: "ไม่รู้",
+		criteria: "ด้านจริยธรรมและการแก้ไขปัญหา",
 	},
 	{
 		section: "regis_4",
-		fullScore: "5",
+		fullScore: "10",
 		question:
 			"ทีมพัฒนาเทคโนโลยีของบริษัทแห่งหนึ่งได้รับข้อเสนอให้พัฒนาระบบการจัดการโรงแรมโดยใช้ AI ซึ่งทีมจะต้องพัฒนาระบบ AI ที่มีความซับซ้อน มีขอบเขตงานขนาดใหญ่ และต้องใช้ทรัพยากรจำนวนมาก จึงทำให้ค่าใช้จ่ายของโครงการค่อนข้างสูง ในขณะเดียวกัน ลูกค้ายังไม่มีความรู้และความเข้าใจด้านระบบเทคโนโลยีมากนัก",
-		criteria: "ไม่รู้",
+		criteria: "ด้านการสื่อสาร",
 	},
 	{
 		section: "regis_5",
-		fullScore: "5",
+		fullScore: "20",
 		question: "น้องจะต้องเดินทางเพื่อออกตามหากุญแจ 2 ดอก เพื่อนำไปเปิดกล่องสมบัติชิ้นสุดท้ายของตระกูลที่ถูกโจรสลัดขโมยไปเมื่อหลายสิบปีก่อน",
-		criteria: "ไม่รู้",
+		criteria: "ด้านความคิดสร้างสรรค์",
 	},
 	{
 		section: "regis_6",
-		fullScore: "5",
+		fullScore: "10",
 		question:
 			"ในปัจจุบันความรู้ด้านคอมพิวเตอร์สามารถเรียนรู้ได้ผ่านช่องทางออนไลน์ได้อย่างอิสระ อย่างไรก็ตาม น้องคิดว่าทำไมการเข้าศึกษาต่อในระดับอุดมศึกษา สาขาวิศวกรรมคอมพิวเตอร์จึงยังมีความสำคัญ AI ซึ่งทีมจะต้องพัฒนาระบบ AI ที่มีความซับซ้อน มีขอบเขตงานขนาดใหญ่ และต้องใช้ทรัพยากรจำนวนมาก จึงทำให้ค่าใช้จ่ายของโครงการค่อนข้างสูง ในขณะเดียวกัน ลูกค้ายังไม่มีความรู้และความเข้าใจด้านระบบเทคโนโลยีมากนัก",
-		criteria: "ไม่รู้",
+		criteria: "ด้านการให้เหตุผล",
 	},
 ];
 
@@ -94,9 +101,11 @@ export default function RegisAnswerGradingPage() {
 	const id = params?.id as string;
 	const router = useRouter();
 	const [answer, setAnswer] = useState<RegisAnswer[]>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		if (!id) return;
+		setIsLoading(true);
 
 		const fetchAnswer = async () => {
 			try {
@@ -110,12 +119,20 @@ export default function RegisAnswerGradingPage() {
 			} catch (error) {
 				console.error(error);
 			} finally {
-				// setLoading(false);
+				setIsLoading(false);
 			}
 		};
 
 		fetchAnswer();
 	}, [id]);
+
+	if (isLoading) {
+		return (
+			<div className="flex h-96 w-full items-center justify-center">
+				<Loader2 className="h-8 w-8 animate-spin text-primary" />
+			</div>
+		);
+	}
 
 	return (
 		<>
@@ -128,9 +145,9 @@ export default function RegisAnswerGradingPage() {
 				<PageTitle title="ประเมินคะแนนคำถามทะเบียน" description="" />
 			</div>
 			<div className="border rounded-xl py-8 pl-10">
-				<div className="grid grid-cols-5 gap-5 h-[calc(100vh-250px)]">
+				<div className="grid gap-y-16 lg:grid-cols-5 gap-5 h-screen xl:h-[calc(100vh-250px)]">
 					<div className="col-span-3 border-r flex flex-col pr-10 overflow-y-auto">
-						<div className="text-center sticky top-0 bg-background pb-4">คำถาม</div>
+						<div className="text-center sticky z-10 top-0 bg-background pb-4">คำถาม</div>
 						<Question1 answer={answer.filter((ans) => ans.std_regis_answer_section === "regis_1")[0]?.std_regis_answer} />
 						<Question2 answer={answer.filter((ans) => ans.std_regis_answer_section === "regis_2")[0]?.std_regis_answer} />
 						<Question3 answer={answer.filter((ans) => ans.std_regis_answer_section === "regis_3")[0]?.std_regis_answer} />
@@ -139,11 +156,22 @@ export default function RegisAnswerGradingPage() {
 						<Question6 answer={answer.filter((ans) => ans.std_regis_answer_section === "regis_6")[0]?.std_regis_answer} />
 					</div>
 					<div className="col-span-2 flex flex-col overflow-y-auto">
-						<div className="text-center sticky top-0 bg-background pb-4">เกณฑ์การให้คะแนน</div>
+						<div className="text-center sticky z-10 top-0 bg-background pb-4">เกณฑ์การให้คะแนน</div>
 						<div className="pr-5">
-							{/* {answer.map((ans, i) => (
-								<Grading key={i} section={ans.std_regis_answer_section} question={question[i].question} applicationId={ans.std_application_id} answerId={ans.std_regis_answer_id} />
-							))} */}
+							{answer
+								.sort((a, b) => parseInt(a.std_regis_answer_section.replace("regis_", "")) - parseInt(b.std_regis_answer_section.replace("regis_", "")))
+								.map((ans, i) => (
+									<Grading
+										key={i}
+										fullScore={question[i].fullScore}
+										section={ans.std_regis_answer_section}
+										question={question[i].question}
+										applicationId={ans.std_application_id}
+										answerId={ans.std_regis_answer_id}
+										passGrading={ans.stf_regis_question_score}
+										criteria={question[i].criteria}
+									/>
+								))}
 						</div>
 					</div>
 				</div>
