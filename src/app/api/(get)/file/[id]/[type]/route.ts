@@ -2,37 +2,33 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { config } from "@/config/config";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string; type: string }> }
-) {
-  try {
-    const { id, type } = await params;
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string; type: string }> }) {
+	try {
+		const { id, type } = await params;
 
-    const headersList = await headers();
-    const cookie = headersList.get("cookie") || "";
-    const authorization = headersList.get("authorization") || "";
+		const headersList = await headers();
+		const cookie = headersList.get("cookie") || "";
+		const authorization = headersList.get("authorization") || "";
 
-    const backendUrl = `${config.backend.baseUrl}/api/application/file/${id}/${type}`;
-    
-    const res = await fetch(backendUrl, {
-      method: "GET",
-      headers: {
-        "Cookie": cookie,
-        "Authorization": authorization,
-      },
-    });
+		const backendUrl = `${config.backend.baseUrl}/api/application/file/${id}/${type}`;
 
-    if (!res.ok) {
-      const errorText = await res.text();
-      return NextResponse.json({ error: "Failed to fetch file URL", details: errorText }, { status: res.status });
-    }
+		const res = await fetch(backendUrl, {
+			method: "GET",
+			headers: {
+				Cookie: cookie,
+				Authorization: authorization,
+			},
+		});
 
-    const data = await res.json();
-    return NextResponse.json(data);
+		if (!res.ok) {
+			const errorText = await res.text();
+			return NextResponse.json({ error: "Failed to fetch file URL", details: errorText }, { status: res.status });
+		}
 
-  } catch (error) {
-    console.error("Fetch File Route Error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
-  }
+		const data = await res.json();
+		return NextResponse.json(data);
+	} catch (error) {
+		console.error("Fetch File Route Error:", error);
+		return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+	}
 }

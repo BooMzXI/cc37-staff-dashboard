@@ -1,33 +1,8 @@
 "use client";
-import {
-	Table,
-	TableBody,
-	TableCaption,
-	TableCell,
-	TableFooter,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import PageTitle from "@/components/PageTitle";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
@@ -53,22 +28,17 @@ export default function AdminPage() {
 		}
 	}, [session, router]);
 
-	useEffect(() =>{
-		(async() => {
+	useEffect(() => {
+		(async () => {
 			axios.defaults.withCredentials = true;
 			const staffAccount = await axios.get(`${config.backend.baseUrl}/api/staff/account`);
 			setStaffAccount(staffAccount.data);
 		})();
 	}, []);
 
-	
-
 	return (
 		<>
-			<PageTitle
-				title="Admin Panel"
-				description="หน้าต่างจัดการระบบสำหรับ Admin"
-			/>
+			<PageTitle title="Admin Panel" description="หน้าต่างจัดการระบบสำหรับ Admin" />
 			<div className="text-2xl font-bold mb-5">Staff Accounts</div>
 			<Table>
 				<TableHeader>
@@ -89,19 +59,26 @@ export default function AdminPage() {
 							<TableCell>{ac.role}</TableCell>
 							<TableCell>
 								<DropdownMenu>
-								<DropdownMenuTrigger asChild>
-									<div className="p-2 bg-white text-black w-fit rounded-md hover:scale-105 active:scale-95 duration-300 cursor-pointer"><Settings2 strokeWidth={3} size={20} /></div>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent>
-									<DropdownMenuGroup>
-									<DropdownMenuLabel>{ac.username}</DropdownMenuLabel>
-									</DropdownMenuGroup>
-									<DropdownMenuSeparator />
-									<DropdownMenuItem><PenLine />Edit</DropdownMenuItem>
-									<DropdownMenuItem><Trash />Remove</DropdownMenuItem>
-								</DropdownMenuContent>
+									<DropdownMenuTrigger asChild>
+										<div className="p-2 bg-white text-black w-fit rounded-md hover:scale-105 active:scale-95 duration-300 cursor-pointer">
+											<Settings2 strokeWidth={3} size={20} />
+										</div>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										<DropdownMenuGroup>
+											<DropdownMenuLabel>{ac.username}</DropdownMenuLabel>
+										</DropdownMenuGroup>
+										<DropdownMenuSeparator />
+										<DropdownMenuItem>
+											<PenLine />
+											Edit
+										</DropdownMenuItem>
+										<DropdownMenuItem>
+											<Trash />
+											Remove
+										</DropdownMenuItem>
+									</DropdownMenuContent>
 								</DropdownMenu>
-								
 							</TableCell>
 						</TableRow>
 					))}
