@@ -3,6 +3,7 @@ import { Loader2, PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
+import Loading from "@/components/Loading";
 import PageTitle from "@/components/PageTitle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,11 +52,7 @@ export default function AdminPage() {
 	if (session?.user && (session.user as User)?.role !== "admin") return null;
 
 	if (loading) {
-		return (
-			<div className="flex h-96 w-full items-center justify-center">
-				<Loader2 className="h-8 w-8 animate-spin text-primary" />
-			</div>
-		);
+		return <Loading />;
 	}
 
 	return (

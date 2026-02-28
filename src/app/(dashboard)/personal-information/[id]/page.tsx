@@ -3,6 +3,7 @@
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { config } from "@/config/config";
@@ -77,11 +78,7 @@ export default function PersonalDetail() {
 	};
 
 	if (loading) {
-		return (
-			<div className="flex min-h-screen items-center justify-center">
-				<Loader2 className="h-8 w-8 animate-spin text-primary" />
-			</div>
-		);
+		return <Loading />;
 	}
 
 	if (!data) {

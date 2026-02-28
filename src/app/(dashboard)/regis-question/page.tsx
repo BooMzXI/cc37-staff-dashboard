@@ -33,7 +33,7 @@ export default function RegisQuestionPage() {
 	}, []);
 
 	if (loading) {
-		return Loading();
+		return <Loading />;
 	}
 
 	// Calculate stats

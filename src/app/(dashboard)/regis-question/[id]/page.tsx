@@ -129,7 +129,7 @@ export default function RegisAnswerGradingPage() {
 	}, [id, updateTrigger]);
 
 	if (isLoading) {
-		return Loading();
+		return <Loading />;
 	}
 
 	return (

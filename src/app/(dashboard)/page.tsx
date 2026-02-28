@@ -2,6 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import Loading from "@/components/Loading";
 import PageTitle from "@/components/PageTitle";
 import { config } from "@/config/config";
 import { STATS_CONFIG, type StatisticData } from "@/config/dashboard-stats";
@@ -32,11 +33,7 @@ export default function Dashboard() {
 	}, []);
 
 	if (loading) {
-		return (
-			<div className="flex h-96 w-full items-center justify-center">
-				<Loader2 className="h-8 w-8 animate-spin text-primary" />
-			</div>
-		);
+		return <Loading />;
 	}
 
 	return (
