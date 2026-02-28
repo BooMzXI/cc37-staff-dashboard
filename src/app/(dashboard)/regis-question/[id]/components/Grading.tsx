@@ -1,6 +1,7 @@
 import axios from "axios";
-import { Check, ChevronDown, Dot } from "lucide-react";
+import { Check, ChevronDown, Dot, Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Collapsible } from "@/components/Collapsible";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,6 +22,7 @@ export function Grading({
 	answerId,
 	passGrading,
 	criteria,
+	updateTrigger,
 }: {
 	fullScore: string;
 	question: string;
@@ -29,6 +31,7 @@ export function Grading({
 	section: string;
 	passGrading: RegisQuestionScore[];
 	criteria: string;
+	updateTrigger: (_: number) => void;
 }): React.JSX.Element {
 	const [gradingStaff1, setGradingStaff1] = useState<Grading>({
 		score: passGrading.filter((g) => g.stf_count === 1)[0]?.stf_score,
@@ -40,9 +43,13 @@ export function Grading({
 	});
 	const [isShowCriteria, setIsShowCriteria] = useState<boolean>(false);
 
+	const [isGradingLoading, setIsGradingLoading] = useState<boolean>(false);
+
 	async function submitGrading(staff: number) {
-		if (!gradingStaff1.score && staff === 1) return;
-		if (!gradingStaff2.score && staff === 2) return;
+		if (!gradingStaff1.score && staff === 1) return toast.error(`คะเเนนไม่ถูกต้อง (0 - ${fullScore})`);
+		if (!gradingStaff2.score && staff === 2) return toast.error(`คะเเนนไม่ถูกต้อง (0 - ${fullScore})`);
+
+		if (gradingStaff1.score > Number(fullScore) || gradingStaff2.score > Number(fullScore)) return toast.error(`คะเเนนไม่ถูกต้อง (0 - ${fullScore})`);
 
 		console.log("Staff 1", gradingStaff1);
 		console.log("Staff 2", gradingStaff2);
@@ -50,6 +57,7 @@ export function Grading({
 		console.log("section", section);
 		console.log("answer_id", answerId);
 
+		setIsGradingLoading(true);
 		try {
 			axios.defaults.withCredentials = true;
 			const gradingResponse = await axios.post(`${config.backend.baseUrl}/api/staff/regis/answer/grading`, {
@@ -60,8 +68,12 @@ export function Grading({
 				comment: staff === 1 ? gradingStaff1.comment : gradingStaff2.comment,
 			});
 			console.log(gradingResponse.data);
+			toast.success(`บันทึกคะเเนนข้อ ${section.replace("regis_", "")} ของผู้ตรวจ ${staff} เเล้ว`);
 		} catch (e) {
 			console.error(e);
+		} finally {
+			setIsGradingLoading(false);
+			updateTrigger(Math.random());
 		}
 	}
 
@@ -87,12 +99,13 @@ export function Grading({
 					<div className="text-xs">ผู้ตรวจคนที่ 1</div>
 					<div className="flex flex-row items-center mt-5">
 						<Input
+							disabled={isGradingLoading}
 							className="mr-2"
 							type="number"
 							placeholder="0.00"
 							step="0.01"
 							min="0"
-							max={fullScore}
+							max={Number(fullScore)}
 							defaultValue={passGrading.filter((g) => g.stf_count === 1)[0]?.stf_score}
 							onChange={(e) =>
 								setGradingStaff1((prev) => ({
@@ -102,12 +115,13 @@ export function Grading({
 							}
 							required
 						/>
-						<button type="button" className="flex items-center py-2 px-2 bg-white text-black rounded-md cursor-pointer hover:scale-105 duration-300 active:scale-95" onClick={() => submitGrading(1)}>
-							<Check strokeWidth={3} />
+						<button disabled={isGradingLoading} type="button" className="flex items-center py-2 px-2 bg-white text-black rounded-md cursor-pointer hover:scale-105 duration-300 active:scale-95" onClick={() => submitGrading(1)}>
+							{isGradingLoading ? <Loader2 strokeWidth={3} className="animate-spin" /> : <Check strokeWidth={3} />}
 						</button>
 					</div>
 					<div className="mt-3">
 						<Textarea
+							disabled={isGradingLoading}
 							defaultValue={passGrading.filter((g) => g.stf_count === 1)[0]?.stf_comment || ""}
 							onChange={(e) =>
 								setGradingStaff1((prev) => ({
@@ -122,12 +136,13 @@ export function Grading({
 					<div className="text-xs">ผู้ตรวจคนที่ 2</div>
 					<div className="flex flex-row items-center mt-5">
 						<Input
+							disabled={isGradingLoading}
 							className="mr-2"
 							type="number"
 							placeholder="0.00"
 							step="0.01"
 							min="0"
-							max={fullScore}
+							max={Number(fullScore)}
 							defaultValue={passGrading.filter((g) => g.stf_count === 2)[0]?.stf_score}
 							onChange={(e) =>
 								setGradingStaff2((prev) => ({
@@ -137,12 +152,13 @@ export function Grading({
 							}
 							required
 						/>
-						<button type="button" className="flex items-center py-2 px-2 bg-white text-black rounded-md cursor-pointer hover:scale-105 duration-300 active:scale-95" onClick={() => submitGrading(2)}>
-							<Check strokeWidth={3} />
+						<button disabled={isGradingLoading} type="button" className="flex items-center py-2 px-2 bg-white text-black rounded-md cursor-pointer hover:scale-105 duration-300 active:scale-95" onClick={() => submitGrading(2)}>
+							{isGradingLoading ? <Loader2 strokeWidth={3} className="animate-spin" /> : <Check strokeWidth={3} />}
 						</button>
 					</div>
 					<div className="mt-3">
 						<Textarea
+							disabled={isGradingLoading}
 							defaultValue={passGrading.filter((g) => g.stf_count === 2)[0]?.stf_comment || ""}
 							onChange={(e) =>
 								setGradingStaff2((prev) => ({
