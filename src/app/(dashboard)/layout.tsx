@@ -11,7 +11,7 @@ async function DashboardShell({ children }: { children: React.ReactNode }) {
 	});
 	return (
 		<>
-			<DashboardNavbar role={data?.user.role} />
+			<DashboardNavbar role={data?.user?.role} />
 			{children}
 		</>
 	);
