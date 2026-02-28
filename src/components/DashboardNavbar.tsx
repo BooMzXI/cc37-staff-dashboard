@@ -40,7 +40,7 @@ const DashboardNavbar = ({ role }: { role: string | undefined | null }) => {
 	}, []);
 
 	const userRole = role || null;
-	const filteredMenu = MENU_ITEMS.filter((item) => userRole && item.roles.includes(userRole));
+	const filteredMenu = MENU_ITEMS.filter((item) => userRole && item.roles.includes(userRole)).filter((item) => item.isEnable);
 
 	const handleSignOut = async () => {
 		await authClient.signOut({
