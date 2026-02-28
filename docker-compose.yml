@@ -1,0 +1,32 @@
+
+services:
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    command:
+      - "--label-enable"
+      - "--interval"
+      - "30"
+      - "--cleanup"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # - ~/.docker/config.json:/config.json:ro
+    networks:
+      - internal
+
+  client:
+    image: ghcr.io/imjustnon/comcamp37-staff-x:latest
+    container_name: comcamp37-staff
+    restart: unless-stopped
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+    networks:
+      - internal
+    ports:
+      - "8989:3000"
+      
+
+networks:
+  internal:
+    driver: bridge
