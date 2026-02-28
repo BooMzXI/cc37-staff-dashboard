@@ -23,19 +23,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Build arguments for environment variables
-ARG NEXT_PUBLIC_ENV=PROD
-ARG NEXT_PUBLIC_BACKEND_URL=https://api.comcamp.io
-ARG NEXT_PUBLIC_ENABLED_TAB=MAIN,PROFILE,SEND_EMAIL,REGIS_QUESTION,ACADEMIC_QUESTION,ACADEMIC_CHAOS_QUESTION,CONFIRMATION,CHANGE_PASS,ADMIN
-
-ENV NEXT_PUBLIC_ENV=$NEXT_PUBLIC_ENV
-ENV NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
-ENV NEXT_PUBLIC_ENABLED_TAB=$NEXT_PUBLIC_ENABLED_TAB
-
 # Disable Next.js telemetry
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Build the application
+# Build the application (uses .env.production automatically)
 RUN pnpm build
 
 # Runner stage (Production)
@@ -46,16 +37,12 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Runtime environment variables (can be overridden by docker-compose/docker run)
-ENV NEXT_PUBLIC_ENV=PROD
-ENV NEXT_PUBLIC_BACKEND_URL=https://api.comcamp.io
-ENV NEXT_PUBLIC_ENABLED_TAB=MAIN,PROFILE,SEND_EMAIL,REGIS_QUESTION,ACADEMIC_QUESTION,ACADEMIC_CHAOS_QUESTION,CONFIRMATION,CHANGE_PASS,ADMIN
-
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
 
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/.env.production ./.env.production
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 

@@ -55,7 +55,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            NEXT_PUBLIC_ENV=PROD
-            NEXT_PUBLIC_BACKEND_URL=https://api.comcamp.io
-            NEXT_PUBLIC_ENABLED_TAB="MAIN,PROFILE,SEND_EMAIL,REGIS_QUESTION,ACADEMIC_QUESTION,ACADEMIC_CHAOS_QUESTION,CONFIRMATION,CHANGE_PASS,ADMIN"
