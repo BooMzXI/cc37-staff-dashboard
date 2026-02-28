@@ -17,3 +17,9 @@ docker buildx build \
   .
 
 echo "Build and push complete: $IMAGE"
+
+# Clean build cache and unused images
+echo "Cleaning build cache and unused images..."
+docker buildx prune -f
+docker image prune -f
+docker builder prune -f
