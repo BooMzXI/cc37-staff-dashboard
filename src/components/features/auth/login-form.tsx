@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { AlertCircle, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -12,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { config } from "@/config/config";
 import { authClient } from "@/lib/auth-client";
 
 const formSchema = z.object({
@@ -37,22 +39,32 @@ export function LoginForm() {
 		setIsLoading(true);
 		setError(null);
 
-		const { data, error: authError } = await authClient.signIn.username(
-			{
+		try {
+			axios.defaults.withCredentials = true;
+			const loginRes = await axios.post(`${config.backend.baseUrl}/api/auth/sign-in/username`, {
 				username: values.username,
 				password: values.password,
-			},
-			{
-				onSuccess: () => {
-					router.push("/");
-					router.refresh();
-				},
-				onError: (ctx: { error: { message: unknown } }) => {
-					setError((ctx.error.message as string) || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ");
-					setIsLoading(false);
-				},
-			},
-		);
+			});
+
+			console.log(loginRes);
+		} catch (e) {
+			console.log(e);
+		}
+		// const { data, error: authError } = await authClient.signIn.username(
+		// 	{
+		// 		username: values.username,
+		// 		password: values.password,
+		// 	},
+		// 	{
+		// 		onSuccess: () => {
+		// 			router.push("/");
+		// 		},
+		// 		onError: (ctx: { error: { message: unknown } }) => {
+		// 			setError((ctx.error.message as string) || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ");
+		// 			setIsLoading(false);
+		// 		},
+		// 	},
+		// );
 	}
 
 	return (
