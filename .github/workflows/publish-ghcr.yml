@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: imjustnon/comcamp37-staff
+  IMAGE_NAME: imjustnon/comcamp37-staff-x
 
 jobs:
   build-and-push:

@@ -11,8 +11,17 @@ const nextConfig: NextConfig = {
 				port: "",
 				pathname: "/**",
 			},
+			{
+				protocol: "https",
+				hostname: "api.comcamp.io",
+				port: "",
+				pathname: "/**",
+			},
 		],
 	},
+	// Make environment variables available at runtime for server-side rendering
+	// Note: NEXT_PUBLIC_* vars are still embedded at build time for client-side JS
+	serverExternalPackages: [],
 	// async rewrites() {
 	// 	return [
 	// 		{

@@ -46,6 +46,11 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
+# Runtime environment variables (can be overridden by docker-compose/docker run)
+ENV NEXT_PUBLIC_ENV=PROD
+ENV NEXT_PUBLIC_BACKEND_URL=https://api.comcamp.io
+ENV NEXT_PUBLIC_ENABLED_TAB=MAIN,PROFILE,SEND_EMAIL,REGIS_QUESTION,ACADEMIC_QUESTION,ACADEMIC_CHAOS_QUESTION,CONFIRMATION,CHANGE_PASS,ADMIN
+
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
