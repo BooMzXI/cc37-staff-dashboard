@@ -4,5 +4,5 @@ import { config } from "@/config/config";
 
 export const authClient = createAuthClient({
 	baseURL: config.backend.baseUrl,
-	plugins: [adminClient()],
+	plugins: [usernameClient(), adminClient()],
 });
