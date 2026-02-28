@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, CircleCheckBig, ClipboardCheck, FileText, Search } from "lucide-react";
+import { ArrowUpDown, Check, CircleCheckBig, ClipboardCheck, FileText, Search, X } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -180,6 +180,21 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 		},
 	},
 	{
+		accessorKey: "std_regis_question",
+		header: ({ column }) => {
+			return (
+				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					รวมคะเเนน <ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			);
+		},
+		cell: ({ row }) => {
+			const result = row.original.std_regis_question.sort((a, b) => Number(a.std_regis_answer_section.replace("regis_", "")) - Number(b.std_regis_answer_section.replace("regis_", "")));
+
+			return ScorePopOver(result);
+		},
+	},
+	{
 		accessorKey: "std_application_id",
 		header: ({ column }) => {
 			return <Button variant="ghost">ยืนยันส่งใบสมัคร</Button>;
@@ -206,10 +221,21 @@ export const columns: ColumnDef<StudentRegisQuestion>[] = [
 ];
 
 function StaffPopOver(result: RegisQuestion[]): React.JSX.Element {
+	console.log(result[0]?.stf_regis_question_score.length);
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score.length} / 2</div>
+				<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer flex flex-col">
+					<div className="flex flex-row items-center gap-3 justify-between">
+						<div className="text-xs">ผู้ตรวจ 1</div>
+						{result[0]?.stf_regis_question_score.filter((stf) => stf.stf_count === 1).length > 0 ? <Check size={20} className="text-green-600" /> : <X size={20} className="text-red-600" />}
+					</div>
+					<div className="flex flex-row items-center gap-3 justify-between">
+						<div className="text-xs">ผู้ตรวจ 2</div>
+						{result[0]?.stf_regis_question_score.filter((stf) => stf.stf_count === 2).length > 0 ? <Check size={20} className="text-green-600" /> : <X size={20} className="text-red-600" />}
+					</div>
+				</div>
+				{/* <div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">{result[0]?.stf_regis_question_score. / 2</div> */}
 			</PopoverTrigger>
 			<PopoverContent align="center" side="top">
 				<div className="grid grid-cols-3 items-center">
@@ -229,5 +255,64 @@ function StaffPopOver(result: RegisQuestion[]): React.JSX.Element {
 					: ""}
 			</PopoverContent>
 		</Popover>
+	);
+}
+
+function ScorePopOver(result: RegisQuestion[]): React.JSX.Element {
+	const calScoreEachSection = result.map((ans) => {
+		let total = 0;
+		for (const { stf_score } of ans.stf_regis_question_score) {
+			total += stf_score;
+		}
+		const mean = total / ans.stf_regis_question_score.length;
+
+		return {
+			section: ans.std_regis_answer_section,
+			score_staff1: ans.stf_regis_question_score.filter((stf) => stf.stf_count === 1)[0]?.stf_score,
+			score_staff2: ans.stf_regis_question_score.filter((stf) => stf.stf_count === 2)[0]?.stf_score,
+			total: total,
+			mean: mean,
+		};
+	});
+
+	let sumTotal = 0;
+	for (const { mean } of calScoreEachSection) {
+		sumTotal += mean;
+	}
+
+	return (
+		<div className="w-full">
+			<Popover>
+				<PopoverTrigger asChild className="flex flex-row">
+					<button type="button" disabled={Number.isNaN(sumTotal)} className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer">
+						{!Number.isNaN(sumTotal) ? sumTotal.toFixed(2) : "-"}
+					</button>
+				</PopoverTrigger>
+				<PopoverContent align="center" side="top">
+					<div className="grid grid-cols-5 items-center">
+						<div className="text-center text-sm">ข้อที่</div>
+						<div className="text-center text-sm">Staff1</div>
+						<div className="text-center text-sm">Staff2</div>
+						<div className="text-center text-sm">รวม</div>
+						<div className="text-center text-sm">เฉลี่ย</div>
+					</div>
+					<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
+					{calScoreEachSection.length !== 0
+						? calScoreEachSection.map((sc, i) => (
+								<div className="grid grid-cols-5 mt-3 items-center" key={i}>
+									<div className="text-center text-sm">{sc.section.replace("regis_", "")}</div>
+									<div className="text-center text-sm">{sc.score_staff1}</div>
+									<div className="text-center text-sm">{sc.score_staff2}</div>
+									<div className="text-center text-sm">{sc.total.toFixed(2)}</div>
+									<div className="text-center text-sm">{sc.mean.toFixed(2)}</div>
+								</div>
+							))
+						: ""}
+
+					<div className="h-[2px] rounded-xl mt-5 w-full bg-white"></div>
+					<div className="text-center mt-3 font-bold text-sm">รวมคะเเนน : {sumTotal.toFixed(2)}</div>
+				</PopoverContent>
+			</Popover>
+		</div>
 	);
 }

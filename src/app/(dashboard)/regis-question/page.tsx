@@ -3,6 +3,7 @@
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
+import Loading from "@/components/Loading";
 import PageTitle from "@/components/PageTitle";
 import { config } from "@/config/config";
 import { columns, StudentRegisQuestion } from "./column";
@@ -32,11 +33,7 @@ export default function RegisQuestionPage() {
 	}, []);
 
 	if (loading) {
-		return (
-			<div className="flex h-96 w-full items-center justify-center">
-				<Loader2 className="h-8 w-8 animate-spin text-primary" />
-			</div>
-		);
+		return Loading();
 	}
 
 	// Calculate stats

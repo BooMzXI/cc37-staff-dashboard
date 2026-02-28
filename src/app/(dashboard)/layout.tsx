@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import DashboardNavbar, { AuthSession } from "@/components/DashboardNavbar";
 import { Toaster } from "@/components/ui/sonner";
 import { authClient } from "@/lib/auth-client";

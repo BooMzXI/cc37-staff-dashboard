@@ -3,6 +3,7 @@
 import { ArrowLeft, Check, Loader2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Loading from "@/components/Loading";
 import PageTitle from "@/components/PageTitle";
 import { Input } from "@/components/ui/input";
 import { config } from "@/config/config";
@@ -102,6 +103,7 @@ export default function RegisAnswerGradingPage() {
 	const router = useRouter();
 	const [answer, setAnswer] = useState<RegisAnswer[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [updateTrigger, setUpdateTrigger] = useState<number>(0);
 
 	useEffect(() => {
 		if (!id) return;
@@ -124,14 +126,10 @@ export default function RegisAnswerGradingPage() {
 		};
 
 		fetchAnswer();
-	}, [id]);
+	}, [id, updateTrigger]);
 
 	if (isLoading) {
-		return (
-			<div className="flex h-96 w-full items-center justify-center">
-				<Loader2 className="h-8 w-8 animate-spin text-primary" />
-			</div>
-		);
+		return Loading();
 	}
 
 	return (
@@ -170,6 +168,7 @@ export default function RegisAnswerGradingPage() {
 										answerId={ans.std_regis_answer_id}
 										passGrading={ans.stf_regis_question_score}
 										criteria={question[i].criteria}
+										updateTrigger={setUpdateTrigger}
 									/>
 								))}
 						</div>
