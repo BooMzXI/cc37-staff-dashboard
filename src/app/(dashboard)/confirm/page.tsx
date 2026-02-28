@@ -1,55 +1,47 @@
 "use client";
 
-import PageTitle from "@/components/PageTitle";
-import React, { useState, useEffect } from "react";
 import { Loader2 } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "@/components/DataTable";
+import Loading from "@/components/Loading";
+import PageTitle from "@/components/PageTitle";
+import { config } from "@/config/config";
 import { columns, StudentConfirmation } from "./column";
 
 export default function PersonalInformation() {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<StudentConfirmation[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [data, setData] = useState<StudentConfirmation[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/personal-information`,
-          {
-            method: "GET",
-            credentials: "include",
-          },
-        );
-        if (!res.ok) throw new Error("Failed to fetch data");
-        const jsonData = await res.json();
-        setData(jsonData);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const res = await fetch(`${config.backend.baseUrl}/api/staff/application/all`, {
+					method: "GET",
+					credentials: "include",
+				});
+				if (!res.ok) throw new Error("Failed to fetch data");
+				const jsonData = await res.json();
+				setData(jsonData);
+			} catch (error) {
+				console.error("Failed to fetch data:", error);
+			} finally {
+				setLoading(false);
+			}
+		};
 
-    fetchData();
-  }, []);
+		fetchData();
+	}, []);
 
-  if (loading) {
-    return (
-      <div className="flex h-96 w-full items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
+	if (loading) {
+		return <Loading />;
+	}
 
-  return (
-    <>
-      <PageTitle
-        title="Personal Information"
-        description={`ข้อมูลส่วนตัวของนักเรียน`}
-      />
-      <div className="mt-6 rounded-lg shadow-sm">
-        <DataTable columns={columns} data={data} />
-      </div>
-    </>
-  );
+	return (
+		<>
+			<PageTitle title="Personal Confirmation" description={`การยืนยันใบสมัครของนักเรียน`} />
+			<div className="mt-6 rounded-lg shadow-sm">
+				<DataTable columns={columns} data={data} />
+			</div>
+		</>
+	);
 }
