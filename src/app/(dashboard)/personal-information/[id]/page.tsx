@@ -111,7 +111,7 @@ export default function PersonalDetail() {
 						{/* Left column */}
 						<div className="space-y-6 min-w-0 lg:sticky top-6">
 							{/* Photo placeholder */}
-							<ProfileCard data={data} />
+							<ProfileCard data={data} profileFileKey={data.std_file.filter((file) => file.std_file_type === "file_face")[0]?.std_file_key} />
 							{/* Application status */}
 							<ApplicationStatusCard statusData={data.std_status} files={data.std_file} updatedAt={data.std_status?.updated_at} formatThaiDateTime={formatThaiDateTime} />
 
