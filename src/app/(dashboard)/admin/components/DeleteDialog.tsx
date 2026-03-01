@@ -20,7 +20,7 @@ export function DeleteDialog({ isOpen, setIsOpen, staff }: DeleteDialogProps) {
 		setIsDeleting(true);
 
 		try {
-			const res = await fetch(`${config.backend.baseUrl}/api/auth/admin/remove-user`, {
+			const res = await fetch(`${config.backend.baseUrl}/api/auth/admin`, {
 				credentials: "include",
 				method: "POST",
 				headers: { "Content-Type": "application/json" },

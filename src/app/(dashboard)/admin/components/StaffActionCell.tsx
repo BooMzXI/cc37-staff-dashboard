@@ -39,10 +39,10 @@ export function StaffActionCell({ row }: StaffActionCellProps) {
 						แก้ไขข้อมูล
 					</DropdownMenuItem>
 
-					<DropdownMenuItem className="text-destructive focus:text-destructive" onSelect={() => setIsDeleteDialogOpen(true)}>
+					{/* <DropdownMenuItem className="text-destructive focus:text-destructive" onSelect={() => setIsDeleteDialogOpen(true)}>
 						<Trash className="mr-2 h-4 w-4" />
 						ลบผู้ใช้งาน
-					</DropdownMenuItem>
+					</DropdownMenuItem> */}
 				</DropdownMenuContent>
 			</DropdownMenu>
 
