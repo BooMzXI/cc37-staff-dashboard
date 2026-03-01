@@ -1,16 +1,32 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
+const THSarabun = localFont({
+	src: [
+		{
+			path: "./fonts/THSarabunNew.ttf",
+			weight: "400",
+			style: "normal",
+		},
+		{
+			path: "./fonts/THSarabunNew Bold.ttf",
+			weight: "700",
+			style: "normal",
+		},
+		{
+			path: "./fonts/THSarabunNew Italic.ttf",
+			weight: "400",
+			style: "italic",
+		},
+		{
+			path: "./fonts/THSarabunNew BoldItalic.ttf",
+			weight: "700",
+			style: "italic",
+		},
+	],
+	variable: "--font-sarabun",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +40,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+		<html lang="en" className={`${THSarabun.variable}`}>
 			<body className="antialiased" suppressHydrationWarning>
 				<ThemeProvider>{children}</ThemeProvider>
 			</body>
