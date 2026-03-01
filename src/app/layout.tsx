@@ -6,22 +6,22 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 const THSarabun = localFont({
 	src: [
 		{
-			path: "./fonts/THSarabunNew.ttf",
+			path: "../assets/fonts/THSarabunNew.ttf",
 			weight: "400",
 			style: "normal",
 		},
 		{
-			path: "./fonts/THSarabunNew Bold.ttf",
+			path: "../assets/fonts/THSarabunNew Bold.ttf",
 			weight: "700",
 			style: "normal",
 		},
 		{
-			path: "./fonts/THSarabunNew Italic.ttf",
+			path: "../assets/fonts/THSarabunNew Italic.ttf",
 			weight: "400",
 			style: "italic",
 		},
 		{
-			path: "./fonts/THSarabunNew BoldItalic.ttf",
+			path: "../assets/fonts/THSarabunNew BoldItalic.ttf",
 			weight: "700",
 			style: "italic",
 		},
