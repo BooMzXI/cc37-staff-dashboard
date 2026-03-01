@@ -27,6 +27,9 @@ const config: Config = {
 			animation: {
 				slideLeftIn: "slideLeftIn 0.4s ease-out forwards",
 			},
+			fontFamily: {
+				sans: ["var(--font-sans)", "sans-serif"],
+			},
 			borderRadius: {
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",

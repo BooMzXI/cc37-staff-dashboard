@@ -2,7 +2,7 @@
 
 import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
 import { Search } from "lucide-react";
-
+import { useQueryState } from "nuqs";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +18,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 	/*const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
   );*/ // ถ้าอยากใช้ filter แยกคอลัมน์ก็เปิดใช้งาน state นี้ แล้วใส่ props ที่เกี่ยวข้องใน useReactTable
-	const [globalFilter, setGlobalFilter] = React.useState("");
+	const [globalFilter, setGlobalFilter] = useQueryState("search", {
+		defaultValue: "",
+	});
 
 	const table = useReactTable({
 		data,
@@ -41,7 +43,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 				<div className="relative w-full max-w-sm">
 					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 
-					<Input placeholder="ค้นหาชื่อ, อีเมล, เบอร์โทร..." value={globalFilter ?? ""} onChange={(event) => setGlobalFilter(event.target.value)} className="pl-9" />
+					<Input placeholder="ค้นหาชื่อ, อีเมล, เบอร์โทร..." value={globalFilter} onChange={(event) => setGlobalFilter(event.target.value)} className="pl-9" />
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-md border">
