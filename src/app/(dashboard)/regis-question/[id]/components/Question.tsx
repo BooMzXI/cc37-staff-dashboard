@@ -4,7 +4,7 @@ export function Question1({ answer }: { answer: string }): React.JSX.Element {
 	return (
 		<div className="flex flex-col mt-10">
 			<div className="font-normal text-base flex flex-row items-baseline">
-				<div className="text-3xl mr-3">1.</div> <div>น้องคาดหวังอะไรจากค่ายน้องคาดหวังอะไรจากค่าย</div>
+				<div className="text-3xl mr-3">1.</div> <div>น้องคาดหวังอะไรจากค่าย ComCamp 37</div>
 			</div>
 			<div className="text-sm mt-5 flex flex-row items-baseline">
 				<div className="mr-3 text-base font-bold">ตอบ</div>
@@ -118,11 +118,7 @@ export function Question6({ answer }: { answer: string }): React.JSX.Element {
 	return (
 		<div className="flex flex-col mt-10">
 			<div className="font-normal text-base flex flex-row items-baseline">
-				<div className="text-3xl mr-3">6.</div>{" "}
-				<div>
-					ในปัจจุบันความรู้ด้านคอมพิวเตอร์สามารถเรียนรู้ได้ผ่านช่องทางออนไลน์ได้อย่างอิสระ อย่างไรก็ตาม น้องคิดว่าทำไมการเข้าศึกษาต่อในระดับอุดมศึกษา สาขาวิศวกรรมคอมพิวเตอร์จึงยังมีความสำคัญ AI ซึ่งทีมจะต้องพัฒนาระบบ AI ที่มีความซับซ้อน มีขอบเขตงานขนาดใหญ่ และต้องใช้ทรัพยากรจำนวนมาก
-					จึงทำให้ค่าใช้จ่ายของโครงการค่อนข้างสูง ในขณะเดียวกัน ลูกค้ายังไม่มีความรู้และความเข้าใจด้านระบบเทคโนโลยีมากนัก
-				</div>
+				<div className="text-3xl mr-3">6.</div> <div>ในปัจจุบันความรู้ด้านคอมพิวเตอร์สามารถเรียนรู้ได้ผ่านช่องทางออนไลน์ได้อย่างอิสระ อย่างไรก็ตาม น้องคิดว่าทำไมการเข้าศึกษาต่อในระดับอุดมศึกษา สาขาวิศวกรรมคอมพิวเตอร์จึงยังมีความสำคัญ</div>
 			</div>
 			<div className="text-sm mt-5 flex flex-row items-baseline">
 				<div className="mr-3 text-base font-bold">ตอบ</div>
