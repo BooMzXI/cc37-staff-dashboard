@@ -46,8 +46,8 @@ export function Grading({
 	const [isGradingLoading, setIsGradingLoading] = useState<boolean>(false);
 
 	async function submitGrading(staff: number) {
-		if (!gradingStaff1.score && staff === 1) return toast.error(`คะเเนนไม่ถูกต้อง (0 - ${fullScore})`);
-		if (!gradingStaff2.score && staff === 2) return toast.error(`คะเเนนไม่ถูกต้อง (0 - ${fullScore})`);
+		// if (!gradingStaff1.score && staff === 1) return toast.error(`คะเเนนไม่ถูกต้อง (0 - ${fullScore})`);
+		// if (!gradingStaff2.score && staff === 2) return toast.error(`คะเเนนไม่ถูกต้อง (0 - ${fullScore})`);
 
 		if (gradingStaff1.score > Number(fullScore) || gradingStaff2.score > Number(fullScore)) return toast.error(`คะเเนนไม่ถูกต้อง (0 - ${fullScore})`);
 
