@@ -55,7 +55,7 @@ export const columns: ColumnDef<StudentConfirmation>[] = [
 			const name = row.original.std_user?.name || "-";
 			return (
 				<div className="w-[100px] md:w-[10px] lg:w-[200px] truncate" title={name}>
-					{name}
+					{decodeURI(name)}
 				</div>
 			);
 		},
