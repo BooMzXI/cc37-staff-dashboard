@@ -47,11 +47,11 @@ export const MENU_ITEMS: MenuItem[] = [
 		isEnable: config.enabledTab.includes("CONFIRMATION"),
 	},
 	{
-		title: "คำถามวิชาการ",
-		url: "/academic-questions",
+		title: "คำถามวิชาการ (เชาว์)",
+		url: "/academic-chaos-question",
 		icon: BookOpen,
 		roles: [ROLES.ADMIN, ROLES.ACADEMIC],
-		isEnable: config.enabledTab.includes("ACADEMIC_QUESTION"),
+		isEnable: config.enabledTab.includes("ACADEMIC_CHAOS_QUESTION"),
 	},
 	{
 		title: "เปลี่ยนรหัสผ่าน",
