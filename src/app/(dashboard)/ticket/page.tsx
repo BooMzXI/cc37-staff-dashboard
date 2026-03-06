@@ -110,7 +110,7 @@ export default function TicketPage() {
 
 	return (
 		<>
-			<PageTitle title="จัดการ Ticket" description={`ทั้งหมด ${totalTickets} ticket | แก้ไขแล้ว ${solvedCount} | รอดำเนินการ ${pendingCount}`} />
+			<PageTitle title="เเจ้งปัญหา" description={`ทั้งหมด ${totalTickets} ticket | แก้ไขแล้ว ${solvedCount} | รอดำเนินการ ${pendingCount}`} />
 			<div className="mt-6 rounded-lg shadow-sm">
 				<DataTable columns={allColumns} data={data} />
 			</div>
