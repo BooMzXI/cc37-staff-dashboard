@@ -47,6 +47,13 @@ export const MENU_ITEMS: MenuItem[] = [
 		isEnable: config.enabledTab.includes("CONFIRMATION"),
 	},
 	{
+		title: "คำถามวิชาการ (วิชาการ)",
+		url: "/academic-question",
+		icon: BookOpen,
+		roles: [ROLES.ADMIN, ROLES.ACADEMIC],
+		isEnable: config.enabledTab.includes("ACADEMIC_QUESTION"),
+	},
+	{
 		title: "คำถามวิชาการ (เชาว์)",
 		url: "/academic-chaos-question",
 		icon: BookOpen,

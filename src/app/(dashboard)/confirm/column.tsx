@@ -16,6 +16,8 @@ export interface StudentConfirmation {
 		std_info_gender: string;
 		std_info_phone_number: string;
 		std_info_nick_name: string;
+		std_info_first_name: string;
+		std_info_last_name: string;
 	};
 }
 
@@ -43,7 +45,7 @@ export const columns: ColumnDef<StudentConfirmation>[] = [
 		header: "เบอร์โทรศัพท์",
 	},
 	{
-		accessorKey: "std_user.name",
+		accessorKey: "std_info",
 		header: ({ column }) => {
 			return (
 				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -52,10 +54,12 @@ export const columns: ColumnDef<StudentConfirmation>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			const name = row.original.std_user?.name || "-";
+			const fname = row.original.std_info.std_info_first_name || "-";
+			const lname = row.original.std_info.std_info_last_name || "-";
+
 			return (
-				<div className="w-[100px] md:w-[10px] lg:w-[200px] truncate" title={name}>
-					{decodeURI(name)}
+				<div className="w-[100px] md:w-[10px] lg:w-[200px] truncate" title={fname}>
+					{decodeURI(fname)} {decodeURI(lname)}
 				</div>
 			);
 		},
@@ -68,6 +72,10 @@ export const columns: ColumnDef<StudentConfirmation>[] = [
 					ชื่อเล่น <ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
+		},
+		cell: ({ row }) => {
+			const name = row.original.std_info.std_info_nick_name;
+			return decodeURI(name);
 		},
 	},
 	{
