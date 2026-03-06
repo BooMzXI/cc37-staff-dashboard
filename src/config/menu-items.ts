@@ -1,4 +1,4 @@
-import { BookOpen, FileQuestionMark, Home, Mail, Settings, ShieldCheck, Users } from "lucide-react";
+import { BookOpen, FileQuestionMark, Home, Mail, Settings, ShieldCheck, Ticket, Users } from "lucide-react";
 import { ROLES } from "@/constants/roles";
 import { config } from "./config";
 
@@ -66,6 +66,13 @@ export const MENU_ITEMS: MenuItem[] = [
 		icon: Settings,
 		roles: [ROLES.ADMIN, ROLES.REGISTRATION, ROLES.ACADEMIC],
 		isEnable: config.enabledTab.includes("CHANGE_PASS"),
+	},
+	{
+		title: "เเจ้งปัญหา",
+		url: "/ticket",
+		icon: Ticket,
+		roles: [ROLES.ADMIN],
+		isEnable: config.enabledTab.includes("TICKET"),
 	},
 	{
 		title: "ผู้ดูแลระบบ (Admin)",
