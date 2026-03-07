@@ -153,7 +153,7 @@ export default function RegisAnswerGradingPage() {
 						<Question5 answer={answer.filter((ans) => ans.std_regis_answer_section === "regis_5")[0]?.std_regis_answer} />
 						<Question6 answer={answer.filter((ans) => ans.std_regis_answer_section === "regis_6")[0]?.std_regis_answer} />
 					</div>
-					<div className="col-span-2 flex flex-col overflow-y-auto">
+					<div className="col-span-3 lg:col-span-2 flex flex-col overflow-y-auto">
 						<div className="text-center sticky z-10 top-0 bg-background pb-4">เกณฑ์การให้คะแนน</div>
 						<div className="pr-5">
 							{answer
