@@ -179,7 +179,7 @@ function StaffPopOver(result: AcademicQuestion[]): React.JSX.Element {
 		<Popover>
 			<PopoverTrigger asChild>
 				<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer flex flex-col">
-					<div className="flex flex-row items-center gap-3 justify-between">{result[0]?.stf_academic_question_score.length > 0 ? <Check size={20} className="text-green-600" /> : <X size={20} className="text-red-600" />}</div>
+					<div className="flex flex-row items-center gap-3 justify-between">{result[0]?.stf_academic_question_score.length > 0 ? result[0].stf_academic_question_score[0].stf_score : <X size={20} className="text-red-600" />}</div>
 				</div>
 			</PopoverTrigger>
 			<PopoverContent align="center" side="top">

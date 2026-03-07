@@ -43,7 +43,7 @@ export default function AcademicQuestionPage() {
 
 	return (
 		<>
-			<PageTitle title="ตรวจคำตอบ คำถาม Academic" description={`ทั้งหมด ${totalApplications} ใบสมัคร | ส่งแล้ว ${submittedCount} | มีคำตอบ ${withQuestionsCount} | ตรวจแล้ว ${checkedCount}`} />
+			<PageTitle title="ตรวจคำตอบ คำถามวิชาการ" description={`ทั้งหมด ${totalApplications} ใบสมัคร | ส่งแล้ว ${submittedCount} | มีคำตอบ ${withQuestionsCount} | ตรวจแล้ว ${checkedCount}`} />
 			<div className="mt-6 rounded-lg shadow-sm">
 				<DataTable columns={columns} data={data} />
 			</div>
