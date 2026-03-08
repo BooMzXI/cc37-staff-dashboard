@@ -6,7 +6,7 @@ import { Collapsible } from "@/components/Collapsible";
 import { Input } from "@/components/ui/input";
 import { config } from "@/config/config";
 import { AcademicChaosQuestionScore, getSectionDisplayName } from "../../column";
-import { Criteria } from "./Criteria";
+import { Answer2, Criteria } from "./Criteria";
 
 export function Grading({
 	section,
@@ -23,7 +23,8 @@ export function Grading({
 	updateTrigger: (_: number) => void;
 	question: string;
 }): React.JSX.Element {
-	const [score, setScore] = useState<number | undefined>(passGrading[0]?.stf_score);
+	const existingScore = passGrading.find((g) => g.stf_count === 11)?.stf_score;
+	const [score, setScore] = useState<number | undefined>(existingScore);
 	const [isGradingLoading, setIsGradingLoading] = useState<boolean>(false);
 	const [isShowCriteria, setIsShowCriteria] = useState<boolean>(false);
 
@@ -36,7 +37,7 @@ export function Grading({
 			const gradingResponse = await axios.post(`${config.backend.baseUrl}/api/staff/academic-chaos/answer/grading`, {
 				application_id: applicationId,
 				answer_id: answerId,
-				staff_count: 1,
+				staff_count: 11,
 				score: score,
 			});
 			console.log(gradingResponse.data);
@@ -70,7 +71,7 @@ export function Grading({
 			</Collapsible>
 			<div className="flex flex-col mt-2">
 				<div className="flex flex-row items-center mt-1">
-					<Input disabled={isGradingLoading} className="mr-2" type="number" placeholder="0.00" step="0.01" min="0" defaultValue={passGrading[0]?.stf_score} onChange={(e) => setScore(Number(e.target.value))} required />
+					<Input disabled={isGradingLoading} className="mr-2" type="number" placeholder="0.00" step="0.01" min="0" defaultValue={existingScore} onChange={(e) => setScore(Number(e.target.value))} required />
 					<button disabled={isGradingLoading} type="button" className="flex items-center py-2 px-2 bg-white text-black rounded-md cursor-pointer hover:scale-105 duration-300 active:scale-95" onClick={() => submitGrading()}>
 						{isGradingLoading ? <Loader2 strokeWidth={3} className="animate-spin" /> : <Check strokeWidth={3} />}
 					</button>

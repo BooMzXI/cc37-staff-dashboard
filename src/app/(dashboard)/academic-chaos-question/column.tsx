@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Check, CircleCheckBig, Search, X } from "lucide-react";
+import { ArrowUpDown, Check, CircleAlert, CircleCheckBig, CircleMinus, Search, X } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -81,12 +81,12 @@ export const APTITUDE_SECTIONS = ["aptitude_101", "aptitude_102", "aptitude_201"
 export function getSectionDisplayName(section: string): string {
 	const map: Record<string, string> = {
 		aptitude_101: "1.1",
-		aptitude_102: "1.2",
-		aptitude_201: "2.1",
-		aptitude_202: "2.2",
-		aptitude_203: "2.3",
-		aptitude_301: "3.1",
-		aptitude_302: "3.2",
+		aptitude_102: "1.2 (Deprecate)",
+		aptitude_201: "2.1 (ด้าน 1)",
+		aptitude_202: "2.2 (ด้าน 2)",
+		aptitude_203: "2.3 (ด้าน 3)",
+		aptitude_301: "3.1 (ด้าน 1,2,3,4)",
+		aptitude_302: "3.2 (Deprecate)",
 	};
 	return map[section] || section;
 }
@@ -170,23 +170,47 @@ export const columns: ColumnDef<StudentAcademicChaosQuestion>[] = [
 ];
 
 function StaffPopOver(result: AcademicChaosQuestion[]): React.JSX.Element {
+	const section = result[0]?.std_academic_chaos_answer_section;
+	const isDeprecated = section === "aptitude_102" || section === "aptitude_302";
+
+	const staffCountLabelMap: Record<number, string> = {
+		11: "1.1",
+		21: "2.1 (ด้าน 1)",
+		22: "2.2 (ด้าน 2)",
+		23: "2.3 (ด้าน 3)",
+		31: "3 ด้าน 1",
+		32: "3 ด้าน 2",
+		33: "3 ด้าน 3",
+		34: "3 ด้าน 4",
+	};
+
+	// Build sorted score rows with labels
+	const scores = result[0]?.stf_academic_chaos_question_score ?? [];
+	const sortedScores = [...scores].sort((a, b) => a.stf_count - b.stf_count);
+
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
 				<div className="text-center py-2 w-fit px-4 mx-auto hover:bg-white/10 rounded-md duration-300 cursor-pointer flex flex-col">
-					<div className="flex flex-row items-center gap-3 justify-between">{result[0]?.stf_academic_chaos_question_score.length > 0 ? <Check size={20} className="text-green-600" /> : <X size={20} className="text-red-600" />}</div>
+					{isDeprecated ? (
+						<CircleMinus size={20} className="text-[#ffa109]" />
+					) : (
+						<div className="flex flex-row items-center gap-3 justify-between">{scores.length > 0 ? scores.map((sc) => sc.stf_score).reduce((prev, cur) => prev + cur, 0) : <X size={20} className="text-red-600" />}</div>
+					)}
 				</div>
 			</PopoverTrigger>
 			<PopoverContent align="center" side="top">
-				<div className="grid grid-cols-3 items-center">
+				<div className="grid grid-cols-4 items-center">
+					<div className="text-center text-sm">ข้อ</div>
 					<div className="text-center text-sm">ผู้ตรวจ</div>
 					<div className="text-center text-sm">คะแนน</div>
 					<div className="text-center text-sm">วันที่ตรวจ</div>
 				</div>
 				<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
-				{result.length !== 0
-					? result[0].stf_academic_chaos_question_score.map((sc, i) => (
-							<div className="grid grid-cols-3 mt-3 items-center" key={i}>
+				{sortedScores.length !== 0
+					? sortedScores.map((sc, i) => (
+							<div className="grid grid-cols-4 mt-3 items-center" key={i}>
+								<div className="text-center text-sm">{staffCountLabelMap[sc.stf_count] ?? sc.stf_count}</div>
 								<div className="text-center text-sm">{sc.stf_user.name}</div>
 								<div className="text-center text-sm">{sc.stf_score}</div>
 								<div className="text-center text-xs">{new Date(sc.created_at).toLocaleString()}</div>
@@ -199,17 +223,64 @@ function StaffPopOver(result: AcademicChaosQuestion[]): React.JSX.Element {
 }
 
 function ScorePopOver(result: AcademicChaosQuestion[]): React.JSX.Element {
-	const calScoreEachSection = result.map((ans) => {
-		const score = ans.stf_academic_chaos_question_score[0]?.stf_score;
-		return {
-			section: ans.std_academic_chaos_answer_section,
-			score: score,
-		};
-	});
+	const staffCountLabelMap: Record<number, string> = {
+		11: "1.1",
+		21: "2.1 (ด้าน 1)",
+		22: "2.2 (ด้าน 2)",
+		23: "2.3 (ด้าน 3)",
+		31: "3 ด้าน 1",
+		32: "3 ด้าน 2",
+		33: "3 ด้าน 3",
+		34: "3 ด้าน 4",
+	};
+
+	interface ScoreRow {
+		label: string;
+		sortKey: number;
+		score: number | undefined;
+	}
+
+	const rows: ScoreRow[] = [];
+
+	for (const ans of result) {
+		const section = ans.std_academic_chaos_answer_section;
+		// skip deprecated sections
+		if (section === "aptitude_102" || section === "aptitude_302") continue;
+
+		if (section === "aptitude_301") {
+			// expand into 4 rows by staff_count
+			for (const stfCount of [31, 32, 33, 34]) {
+				const sc = ans.stf_academic_chaos_question_score.find((s) => s.stf_count === stfCount);
+				rows.push({
+					label: staffCountLabelMap[stfCount] || `ด้าน ${stfCount}`,
+					sortKey: stfCount,
+					score: sc?.stf_score,
+				});
+			}
+		} else {
+			// single score per section — find the matching staff_count
+			const stfCountMap: Record<string, number> = {
+				aptitude_101: 11,
+				aptitude_201: 21,
+				aptitude_202: 22,
+				aptitude_203: 23,
+			};
+			const expectedCount = stfCountMap[section];
+			const sc = expectedCount ? ans.stf_academic_chaos_question_score.find((s) => s.stf_count === expectedCount) : ans.stf_academic_chaos_question_score[0];
+			rows.push({
+				label: staffCountLabelMap[expectedCount ?? 0] || getSectionDisplayName(section),
+				sortKey: expectedCount ?? 0,
+				score: sc?.stf_score,
+			});
+		}
+	}
+
+	// sort by sortKey (small to large)
+	rows.sort((a, b) => a.sortKey - b.sortKey);
 
 	let sumTotal = 0;
 	let hasAnyScore = false;
-	for (const { score } of calScoreEachSection) {
+	for (const { score } of rows) {
 		if (score !== undefined && score !== null) {
 			sumTotal += score;
 			hasAnyScore = true;
@@ -230,11 +301,11 @@ function ScorePopOver(result: AcademicChaosQuestion[]): React.JSX.Element {
 						<div className="text-center text-sm">คะแนน</div>
 					</div>
 					<div className="h-[2px] rounded-xl my-5 w-full bg-white"></div>
-					{calScoreEachSection.length !== 0
-						? calScoreEachSection.map((sc, i) => (
+					{rows.length !== 0
+						? rows.map((r, i) => (
 								<div className="grid grid-cols-2 mt-3 items-center" key={i}>
-									<div className="text-center text-sm">{getSectionDisplayName(sc.section)}</div>
-									<div className="text-center text-sm">{sc.score !== undefined && sc.score !== null ? sc.score : "-"}</div>
+									<div className="text-center text-sm">{r.label}</div>
+									<div className="text-center text-sm">{r.score !== undefined && r.score !== null ? r.score : "-"}</div>
 								</div>
 							))
 						: ""}
