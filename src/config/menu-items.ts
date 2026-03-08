@@ -29,7 +29,7 @@ export const MENU_ITEMS: MenuItem[] = [
 		title: "ส่งอีเมล (R)",
 		url: "/send-email",
 		icon: Mail,
-		roles: [ROLES.REGISTRATION],
+		roles: [ROLES.ADMIN, ROLES.REGISTRATION],
 		isEnable: config.enabledTab.includes("SEND_EMAIL"),
 	},
 	{
@@ -38,13 +38,6 @@ export const MENU_ITEMS: MenuItem[] = [
 		icon: FileQuestionMark,
 		roles: [ROLES.ADMIN, ROLES.REGISTRATION],
 		isEnable: config.enabledTab.includes("REGIS_QUESTION"),
-	},
-	{
-		title: "ส่งอีเมล (R)",
-		url: "/send-email",
-		icon: Mail,
-		roles: [ROLES.ADMIN, ROLES.REGISTRATION],
-		isEnable: config.enabledTab.includes("SEND_EMAIL"),
 	},
 	{
 		title: "ยืนยันสิทธิ์ (R)",
