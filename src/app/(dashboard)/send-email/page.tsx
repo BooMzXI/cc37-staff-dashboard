@@ -186,7 +186,7 @@ export default function SendEmailPage() {
 													{filteredUsers.length === 0 ? (
 														<div className="py-4 text-center text-sm text-muted-foreground">ไม่พบผู้ใช้</div>
 													) : (
-														filteredUsers.map((user) => (
+														filteredUsers.slice(0, 4).map((user) => (
 															<button key={user.email} type="button" className="flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground" onClick={() => handleSelectEmail(user)}>
 																<Check className={`h-4 w-4 shrink-0 ${selectedEmail === user.email ? "opacity-100" : "opacity-0"}`} />
 																<div className="flex flex-col items-start">
