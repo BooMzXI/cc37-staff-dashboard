@@ -8,6 +8,7 @@ import PageTitle from "@/components/PageTitle";
 import { config } from "@/config/config";
 import { AcademicChaosQuestionScore, getSectionDisplayName, sectionSortIndex } from "../column";
 import { Grading } from "./components/Grading";
+import { type GradingBoxItem, GradingGroup } from "./components/GradingGroup";
 import { Question1, Question2, Question3 } from "./components/Question";
 
 export interface AcademicChaosAnswer {
@@ -131,20 +132,100 @@ export default function AcademicChaosAnswerGradingPage() {
 					<div className="col-span-2 flex flex-col overflow-y-auto">
 						<div className="text-center sticky z-10 top-0 bg-background pb-4">ให้คะแนน</div>
 						<div className="pr-5">
-							{[...answer]
-								.sort((a, b) => sectionSortIndex(a.std_academic_chaos_answer_section) - sectionSortIndex(b.std_academic_chaos_answer_section))
-								.filter((ans) => ans.std_academic_chaos_answer_section !== "aptitude_102") // filter 1.2 out
-								.map((ans) => (
+							{/* ข้อ 1: aptitude_101 — 1 grading box */}
+							{(() => {
+								const ans101 = answer.find((a) => a.std_academic_chaos_answer_section === "aptitude_101");
+								if (!ans101) return null;
+								return (
 									<Grading
-										key={ans.std_academic_chaos_answer_id}
-										section={ans.std_academic_chaos_answer_section}
-										question={question.find((q) => q.section === ans.std_academic_chaos_answer_section)?.question || ""}
-										applicationId={ans.std_application_id}
-										answerId={ans.std_academic_chaos_answer_id}
-										passGrading={ans.stf_academic_chaos_question_score}
+										key={ans101.std_academic_chaos_answer_id}
+										section={ans101.std_academic_chaos_answer_section}
+										question={question.find((q) => q.section === "aptitude_101")?.question || ""}
+										applicationId={ans101.std_application_id}
+										answerId={ans101.std_academic_chaos_answer_id}
+										passGrading={ans101.stf_academic_chaos_question_score}
 										updateTrigger={setUpdateTrigger}
 									/>
-								))}
+								);
+							})()}
+
+							{/* ข้อ 2: aptitude_201-203 — 1 section, 3 grading boxes */}
+							{(() => {
+								const ans201 = answer.find((a) => a.std_academic_chaos_answer_section === "aptitude_201");
+								const ans202 = answer.find((a) => a.std_academic_chaos_answer_section === "aptitude_202");
+								const ans203 = answer.find((a) => a.std_academic_chaos_answer_section === "aptitude_203");
+								if (!ans201 && !ans202 && !ans203) return null;
+								const items: GradingBoxItem[] = [];
+								if (ans201)
+									items.push({
+										label: getSectionDisplayName("aptitude_201"),
+										answerId: ans201.std_academic_chaos_answer_id,
+										applicationId: ans201.std_application_id,
+										staffCount: 21,
+										passGrading: ans201.stf_academic_chaos_question_score,
+										criteriaSection: "aptitude_201",
+									});
+								if (ans202)
+									items.push({
+										label: getSectionDisplayName("aptitude_202"),
+										answerId: ans202.std_academic_chaos_answer_id,
+										applicationId: ans202.std_application_id,
+										staffCount: 22,
+										passGrading: ans202.stf_academic_chaos_question_score,
+										criteriaSection: "aptitude_202",
+									});
+								if (ans203)
+									items.push({
+										label: getSectionDisplayName("aptitude_203"),
+										answerId: ans203.std_academic_chaos_answer_id,
+										applicationId: ans203.std_application_id,
+										staffCount: 23,
+										passGrading: ans203.stf_academic_chaos_question_score,
+										criteriaSection: "aptitude_203",
+									});
+								return <GradingGroup title="ข้อ 2: หอคอยสัญญาณอัฉริยะ" items={items} updateTrigger={setUpdateTrigger} />;
+							})()}
+
+							{/* ข้อ 3: aptitude_301-302 — 1 section, 4 grading boxes */}
+							{(() => {
+								const ans301 = answer.find((a) => a.std_academic_chaos_answer_section === "aptitude_301");
+								if (!ans301) return null;
+								const items: GradingBoxItem[] = [
+									{
+										label: "ด้าน 1: การเชื่อมโยงหลักฐานสมองกล",
+										answerId: ans301.std_academic_chaos_answer_id,
+										applicationId: ans301.std_application_id,
+										staffCount: 31,
+										passGrading: ans301.stf_academic_chaos_question_score,
+										criteriaSection: "aptitude_301",
+									},
+									{
+										label: "ด้าน 2: การวิเคราะห์ความขัดแย้งพยาน",
+										answerId: ans301.std_academic_chaos_answer_id,
+										applicationId: ans301.std_application_id,
+										staffCount: 32,
+										passGrading: ans301.stf_academic_chaos_question_score,
+										criteriaSection: "aptitude_302",
+									},
+									{
+										label: "ด้าน 3: ความสมเหตุสมผลเชิงตรรกะ",
+										answerId: ans301.std_academic_chaos_answer_id,
+										applicationId: ans301.std_application_id,
+										staffCount: 33,
+										passGrading: ans301.stf_academic_chaos_question_score,
+										criteriaSection: "aptitude_303",
+									},
+									{
+										label: "ด้าน 4: ความตั้งใจและการเรียบเรียง",
+										answerId: ans301.std_academic_chaos_answer_id,
+										applicationId: ans301.std_application_id,
+										staffCount: 34,
+										passGrading: ans301.stf_academic_chaos_question_score,
+										criteriaSection: "aptitude_304",
+									},
+								];
+								return <GradingGroup title="ข้อ 3: คดีปริศนาในม่านฝุ่น" items={items} updateTrigger={setUpdateTrigger} />;
+							})()}
 						</div>
 					</div>
 				</div>

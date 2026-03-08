@@ -2,11 +2,13 @@ import React from "react";
 
 export function Criteria({ section }: { section: string }): React.JSX.Element {
 	if (section === "aptitude_101") return <Criteria1 />;
-	else if (section === "aptitude_201") return <Criteria2 />;
-	else if (section === "aptitude_202") return <Criteria2 />;
-	else if (section === "aptitude_203") return <Criteria2 />;
-	else if (section === "aptitude_301") return <Criteria3 />;
-	else if (section === "aptitude_302") return <Criteria3 />;
+	else if (section === "aptitude_201") return <Criteria21 />;
+	else if (section === "aptitude_202") return <Criteria22 />;
+	else if (section === "aptitude_203") return <Criteria23 />;
+	else if (section === "aptitude_301") return <Criteria31 />;
+	else if (section === "aptitude_302") return <Criteria32 />;
+	else if (section === "aptitude_303") return <Criteria33 />;
+	else if (section === "aptitude_304") return <Criteria34 />;
 	else return <></>;
 }
 
@@ -202,7 +204,7 @@ export function Criteria1(): React.JSX.Element {
 	);
 }
 
-export function Criteria2(): React.JSX.Element {
+export function Answer2(): React.JSX.Element {
 	return (
 		<CriteriaBody>
 			<CriteriaHead>เฉลยเชิงตรรกะ ข้อ 2 — ตารางบันทึกสถานะ</CriteriaHead>
@@ -214,8 +216,13 @@ export function Criteria2(): React.JSX.Element {
 				<CriteriaTableSub c1="2 — พายุเข้า" c2="🔴 Red" c3="Y=🟡 Yellow, Z=🟡 Yellow → ปกติ" />
 				<CriteriaTableSub c1="3 — พายุเข้า" c2="🔴 Red" c3="Y=🔴 Red, Z=🔵 Blue → ไฟลัดวงจร!" />
 			</CriteriaTableBody>
+		</CriteriaBody>
+	);
+}
 
-			<div className="my-4"></div>
+export function Criteria21(): React.JSX.Element {
+	return (
+		<CriteriaBody>
 			<CriteriaHead>ด้านที่ 1: ความถูกต้องและการวิเคราะห์สถานการณ์ (4 คะแนน)</CriteriaHead>
 			<CriteriaTableBody>
 				<CriteriaTableHead c1="เกณฑ์การพิจารณา (Criteria)" c2="คะแนน" c3="ตัวอย่างพฤติกรรมคำตอบ" />
@@ -270,8 +277,13 @@ export function Criteria2(): React.JSX.Element {
 					</div>
 				</div>
 			</CriteriaTableBody>
+		</CriteriaBody>
+	);
+}
 
-			<div className="my-4"></div>
+export function Criteria22(): React.JSX.Element {
+	return (
+		<CriteriaBody>
 			<CriteriaHead>ด้านที่ 2: การออกแบบและการแก้ปัญหา (4 คะแนน)</CriteriaHead>
 			<CriteriaTableBody>
 				<CriteriaTableHead c1="เกณฑ์การพิจารณา (Criteria)" c2="คะแนน" c3="ตัวอย่างพฤติกรรมคำตอบ" />
@@ -326,8 +338,13 @@ export function Criteria2(): React.JSX.Element {
 					</div>
 				</div>
 			</CriteriaTableBody>
+		</CriteriaBody>
+	);
+}
 
-			<div className="my-4"></div>
+export function Criteria23(): React.JSX.Element {
+	return (
+		<CriteriaBody>
 			<CriteriaHead>ด้านที่ 3: การอธิบายและการให้เหตุผล (2 คะแนน)</CriteriaHead>
 			<CriteriaTableBody>
 				<CriteriaTableHead c1="เกณฑ์การพิจารณา (Criteria)" c2="คะแนน" c3="ตัวอย่างพฤติกรรมคำตอบ" />
@@ -366,7 +383,7 @@ export function Criteria2(): React.JSX.Element {
 	);
 }
 
-export function Criteria3(): React.JSX.Element {
+export function Criteria31(): React.JSX.Element {
 	return (
 		<CriteriaBody>
 			<CriteriaHead>เกณฑ์คะแนน ข้อ 3</CriteriaHead>
@@ -426,8 +443,16 @@ export function Criteria3(): React.JSX.Element {
 					</div>
 				</div>
 			</CriteriaTableBody>
+		</CriteriaBody>
+	);
+}
 
-			<div className="my-4"></div>
+export function Criteria32(): React.JSX.Element {
+	return (
+		<CriteriaBody>
+			<CriteriaHead>เกณฑ์คะแนน ข้อ 3</CriteriaHead>
+
+			<div className="my-2"></div>
 			<CriteriaHead>ด้านที่ 2: การวิเคราะห์ความขัดแย้งพยาน (ด้านการจับผิด) (3 คะแนน)</CriteriaHead>
 			<CriteriaTableBody>
 				<CriteriaTableHead c1="เกณฑ์การพิจารณา (Criteria)" c2="คะแนน" c3="ตัวอย่างพฤติกรรมคำตอบ" />
@@ -472,8 +497,16 @@ export function Criteria3(): React.JSX.Element {
 					</div>
 				</div>
 			</CriteriaTableBody>
+		</CriteriaBody>
+	);
+}
 
-			<div className="my-4"></div>
+export function Criteria33(): React.JSX.Element {
+	return (
+		<CriteriaBody>
+			<CriteriaHead>เกณฑ์คะแนน ข้อ 3</CriteriaHead>
+
+			<div className="my-2"></div>
 			<CriteriaHead>ด้านที่ 3: ความสมเหตุสมผลเชิงตรรกะ (ด้านวิธีการ) (2 คะแนน)</CriteriaHead>
 			<CriteriaTableBody>
 				<CriteriaTableHead c1="เกณฑ์การพิจารณา (Criteria)" c2="คะแนน" c3="ตัวอย่างพฤติกรรมคำตอบ" />
@@ -508,8 +541,16 @@ export function Criteria3(): React.JSX.Element {
 					</div>
 				</div>
 			</CriteriaTableBody>
+		</CriteriaBody>
+	);
+}
 
-			<div className="my-4"></div>
+export function Criteria34(): React.JSX.Element {
+	return (
+		<CriteriaBody>
+			<CriteriaHead>เกณฑ์คะแนน ข้อ 3</CriteriaHead>
+
+			<div className="my-2"></div>
 			<CriteriaHead>ด้านที่ 4: ความตั้งใจและการเรียบเรียง (ด้านพิเศษ - Non-AI) (1 คะแนน)</CriteriaHead>
 			<CriteriaTableBody>
 				<CriteriaTableHead c1="เกณฑ์การพิจารณา (Criteria)" c2="คะแนน" c3="รายละเอียด" />
