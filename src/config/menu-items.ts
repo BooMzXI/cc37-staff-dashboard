@@ -40,6 +40,13 @@ export const MENU_ITEMS: MenuItem[] = [
 		isEnable: config.enabledTab.includes("REGIS_QUESTION"),
 	},
 	{
+		title: "ส่งอีเมล (R)",
+		url: "/send-email",
+		icon: Mail,
+		roles: [ROLES.ADMIN, ROLES.REGISTRATION],
+		isEnable: config.enabledTab.includes("SEND_EMAIL"),
+	},
+	{
 		title: "ยืนยันสิทธิ์ (R)",
 		url: "/confirm",
 		icon: ShieldCheck,
