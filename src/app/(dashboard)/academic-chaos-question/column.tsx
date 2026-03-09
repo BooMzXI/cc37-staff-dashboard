@@ -185,7 +185,7 @@ function StaffPopOver(result: AcademicChaosQuestion[]): React.JSX.Element {
 	};
 
 	// Build sorted score rows with labels
-	const scores = result[0]?.stf_academic_chaos_question_score ?? [];
+	const scores = result[0]?.std_academic_chaos_answer_section === "aptitude_101" ? result[0]?.stf_academic_chaos_question_score.filter((sc) => sc.stf_count === 11) : (result[0]?.stf_academic_chaos_question_score ?? []);
 	const sortedScores = [...scores].sort((a, b) => a.stf_count - b.stf_count);
 
 	return (
@@ -195,7 +195,16 @@ function StaffPopOver(result: AcademicChaosQuestion[]): React.JSX.Element {
 					{isDeprecated ? (
 						<CircleMinus size={20} className="text-[#ffa109]" />
 					) : (
-						<div className="flex flex-row items-center gap-3 justify-between">{scores.length > 0 ? scores.map((sc) => sc.stf_score).reduce((prev, cur) => prev + cur, 0) : <X size={20} className="text-red-600" />}</div>
+						<div className="flex flex-row items-center gap-3 justify-between">
+							{scores.length > 0 ? (
+								scores
+									.filter((sc) => sc.stf_count)
+									.map((sc) => sc.stf_score)
+									.reduce((prev, cur) => prev + cur, 0)
+							) : (
+								<X size={20} className="text-red-600" />
+							)}
+						</div>
 					)}
 				</div>
 			</PopoverTrigger>
