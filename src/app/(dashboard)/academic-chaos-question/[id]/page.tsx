@@ -129,7 +129,7 @@ export default function AcademicChaosAnswerGradingPage() {
 							answer2={answer.filter((ans) => ans.std_academic_chaos_answer_section === "aptitude_302")[0]?.std_academic_chaos_answer}
 						/>
 					</div>
-					<div className="col-span-2 flex flex-col overflow-y-auto">
+					<div className="col-span-3 lg:col-span-2 flex flex-col overflow-y-auto">
 						<div className="text-center sticky z-10 top-0 bg-background pb-4">ให้คะแนน</div>
 						<div className="pr-5">
 							{/* ข้อ 1: aptitude_101 — 1 grading box */}
