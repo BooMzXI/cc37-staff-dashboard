@@ -43,9 +43,9 @@ export default function ProfileCard({ data, profileFileKey }: { data: StudentDet
 	const initialLetter = decodedName.charAt(0) || "?";
 
 	return (
-		<Card>
-			<CardContent className="p-4 sm:p-6 flex items-center justify-center">
-				<div className="w-full aspect-square max-w-[180px] sm:max-w-[250px] md:max-w-[300px] rounded-full sm:rounded-xl bg-muted flex items-center justify-center text-muted-foreground text-5xl sm:text-6xl font-bold uppercase shadow-inner overflow-hidden transition-all duration-300 relative">
+		<Card className="w-full shadow-sm">
+			<CardContent className="p-6 flex flex-col items-center justify-center">
+				<div className="relative aspect-square shrink-0 w-32 h-32 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full sm:rounded-xl bg-muted flex items-center justify-center text-muted-foreground text-4xl sm:text-6xl font-bold uppercase shadow-inner overflow-hidden transition-all duration-300">
 					{profileImg && !imageError ? (
 						<Image src={profileImg} alt={`รูปโปรไฟล์ของ ${decodedName}`} className="w-full h-full object-cover" width={300} height={300} priority unoptimized={true} referrerPolicy="no-referrer" onError={() => setImageError(true)} />
 					) : (
