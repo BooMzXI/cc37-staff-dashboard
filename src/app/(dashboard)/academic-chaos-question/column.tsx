@@ -185,7 +185,20 @@ function StaffPopOver(result: AcademicChaosQuestion[]): React.JSX.Element {
 	};
 
 	// Build sorted score rows with labels
-	const scores = result[0]?.std_academic_chaos_answer_section === "aptitude_101" ? result[0]?.stf_academic_chaos_question_score.filter((sc) => sc.stf_count === 11) : (result[0]?.stf_academic_chaos_question_score ?? []);
+	let scores: AcademicChaosQuestionScore[];
+	if (result[0]?.std_academic_chaos_answer_section === "aptitude_101") {
+		scores = result[0]?.stf_academic_chaos_question_score.filter((sc) => sc.stf_count === 11);
+	} else if (result[0]?.std_academic_chaos_answer_section === "aptitude_201") {
+		scores = result[0]?.stf_academic_chaos_question_score.filter((sc) => sc.stf_count === 21);
+	} else if (result[0]?.std_academic_chaos_answer_section === "aptitude_202") {
+		scores = result[0]?.stf_academic_chaos_question_score.filter((sc) => sc.stf_count === 22);
+	} else if (result[0]?.std_academic_chaos_answer_section === "aptitude_203") {
+		scores = result[0]?.stf_academic_chaos_question_score.filter((sc) => sc.stf_count === 23);
+	} else if (result[0]?.std_academic_chaos_answer_section === "aptitude_301") {
+		scores = result[0]?.stf_academic_chaos_question_score.filter((sc) => sc.stf_count === 31 || sc.stf_count === 32 || sc.stf_count === 33 || sc.stf_count === 34);
+	} else {
+		scores = result[0]?.stf_academic_chaos_question_score ?? [];
+	}
 	const sortedScores = [...scores].sort((a, b) => a.stf_count - b.stf_count);
 
 	return (
