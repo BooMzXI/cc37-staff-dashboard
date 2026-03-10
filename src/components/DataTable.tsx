@@ -3,11 +3,31 @@
 import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
 import { Search } from "lucide-react";
 import { useQueryState } from "nuqs";
-import React from "react";
+import React, { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
+function decodeData<T>(obj: T): T {
+	if (typeof obj === "string") {
+		try {
+			return decodeURIComponent(obj.replace(/\+/g, "%20")) as unknown as T;
+		} catch (e) {
+			return obj;
+		}
+	}
+	if (Array.isArray(obj)) {
+		return obj.map(decodeData) as unknown as T;
+	}
+	if (obj !== null && typeof obj === "object") {
+		const decodedObj: Record<string, unknown> = {};
+		for (const key in obj) {
+			decodedObj[key] = decodeData((obj as unknown as Record<string, unknown>)[key]);
+		}
+		return decodedObj as T;
+	}
+	return obj;
+}
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
@@ -22,8 +42,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		defaultValue: "",
 	});
 
+	const processedData = useMemo(() => {
+		return data.map((item) => decodeData(item));
+	}, [data]);
+
 	const table = useReactTable({
-		data,
+		data: processedData,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
