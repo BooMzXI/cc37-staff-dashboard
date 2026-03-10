@@ -8,20 +8,56 @@ import { config } from "@/config/config";
 import { STATS_CONFIG, type StatisticData } from "@/config/dashboard-stats";
 import { authClient } from "@/lib/auth-client";
 
+interface TimeLeftResponse {
+	current: string;
+	start_at: string;
+	end_at: string;
+	time_left: {
+		day: number;
+		hour: number;
+		minute: number;
+		second: number;
+		milisecond: number;
+	};
+}
+
+function RegistrationStatus({ timeLeft }: { timeLeft: TimeLeftResponse | null }) {
+	if (!timeLeft) return null;
+
+	const current = new Date(timeLeft.current);
+	const startAt = new Date(timeLeft.start_at);
+	const endAt = new Date(timeLeft.end_at);
+
+	if (current > endAt) {
+		return <span className="text-2xl font-semibold text-red-400">ปิดรับสมัครแล้ว 🥳</span>;
+	}
+
+	const { day, hour, minute, second } = timeLeft.time_left;
+	const parts: string[] = [];
+	if (day > 0) parts.push(`${day} วัน`);
+	if (hour > 0) parts.push(`${hour} ชม.`);
+	if (minute > 0) parts.push(`${minute} นาที`);
+	if (second > 0) parts.push(`${second} วินาที`);
+
+	return (
+		<span className="text-2xl font-semibold text-green-400">
+			เปิดรับสมัครอยู่ 🙏 <span className="text-lg text-muted-foreground">เหลือ {parts.join(" ")}</span>
+		</span>
+	);
+}
+
 export default function Dashboard() {
 	const [data, setData] = useState<StatisticData | null>(null);
+	const [timeLeft, setTimeLeft] = useState<TimeLeftResponse | null>(null);
 	const [loading, setLoading] = useState(true);
 	const { data: session } = authClient.useSession();
 
 	useEffect(() => {
-		const fetchStats = async () => {
+		const fetchData = async () => {
 			try {
-				const res = await fetch(`${config.backend.baseUrl}/api/staff/statistic`, {
-					credentials: "include",
-				});
-				if (!res.ok) throw new Error("Failed to fetch");
-				const jsonData = await res.json();
-				setData(jsonData);
+				const [statsRes, timeRes] = await Promise.all([fetch(`${config.backend.baseUrl}/api/staff/statistic`, { credentials: "include" }), fetch(`${config.backend.baseUrl}/timeleft`, { credentials: "include" })]);
+				if (statsRes.ok) setData(await statsRes.json());
+				if (timeRes.ok) setTimeLeft(await timeRes.json());
 			} catch (error) {
 				console.error(error);
 			} finally {
@@ -29,7 +65,7 @@ export default function Dashboard() {
 			}
 		};
 
-		fetchStats();
+		fetchData();
 	}, []);
 
 	if (loading) {
@@ -38,7 +74,13 @@ export default function Dashboard() {
 
 	return (
 		<>
-			<PageTitle title="Overview" description={`Welcome Back! : ${session?.user.name}`} />
+			<div className="mb-8 flex md:items-center md:flex-row justify-between flex-col-reverse">
+				<div className="mt-5 md:mt-0">
+					<h1 className="text-3xl font-bold text-foreground">Overview</h1>
+					<p className="text-lg text-muted-foreground">Welcome Back! : {session?.user.name}</p>
+				</div>
+				<RegistrationStatus timeLeft={timeLeft} />
+			</div>
 			<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 				{data &&
 					STATS_CONFIG.map((stat) => {
