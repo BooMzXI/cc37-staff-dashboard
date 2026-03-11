@@ -107,7 +107,7 @@ export default function PersonalDetail() {
 						<h2 className="text-lg font-semibold text-foreground">ข้อมูลส่วนตัว</h2>
 					</div>
 
-					<div className=" gap-6 lg:grid-cols-[1fr_1.5fr] w-full items-start animate-slideLeftIn">
+					<div className="grid gap-6 lg:grid-cols-[1fr_1.5fr] w-full items-start animate-slideLeftIn">
 						{/* Left column */}
 						<div className="space-y-6 min-w-0 lg:sticky top-6">
 							{/* Photo placeholder */}
