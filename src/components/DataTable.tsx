@@ -42,7 +42,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		defaultValue: "",
 	});
 
-	const [pageIndex, setPageIndex] = useQueryState("page", parseAsInteger.withDefault(0));
+	const [pageIndex, setPageIndex] = useQueryState("page", parseAsInteger.withDefault(1));
+	const tablePageIndex = pageIndex - 1;
 
 	const processedData = useMemo(() => {
 		return data.map((item) => decodeData(item));
@@ -60,12 +61,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		onPaginationChange: (updater) => {
 			if (typeof updater === "function") {
 				const newState = updater({
-					pageIndex,
+					pageIndex: tablePageIndex,
 					pageSize: 10,
 				});
-				setPageIndex(newState.pageIndex);
+				setPageIndex(newState.pageIndex + 1);
 			} else {
-				setPageIndex(updater.pageIndex);
+				setPageIndex(updater.pageIndex + 1);
 			}
 		},
 		autoResetPageIndex: false,
@@ -73,7 +74,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 			sorting,
 			globalFilter,
 			pagination: {
-				pageIndex,
+				pageIndex: tablePageIndex,
 				pageSize: 10,
 			},
 		},
@@ -90,7 +91,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						value={globalFilter}
 						onChange={(event) => {
 							setGlobalFilter(event.target.value);
-							setPageIndex(0);
+							setPageIndex(1);
 						}}
 						className="pl-9"
 					/>
