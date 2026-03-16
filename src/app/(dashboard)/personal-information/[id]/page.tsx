@@ -101,7 +101,7 @@ export default function PersonalDetail() {
 				<Card className="mb-6 p-6 overflow-hidden">
 					{/* Header */}
 					<div className="mb-6 flex items-center gap-3">
-						<Button variant="ghost" size="icon" onClick={() => router.push("/personal-information")} className="shrink-0 hover:bg-muted">
+						<Button variant="ghost" size="icon" onClick={() => router.back()} className="shrink-0 hover:bg-muted">
 							<ArrowLeft className="h-5 w-5" />
 						</Button>
 						<h2 className="text-lg font-semibold text-foreground">ข้อมูลส่วนตัว</h2>

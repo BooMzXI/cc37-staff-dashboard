@@ -2,7 +2,7 @@
 
 import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
 import { Search } from "lucide-react";
-import { useQueryState } from "nuqs";
+import { parseAsInteger, useQueryState } from "nuqs";
 import React, { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,6 +42,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		defaultValue: "",
 	});
 
+	const [pageIndex, setPageIndex] = useQueryState("page", parseAsInteger.withDefault(0));
+
 	const processedData = useMemo(() => {
 		return data.map((item) => decodeData(item));
 	}, [data]);
@@ -55,9 +57,25 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		onGlobalFilterChange: setGlobalFilter,
+		onPaginationChange: (updater) => {
+			if (typeof updater === "function") {
+				const newState = updater({
+					pageIndex,
+					pageSize: 10,
+				});
+				setPageIndex(newState.pageIndex);
+			} else {
+				setPageIndex(updater.pageIndex);
+			}
+		},
+		autoResetPageIndex: false,
 		state: {
 			sorting,
 			globalFilter,
+			pagination: {
+				pageIndex,
+				pageSize: 10,
+			},
 		},
 	});
 
@@ -67,7 +85,15 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 				<div className="relative w-full max-w-sm">
 					<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
 
-					<Input placeholder="ค้นหาชื่อ, อีเมล, เบอร์โทร..." value={globalFilter} onChange={(event) => setGlobalFilter(event.target.value)} className="pl-9" />
+					<Input
+						placeholder="ค้นหาชื่อ, อีเมล, เบอร์โทร..."
+						value={globalFilter}
+						onChange={(event) => {
+							setGlobalFilter(event.target.value);
+							setPageIndex(0);
+						}}
+						className="pl-9"
+					/>
 				</div>
 			</div>
 			<div className="overflow-hidden rounded-md border">

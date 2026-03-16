@@ -136,7 +136,7 @@ export default function RegisAnswerGradingPage() {
 		<>
 			<div className="flex flex-row items-center">
 				<div className="mb-8 mr-5">
-					<button type="button" className="px-2 py-2 rounded-md hover:bg-white/10 border duration-300 cursor-pointer" onClick={() => router.push("/regis-question")}>
+					<button type="button" className="px-2 py-2 rounded-md hover:bg-white/10 border duration-300 cursor-pointer" onClick={() => router.back()}>
 						<ArrowLeft size={30} />
 					</button>
 				</div>
