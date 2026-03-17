@@ -157,7 +157,7 @@ export default function PersonalConfirmation() {
 
 	return (
 		<>
-			<PageTitle title="Personal Confirmation" description={`การประกาศผลและยืนยันสิทธิ์ของนักเรียน`} />
+			<PageTitle title="Result & Confirmation" description={`ประกาศผลและยืนยันสิทธิ์`} />
 
 			<div className="mt-6">
 				<div className="mb-6 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4">
