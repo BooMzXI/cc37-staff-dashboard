@@ -1,171 +1,173 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Pin, Search, Send } from "lucide-react";
+import { ArrowUpDown, CheckCircle2, Clock3, Search, XCircle } from "lucide-react";
 import Link from "next/link";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export interface StudentConfirmation {
+	rank: number;
 	std_application_id: string;
-	std_total_score: {
-		std_total_score: number | null;
-		std_regis_score: number | null;
-		std_academic_score: number | null;
-		std_academic_chaos_score: number | null;
-	};
-	std_user: {
-		email: string;
-	};
-	std_info: {
-		std_info_gender: string;
-		std_info_phone_number: string;
-		std_info_nick_name: string;
-		std_info_first_name: string;
-		std_info_last_name: string;
-		std_info_education_level: string;
-	};
+	prefix: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	phoneNumber: string;
+	submitStatus: string;
+	applicationResult: string;
+	confirmStatus: string;
+	regisScore: number | null;
+	academicScore: number | null;
+	academicChaosScore: number | null;
+	totalScore: number | null;
 }
+
+const statusIconMap: Record<string, { icon: typeof CheckCircle2; className: string; label: string }> = {
+	submitted: { icon: CheckCircle2, className: "text-green-600", label: "submitted" },
+	not_submitted: { icon: XCircle, className: "text-destructive", label: "not submitted" },
+	confirmed: { icon: CheckCircle2, className: "text-green-600", label: "confirmed" },
+	not_confirmed: { icon: XCircle, className: "text-destructive", label: "not confirmed" },
+	waiting_for_announcement: { icon: Clock3, className: "text-muted-foreground", label: "waiting for announcement" },
+	pass: { icon: CheckCircle2, className: "text-green-600", label: "pass" },
+	reserve: { icon: Clock3, className: "text-amber-500", label: "reserve" },
+	fail: { icon: XCircle, className: "text-destructive", label: "fail" },
+};
+
+const StatusIndicator = ({ status }: { status: string }) => {
+	const mapped = statusIconMap[status];
+	if (!mapped) {
+		return <div className="whitespace-nowrap">{status || "-"}</div>;
+	}
+
+	const Icon = mapped.icon;
+	return (
+		<div className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-md border bg-muted/30 px-2 py-1 text-sm" title={mapped.label}>
+			<Icon className={`h-4 w-4 ${mapped.className}`} />
+			<span className={mapped.className}>{mapped.label}</span>
+		</div>
+	);
+};
 
 export const columns: ColumnDef<StudentConfirmation>[] = [
 	{
-		accessorKey: "std_info",
+		accessorKey: "rank",
 		header: ({ column }) => {
 			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					ชื่อ-นามสกุล <ArrowUpDown className="ml-2 h-4 w-4" />
+				<Button className="whitespace-nowrap" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					อันดับ <ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
 		},
-		cell: ({ row }) => {
-			const fname = row.original.std_info.std_info_first_name || "-";
-			const lname = row.original.std_info.std_info_last_name || "-";
-
-			return (
-				<div className="w-[100px] md:w-[10px] lg:w-[200px] truncate" title={fname}>
-					{decodeURI(fname)} {decodeURI(lname)}
-				</div>
-			);
-		},
+		cell: ({ row }) => <div className="whitespace-nowrap">{row.original.rank}</div>,
 	},
 	{
-		accessorKey: "std_info.std_info_nick_name",
+		accessorKey: "std_application_id",
+		header: () => <div className="whitespace-nowrap">Application ID</div>,
+		cell: ({ row }) => (
+			<div className="max-w-[220px] truncate whitespace-nowrap" title={row.original.std_application_id}>
+				{row.original.std_application_id}
+			</div>
+		),
+	},
+	{
+		accessorKey: "prefix",
+		header: () => <div className="whitespace-nowrap">คำนำหน้า</div>,
+		cell: ({ row }) => <div className="whitespace-nowrap">{row.original.prefix}</div>,
+	},
+	{
+		accessorKey: "firstName",
 		header: ({ column }) => {
 			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					ชื่อเล่น <ArrowUpDown className="ml-2 h-4 w-4" />
+				<Button className="whitespace-nowrap" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					ชื่อ <ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
 		},
-		cell: ({ row }) => {
-			const name = row.original.std_info.std_info_nick_name;
-			return decodeURI(name);
-		},
+		cell: ({ row }) => <div className="whitespace-nowrap">{row.original.firstName}</div>,
 	},
 	{
-		accessorKey: "std_info.std_info_education_level",
-		header: "ระดับชั้น",
-		cell: ({ row }) => {
-			const level = row.original.std_info?.std_info_education_level || "-";
-			const flevel = decodeURI(level);
-			if (flevel.includes("4")) return "ม.4";
-			if (flevel.includes("5")) return "ม.5";
-			return flevel;
-		},
+		accessorKey: "lastName",
+		header: () => <div className="whitespace-nowrap">นามสกุล</div>,
+		cell: ({ row }) => <div className="whitespace-nowrap">{row.original.lastName}</div>,
 	},
 	{
-		accessorKey: "std_info.std_total_score.std_total_score",
+		accessorKey: "email",
+		header: () => <div className="whitespace-nowrap">Email</div>,
+		cell: ({ row }) => <div className="whitespace-normal break-all">{row.original.email}</div>,
+	},
+	{
+		accessorKey: "phoneNumber",
+		header: () => <div className="whitespace-nowrap">Phone</div>,
+		cell: ({ row }) => <div className="whitespace-nowrap">{row.original.phoneNumber}</div>,
+	},
+	{
+		accessorKey: "submitStatus",
+		header: () => <div className="whitespace-nowrap">Submit Status</div>,
+		cell: ({ row }) => <StatusIndicator status={row.original.submitStatus} />,
+	},
+	{
+		accessorKey: "applicationResult",
+		header: () => <div className="whitespace-nowrap">Application Result</div>,
+		cell: ({ row }) => <StatusIndicator status={row.original.applicationResult} />,
+	},
+	{
+		accessorKey: "confirmStatus",
+		header: () => <div className="whitespace-nowrap">Confirm Status</div>,
+		cell: ({ row }) => <StatusIndicator status={row.original.confirmStatus} />,
+	},
+	{
+		accessorKey: "regisScore",
 		header: ({ column }) => {
 			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					คะแนนรวม <ArrowUpDown className="ml-2 h-4 w-4" />
+				<Button className="whitespace-nowrap" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					Regis Score <ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
 		},
-		cell: ({ row }) => {
-			const score = row.original.std_total_score.std_total_score;
-			return <div className="text-center">{score !== null ? score : "-"}</div>;
-		},
+		cell: ({ row }) => <div className="whitespace-nowrap">{row.original.regisScore ?? "-"}</div>,
 	},
 	{
-		accessorKey: "std_info.std_total_score.std_regis_score",
+		accessorKey: "academicScore",
 		header: ({ column }) => {
 			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					ฝ่ายทะเบียน <ArrowUpDown className="ml-2 h-4 w-4" />
+				<Button className="whitespace-nowrap" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					Academic Score <ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
 		},
-		cell: ({ row }) => {
-			const score = row.original.std_total_score.std_regis_score;
-			return <div className="text-center">{score !== null ? score : "-"}</div>;
-		},
+		cell: ({ row }) => <div className="whitespace-nowrap">{row.original.academicScore ?? "-"}</div>,
 	},
 	{
-		accessorKey: "std_info.std_total_score.std_academic_score",
+		accessorKey: "academicChaosScore",
 		header: ({ column }) => {
 			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					ฝ่ายวิชาการ <ArrowUpDown className="ml-2 h-4 w-4" />
+				<Button className="whitespace-nowrap" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					Academic Chaos Score <ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
 		},
-		cell: ({ row }) => {
-			const score = row.original.std_total_score.std_academic_score;
-			return <div className="text-center">{score !== null ? score : "-"}</div>;
-		},
+		cell: ({ row }) => <div className="whitespace-nowrap">{row.original.academicChaosScore ?? "-"}</div>,
 	},
 	{
-		accessorKey: "std_info.std_total_score.std_academic_chaos_score",
+		accessorKey: "totalScore",
 		header: ({ column }) => {
 			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					ปัญหาเชาว์ <ArrowUpDown className="ml-2 h-4 w-4" />
+				<Button className="whitespace-nowrap" variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					Total Score <ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
 		},
-		cell: ({ row }) => {
-			const score = row.original.std_total_score.std_academic_chaos_score;
-			return <div className="text-center">{score !== null ? score : "-"}</div>;
-		},
+		cell: ({ row }) => <div className="whitespace-nowrap">{row.original.totalScore ?? "-"}</div>,
 	},
 	{
-		id: "actions",
-		cell: ({ row }) => {
-			const application = row.original;
-			const fname = application.std_info.std_info_first_name || "-";
-			const decodeFname = decodeURI(fname);
-			return (
-				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Button variant="outline">
-							<Send className="h-4 w-4" />
-						</Button>
-					</DropdownMenuTrigger>
-					<DropdownMenuContent>
-						<DropdownMenuGroup>
-							<DropdownMenuLabel>{`ตรวจสอบ ${decodeFname}`}</DropdownMenuLabel>
-							<DropdownMenuSeparator />
-							<DropdownMenuItem
-								onClick={() => {
-									toast.success("ยืนยันสิทธิ์สำเร็จ");
-								}}
-								className="flex items-center cursor-pointer"
-							>
-								<Pin className="mr-2" />
-								<p>ยืนยันสิทธิ์</p>
-							</DropdownMenuItem>
-							<DropdownMenuItem>
-								<Link href={`/personal-information/${application.std_application_id}`} className="flex items-center">
-									<Search className="mr-2" />
-									<p>ข้อมูลส่วนตัว</p>
-								</Link>
-							</DropdownMenuItem>
-						</DropdownMenuGroup>
-					</DropdownMenuContent>
-				</DropdownMenu>
-			);
-		},
+		id: "profile",
+		header: () => <div className="whitespace-nowrap">Profile</div>,
+		cell: ({ row }) => (
+			<Link href={`/personal-information/${row.original.std_application_id}`}>
+				<Button variant="ghost" size="icon" className="hover:bg-primary/10 cursor-pointer">
+					<Search className="h-4 w-4" />
+				</Button>
+			</Link>
+		),
 	},
 ];
