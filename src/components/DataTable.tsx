@@ -31,9 +31,10 @@ function decodeData<T>(obj: T): T {
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
+	enablePagination?: boolean;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, enablePagination = true }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	/*const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -53,30 +54,38 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		data: processedData,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
+		...(enablePagination ? { getPaginationRowModel: getPaginationRowModel() } : {}),
 		onSortingChange: setSorting,
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		onGlobalFilterChange: setGlobalFilter,
-		onPaginationChange: (updater) => {
-			if (typeof updater === "function") {
-				const newState = updater({
-					pageIndex: tablePageIndex,
-					pageSize: 10,
-				});
-				setPageIndex(newState.pageIndex + 1);
-			} else {
-				setPageIndex(updater.pageIndex + 1);
-			}
-		},
+		...(enablePagination
+			? {
+					onPaginationChange: (updater: any) => {
+						if (typeof updater === "function") {
+							const newState = updater({
+								pageIndex: tablePageIndex,
+								pageSize: 10,
+							});
+							setPageIndex(newState.pageIndex + 1);
+						} else {
+							setPageIndex(updater.pageIndex + 1);
+						}
+					},
+				}
+			: {}),
 		autoResetPageIndex: false,
 		state: {
 			sorting,
 			globalFilter,
-			pagination: {
-				pageIndex: tablePageIndex,
-				pageSize: 10,
-			},
+			...(enablePagination
+				? {
+						pagination: {
+							pageIndex: tablePageIndex,
+							pageSize: 10,
+						},
+					}
+				: {}),
 		},
 	});
 
@@ -91,7 +100,9 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						value={globalFilter}
 						onChange={(event) => {
 							setGlobalFilter(event.target.value);
-							setPageIndex(1);
+							if (enablePagination) {
+								setPageIndex(1);
+							}
 						}}
 						className="pl-9"
 					/>
@@ -127,20 +138,22 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					</TableBody>
 				</Table>
 			</div>
-			<div className="flex items-center justify-between py-4">
-				<div className="text-sm text-muted-foreground">
-					หน้า {table.getState().pagination.pageIndex + 1} จาก {table.getPageCount()}
-				</div>
+			{enablePagination && (
+				<div className="flex items-center justify-between py-4">
+					<div className="text-sm text-muted-foreground">
+						หน้า {table.getState().pagination.pageIndex + 1} จาก {table.getPageCount()}
+					</div>
 
-				<div className="flex items-center space-x-2">
-					<Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-						ก่อนหน้า
-					</Button>
-					<Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-						ถัดไป
-					</Button>
+					<div className="flex items-center space-x-2">
+						<Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+							ก่อนหน้า
+						</Button>
+						<Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+							ถัดไป
+						</Button>
+					</div>
 				</div>
-			</div>
+			)}
 		</div>
 	);
 }

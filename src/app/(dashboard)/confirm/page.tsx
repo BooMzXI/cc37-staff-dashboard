@@ -25,6 +25,7 @@ type LeaderboardApiItem = {
 		std_info_first_name?: string;
 		std_info_last_name?: string;
 		std_info_phone_number?: string;
+		std_info_education_institute?: string;
 	};
 	std_user?: {
 		email?: string;
@@ -88,6 +89,7 @@ export default function PersonalConfirmation() {
 			prefix: item.std_info?.std_info_prefix || "-",
 			firstName: item.std_info?.std_info_first_name || "-",
 			lastName: item.std_info?.std_info_last_name || "-",
+			school: item.std_info?.std_info_education_institute || "-",
 			email: item.std_user?.email || item.email || "-",
 			phoneNumber: item.std_info?.std_info_phone_number || "-",
 			submitStatus: formatStatus(item.std_application_submit, "submitted", "not_submitted"),
@@ -110,7 +112,7 @@ export default function PersonalConfirmation() {
 			);
 		}
 
-		return <DataTable columns={columns} data={data} />;
+		return <DataTable columns={columns} data={data} enablePagination={false} />;
 	};
 
 	useEffect(() => {
