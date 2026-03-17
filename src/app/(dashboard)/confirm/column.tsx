@@ -11,6 +11,7 @@ export interface StudentConfirmation {
 	prefix: string;
 	firstName: string;
 	lastName: string;
+	school: string;
 	email: string;
 	phoneNumber: string;
 	submitStatus: string;
@@ -89,6 +90,11 @@ export const columns: ColumnDef<StudentConfirmation>[] = [
 		accessorKey: "lastName",
 		header: () => <div className="whitespace-nowrap">นามสกุล</div>,
 		cell: ({ row }) => <div className="whitespace-nowrap">{row.original.lastName}</div>,
+	},
+	{
+		accessorKey: "school",
+		header: () => <div className="whitespace-nowrap">School</div>,
+		cell: ({ row }) => <div className="whitespace-normal break-words">{row.original.school}</div>,
 	},
 	{
 		accessorKey: "email",
