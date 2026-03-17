@@ -9,8 +9,13 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
 
 export interface StudentConfirmation {
 	std_application_id: string;
+	std_total_score: {
+		std_total_score: number | null;
+		std_regis_score: number | null;
+		std_academic_score: number | null;
+		std_academic_chaos_score: number | null;
+	};
 	std_user: {
-		name: string;
 		email: string;
 	};
 	std_info: {
@@ -59,17 +64,6 @@ export const columns: ColumnDef<StudentConfirmation>[] = [
 		},
 	},
 	{
-		accessorKey: "std_info.std_info_gender",
-		header: ({ column }) => {
-			return (
-				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					เพศ <ArrowUpDown className="ml-2 h-4 w-4" />
-				</Button>
-			);
-		},
-		cell: ({ row }) => (row.original.std_info?.std_info_gender === "male" ? "ชาย" : "หญิง"),
-	},
-	{
 		accessorKey: "std_info.std_info_education_level",
 		header: "ระดับชั้น",
 		cell: ({ row }) => {
@@ -81,31 +75,67 @@ export const columns: ColumnDef<StudentConfirmation>[] = [
 		},
 	},
 	{
-		accessorKey: "std_user.email",
+		accessorKey: "std_info.std_total_score.std_total_score",
 		header: ({ column }) => {
 			return (
 				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					Email <ArrowUpDown className="ml-2 h-4 w-4" />
+					คะแนนรวม <ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
 		},
 		cell: ({ row }) => {
-			const email = row.original.std_user?.email || "-";
-			return (
-				<div className="w-[180px] md:w-[200px] lg:w-[250px] truncate" title={email}>
-					{email}
-				</div>
-			);
+			const score = row.original.std_total_score.std_total_score;
+			return <div className="text-center">{score !== null ? score : "-"}</div>;
 		},
 	},
 	{
-		accessorKey: "std_info.std_info_phone_number",
-		header: "เบอร์โทรศัพท์",
+		accessorKey: "std_info.std_total_score.std_regis_score",
+		header: ({ column }) => {
+			return (
+				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					ฝ่ายทะเบียน <ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			);
+		},
+		cell: ({ row }) => {
+			const score = row.original.std_total_score.std_regis_score;
+			return <div className="text-center">{score !== null ? score : "-"}</div>;
+		},
+	},
+	{
+		accessorKey: "std_info.std_total_score.std_academic_score",
+		header: ({ column }) => {
+			return (
+				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					ฝ่ายวิชาการ <ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			);
+		},
+		cell: ({ row }) => {
+			const score = row.original.std_total_score.std_academic_score;
+			return <div className="text-center">{score !== null ? score : "-"}</div>;
+		},
+	},
+	{
+		accessorKey: "std_info.std_total_score.std_academic_chaos_score",
+		header: ({ column }) => {
+			return (
+				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					ปัญหาเชาว์ <ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			);
+		},
+		cell: ({ row }) => {
+			const score = row.original.std_total_score.std_academic_chaos_score;
+			return <div className="text-center">{score !== null ? score : "-"}</div>;
+		},
 	},
 	{
 		id: "actions",
 		cell: ({ row }) => {
 			const application = row.original;
+			const fname = application.std_info.std_info_first_name || "-";
+			const decodeFname = decodeURI(fname);
 			return (
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
@@ -115,7 +145,7 @@ export const columns: ColumnDef<StudentConfirmation>[] = [
 					</DropdownMenuTrigger>
 					<DropdownMenuContent>
 						<DropdownMenuGroup>
-							<DropdownMenuLabel>{`ตรวจสอบ ${application.std_user.name}`}</DropdownMenuLabel>
+							<DropdownMenuLabel>{`ตรวจสอบ ${decodeFname}`}</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem
 								onClick={() => {
