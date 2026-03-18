@@ -14,6 +14,13 @@ export async function proxy(request: NextRequest) {
 	});
 
 	const isLoginPage = request.nextUrl.pathname.startsWith("/login");
+	const redirectTarget = `${request.nextUrl.pathname}${request.nextUrl.search}`;
+
+	const getLoginUrlWithRedirect = () => {
+		const loginUrl = new URL("/login", request.url);
+		loginUrl.searchParams.set("redirect", redirectTarget);
+		return loginUrl;
+	};
 
 	if (sessionToken?.user.role === "user") {
 		if (isLoginPage) {
@@ -23,18 +30,21 @@ export async function proxy(request: NextRequest) {
 			return response;
 		}
 
-		const response = NextResponse.redirect(new URL("/login", request.url));
+		const response = NextResponse.redirect(getLoginUrlWithRedirect());
 		response.cookies.delete("better-auth.session_token");
 		response.cookies.delete("__Secure-better-auth.session_token");
 		return response;
 	}
 
 	if (!sessionToken && !isLoginPage) {
-		return NextResponse.redirect(new URL("/login", request.url));
+		return NextResponse.redirect(getLoginUrlWithRedirect());
 	}
 
 	if (sessionToken && isLoginPage) {
-		return NextResponse.redirect(new URL("/", request.url));
+		const redirect = request.nextUrl.searchParams.get("redirect");
+		const safeRedirectPath = redirect?.startsWith("/") && !redirect?.startsWith("//") ? (redirect ?? "/") : "/";
+
+		return NextResponse.redirect(new URL(safeRedirectPath, request.url));
 	}
 
 	return NextResponse.next();

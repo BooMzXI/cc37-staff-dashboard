@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { AlertCircle, Loader2 } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -23,6 +23,7 @@ const formSchema = z.object({
 
 export function LoginForm() {
 	const router = useRouter();
+	const searchParams = useSearchParams();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [error, setError] = useState<string | null>(null);
@@ -39,14 +40,17 @@ export function LoginForm() {
 		setIsLoading(true);
 		setError(null);
 
-		const { data, error: authError } = await authClient.signIn.username(
+		const redirect = searchParams.get("redirect");
+		const redirectPath = redirect?.startsWith("/") && !redirect.startsWith("//") ? redirect : "/";
+
+		await authClient.signIn.username(
 			{
 				username: values.username,
 				password: values.password,
 			},
 			{
 				onSuccess: () => {
-					router.push("/");
+					router.push(redirectPath);
 					router.refresh();
 				},
 				onError: (ctx: { error: { message: unknown } }) => {
