@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { AlertCircle, Loader2 } from "lucide-react";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -21,9 +21,12 @@ const formSchema = z.object({
 	password: z.string().min(1, { message: "กรุณากรอกรหัสผ่าน" }),
 });
 
-export function LoginForm() {
+type LoginFormProps = {
+	redirect?: string;
+};
+
+export function LoginForm({ redirect }: LoginFormProps) {
 	const router = useRouter();
-	const searchParams = useSearchParams();
 	const [isLoading, setIsLoading] = useState(false);
 
 	const [error, setError] = useState<string | null>(null);
@@ -40,7 +43,6 @@ export function LoginForm() {
 		setIsLoading(true);
 		setError(null);
 
-		const redirect = searchParams.get("redirect");
 		const redirectPath = redirect?.startsWith("/") && !redirect.startsWith("//") ? redirect : "/";
 
 		await authClient.signIn.username(
