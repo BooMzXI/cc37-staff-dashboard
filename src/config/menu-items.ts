@@ -1,4 +1,4 @@
-import { BookOpen, FileQuestionMark, Home, Mail, Settings, ShieldCheck, Ticket, Users } from "lucide-react";
+import { BookOpen, FileQuestionMark, Home, Mail, Settings, ShieldCheck, Ticket, Upload, Users } from "lucide-react";
 import { ROLES } from "@/constants/roles";
 import { config } from "./config";
 
@@ -47,6 +47,13 @@ export const MENU_ITEMS: MenuItem[] = [
 		isEnable: config.enabledTab.includes("CONFIRMATION"),
 	},
 	{
+		title: "Export (S)",
+		url: "/export",
+		icon: Upload,
+		roles: [ROLES.ADMIN, ROLES.REGISTRATION],
+		isEnable: config.enabledTab.includes("EXPORT"),
+	},
+	{
 		title: "คำถามวิชาการ (Ac)",
 		url: "/academic-question",
 		icon: BookOpen,
@@ -64,7 +71,7 @@ export const MENU_ITEMS: MenuItem[] = [
 		title: "เปลี่ยนรหัสผ่าน (S)",
 		url: "/change-password",
 		icon: Settings,
-		roles: [ROLES.ADMIN, ROLES.REGISTRATION, ROLES.ACADEMIC],
+		roles: [ROLES.ADMIN, ROLES.REGISTRATION, ROLES.ACADEMIC, ROLES.STAFF],
 		isEnable: config.enabledTab.includes("CHANGE_PASS"),
 	},
 	{
