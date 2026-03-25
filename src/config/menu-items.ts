@@ -50,7 +50,7 @@ export const MENU_ITEMS: MenuItem[] = [
 		title: "Export (S)",
 		url: "/export",
 		icon: Upload,
-		roles: [ROLES.ADMIN, ROLES.REGISTRATION],
+		roles: [ROLES.ADMIN, ROLES.REGISTRATION, ROLES.ACADEMIC],
 		isEnable: config.enabledTab.includes("EXPORT"),
 	},
 	{
