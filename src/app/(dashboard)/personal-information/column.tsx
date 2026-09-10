@@ -10,12 +10,13 @@ export interface StudentApplication {
 	std_application_submit: boolean;
 	//std_application_confirmed: boolean;
 	std_user: {
-		name: string;
 		email: string;
 	};
 	std_info: {
 		std_info_gender: string;
 		std_info_phone_number: string;
+		std_info_first_name: string;
+		std_info_last_name: string;
 	};
 	std_status: {
 		stf_info_check?: {
@@ -26,7 +27,7 @@ export interface StudentApplication {
 
 export const columns: ColumnDef<StudentApplication>[] = [
 	{
-		accessorKey: "std_user.name",
+		accessorKey: "std_info.std_info_first_name",
 		header: ({ column }) => {
 			return (
 				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
@@ -35,10 +36,11 @@ export const columns: ColumnDef<StudentApplication>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			const name = row.original.std_user?.name || "-";
+			const name = `${row.original.std_info?.std_info_first_name || "-"} ${row.original.std_info?.std_info_last_name || "-"}`;
+			const decodedName = decodeURIComponent(name);
 			return (
-				<div className="w-[100px] md:w-[10px] lg:w-[200px] truncate" title={name}>
-					{name}
+				<div className="w-[100px] md:w-[10px] lg:w-[200px] truncate" title={decodedName}>
+					{decodedName}
 				</div>
 			);
 		},

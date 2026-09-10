@@ -28,7 +28,7 @@ export const InfoRow = ({ label, value }: { label: string; value: string | numbe
 	return (
 		<div className="flex items-start py-3 border-b border-border last:border-0 gap-4 w-full">
 			<div className="w-[140px] sm:w-[160px] text-muted-foreground text-sm shrink-0">{label}:</div>
-			<div className="flex-1 min-w-0 text-sm font-medium text-foreground break-words text-left flex items-center h-full min-h-[20px]">{displayValue()}</div>
+			<div className="flex-1 min-w-0 text-sm font-medium text-foreground break-all text-left flex items-center h-full min-h-[20px]">{displayValue()}</div>
 		</div>
 	);
 };

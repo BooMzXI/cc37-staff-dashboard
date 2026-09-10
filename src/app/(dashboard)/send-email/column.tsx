@@ -1,81 +1,120 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, CircleCheckBig, CircleX, Clock, Eye, Search } from "lucide-react";
-import Link from "next/link";
+import { ArrowUpDown, Eye, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export interface StudentApplication {
-	std_application_id: string;
-	std_application_submit: boolean;
-	//std_application_confirmed: boolean;
-	std_user: {
+export interface SentEmail {
+	email_id: string;
+	email_subject: string;
+	email_content: string;
+	email_to_email: string;
+	email_to_name: string;
+	email_has_sent: boolean;
+	stf_user_id: string;
+	created_at: string;
+	updated_at: string;
+	stf_user: {
+		id: string;
 		name: string;
 		email: string;
-	};
-	std_info: {
-		std_info_gender: string;
-		std_info_phone_number: string;
-	};
-	std_status: {
-		stf_info_check?: {
-			std_info_status: "info_approve" | "info_reject" | "info_waiting" | string;
-		} | null;
+		username: string;
+		displayUsername: string;
+		role: string;
 	};
 }
 
-export const columns: ColumnDef<StudentApplication>[] = [
-	{
-		accessorKey: "std_user.name",
-		header: ({ column }) => {
-			return (
+export function getColumns(onViewDetail: (item: SentEmail) => void): ColumnDef<SentEmail>[] {
+	return [
+		{
+			accessorKey: "email_to_name",
+			header: ({ column }) => (
 				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					ชื่อ-นามสกุล <ArrowUpDown className="ml-2 h-4 w-4" />
+					ผู้รับ <ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
-			);
+			),
 		},
-		cell: ({ row }) => {
-			const name = row.original.std_user?.name || "-";
-			return (
-				<div className="w-[100px] md:w-[10px] lg:w-[200px] truncate" title={name}>
-					{name}
-				</div>
-			);
-		},
-	},
-	{
-		accessorKey: "std_info.std_info_phone_number",
-		header: "เบอร์โทรศัพท์",
-	},
-	{
-		accessorKey: "std_user.email",
-		header: ({ column }) => {
-			return (
+		{
+			accessorKey: "email_to_email",
+			header: ({ column }) => (
 				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-					Email <ArrowUpDown className="ml-2 h-4 w-4" />
+					อีเมล <ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
-			);
+			),
+			cell: ({ row }) => {
+				const email = row.original.email_to_email;
+				return (
+					<div className="max-w-[200px] truncate" title={email}>
+						{email}
+					</div>
+				);
+			},
 		},
-		cell: ({ row }) => {
-			const email = row.original.std_user?.email || "-";
-			return (
-				<div className="w-[180px] md:w-[200px] lg:w-[250px] truncate" title={email}>
-					{email}
+		{
+			accessorKey: "email_subject",
+			header: ({ column }) => (
+				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					หัวข้อ <ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			),
+			cell: ({ row }) => (
+				<div className="max-w-[150px] truncate" title={row.original.email_subject}>
+					{row.original.email_subject}
 				</div>
-			);
+			),
 		},
-	},
-	{
-		id: "actions",
-		cell: ({ row }) => {
-			const application = row.original;
-			return (
-				<Link href={`/personal-information/${application.std_application_id}`}>
-					<Button variant="ghost" size="icon" className="hover:bg-primary/10 cursor-pointer">
-						<Search className="h-4 w-4" />
-					</Button>
-				</Link>
-			);
+		{
+			accessorKey: "email_content",
+			header: "เนื้อหา",
+			cell: ({ row }) => (
+				<div className="max-w-[200px] truncate" title={row.original.email_content}>
+					{row.original.email_content}
+				</div>
+			),
 		},
-	},
-];
+		{
+			accessorKey: "stf_user.name",
+			id: "sender",
+			header: ({ column }) => (
+				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					ผู้ส่ง <ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			),
+			cell: ({ row }) => row.original.stf_user?.name ?? row.original.stf_user_id,
+		},
+		{
+			accessorKey: "email_has_sent",
+			header: "สถานะ",
+			cell: ({ row }) =>
+				row.original.email_has_sent ? (
+					<span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">ส่งแล้ว</span>
+				) : (
+					<span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">รอส่ง</span>
+				),
+		},
+		{
+			accessorKey: "created_at",
+			header: ({ column }) => (
+				<Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					วันที่ส่ง <ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			),
+			cell: ({ row }) =>
+				new Date(row.original.created_at).toLocaleString("th-TH", {
+					year: "numeric",
+					month: "short",
+					day: "numeric",
+					hour: "2-digit",
+					minute: "2-digit",
+				}),
+		},
+		{
+			id: "actions",
+			cell: ({ row }) => (
+				<Button variant="ghost" size="sm" onClick={() => onViewDetail(row.original)} className="flex items-center gap-1">
+					<Search />
+				</Button>
+			),
+		},
+	];
+}

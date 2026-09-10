@@ -98,20 +98,20 @@ export default function PersonalDetail() {
 	return (
 		<div className="min-h-screen bg-background">
 			<main className="mx-auto max-w-7xl px-4 py-8 lg:px-6">
-				<Card className="mb-6 p-6">
+				<Card className="mb-6 p-6 overflow-hidden">
 					{/* Header */}
 					<div className="mb-6 flex items-center gap-3">
-						<Button variant="ghost" size="icon" onClick={() => router.push("/personal-information")} className="shrink-0 hover:bg-muted">
+						<Button variant="ghost" size="icon" onClick={() => router.back()} className="shrink-0 hover:bg-muted">
 							<ArrowLeft className="h-5 w-5" />
 						</Button>
 						<h2 className="text-lg font-semibold text-foreground">ข้อมูลส่วนตัว</h2>
 					</div>
 
-					<div className="grid gap-6 lg:grid-cols-[1fr_1.5fr] w-full overflow-hidden items-start">
+					<div className="grid gap-6 lg:grid-cols-[1fr_1.5fr] w-full items-start animate-slideLeftIn">
 						{/* Left column */}
-						<div className="space-y-6 min-w-0 sticky top-6">
+						<div className="space-y-6 min-w-0 lg:sticky top-6">
 							{/* Photo placeholder */}
-							<ProfileCard data={data} />
+							<ProfileCard data={data} profileFileKey={data.std_file.filter((file) => file.std_file_type === "file_face")[0]?.std_file_key} />
 							{/* Application status */}
 							<ApplicationStatusCard statusData={data.std_status} files={data.std_file} updatedAt={data.std_status?.updated_at} formatThaiDateTime={formatThaiDateTime} />
 

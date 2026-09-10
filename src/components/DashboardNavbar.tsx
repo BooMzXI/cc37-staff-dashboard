@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { MENU_ITEMS } from "@/config/menu-items";
+import { ROLES } from "@/constants/roles";
 import { authClient } from "@/lib/auth-client";
 import { useTheme } from "./ThemeProvider";
 import { Button } from "./ui/button";
@@ -40,7 +41,7 @@ const DashboardNavbar = ({ role }: { role: string | undefined | null }) => {
 	}, []);
 
 	const userRole = role || null;
-	const filteredMenu = MENU_ITEMS.filter((item) => userRole && item.roles.includes(userRole)).filter((item) => item.isEnable);
+	const filteredMenu = MENU_ITEMS.filter((item) => userRole && item.roles.includes(userRole)).filter((item) => item.isEnable || userRole === ROLES.ADMIN);
 
 	const handleSignOut = async () => {
 		await authClient.signOut({

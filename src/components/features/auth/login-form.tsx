@@ -21,7 +21,11 @@ const formSchema = z.object({
 	password: z.string().min(1, { message: "กรุณากรอกรหัสผ่าน" }),
 });
 
-export function LoginForm() {
+type LoginFormProps = {
+	redirect?: string;
+};
+
+export function LoginForm({ redirect }: LoginFormProps) {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -39,32 +43,24 @@ export function LoginForm() {
 		setIsLoading(true);
 		setError(null);
 
-		try {
-			axios.defaults.withCredentials = true;
-			const loginRes = await axios.post(`${config.backend.baseUrl}/api/auth/sign-in/username`, {
+		const redirectPath = redirect?.startsWith("/") && !redirect.startsWith("//") ? redirect : "/";
+
+		await authClient.signIn.username(
+			{
 				username: values.username,
 				password: values.password,
-			});
-
-			console.log(loginRes);
-		} catch (e) {
-			console.log(e);
-		}
-		// const { data, error: authError } = await authClient.signIn.username(
-		// 	{
-		// 		username: values.username,
-		// 		password: values.password,
-		// 	},
-		// 	{
-		// 		onSuccess: () => {
-		// 			router.push("/");
-		// 		},
-		// 		onError: (ctx: { error: { message: unknown } }) => {
-		// 			setError((ctx.error.message as string) || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ");
-		// 			setIsLoading(false);
-		// 		},
-		// 	},
-		// );
+			},
+			{
+				onSuccess: () => {
+					router.push(redirectPath);
+					router.refresh();
+				},
+				onError: (ctx: { error: { message: unknown } }) => {
+					setError((ctx.error.message as string) || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ");
+					setIsLoading(false);
+				},
+			},
+		);
 	}
 
 	return (

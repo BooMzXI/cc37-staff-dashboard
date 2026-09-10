@@ -136,7 +136,7 @@ export default function RegisAnswerGradingPage() {
 		<>
 			<div className="flex flex-row items-center">
 				<div className="mb-8 mr-5">
-					<button type="button" className="px-2 py-2 rounded-md hover:bg-white/10 border duration-300 cursor-pointer" onClick={() => router.push("/regis-question")}>
+					<button type="button" className="px-2 py-2 rounded-md hover:bg-white/10 border duration-300 cursor-pointer" onClick={() => router.back()}>
 						<ArrowLeft size={30} />
 					</button>
 				</div>
@@ -153,7 +153,7 @@ export default function RegisAnswerGradingPage() {
 						<Question5 answer={answer.filter((ans) => ans.std_regis_answer_section === "regis_5")[0]?.std_regis_answer} />
 						<Question6 answer={answer.filter((ans) => ans.std_regis_answer_section === "regis_6")[0]?.std_regis_answer} />
 					</div>
-					<div className="col-span-2 flex flex-col overflow-y-auto">
+					<div className="col-span-3 lg:col-span-2 flex flex-col overflow-y-auto">
 						<div className="text-center sticky z-10 top-0 bg-background pb-4">เกณฑ์การให้คะแนน</div>
 						<div className="pr-5">
 							{answer
